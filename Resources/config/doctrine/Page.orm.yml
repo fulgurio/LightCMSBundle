@@ -1,0 +1,46 @@
+Fulgurio\LightCMSBundle\Entity\Page:
+  type: entity
+  repositoryClass: Fulgurio\LightCMSBundle\Repository\PageRepository
+  table: page
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      length: 255
+    fullpath:
+      type: string
+      length: 255
+      nullable: true
+    slug:
+      type: string
+      length: 255
+      nullable: true
+    status:
+      type: string
+      length: 10
+    content:
+      type: text
+      nullable: true
+    model:
+      type: string
+      length: 255
+      nullable: true
+  oneToMany:
+    children:
+      targetEntity: Page
+      mappedBy: parent
+#      cascade: [ delete ]
+      orderBy:
+        position: ASC
+    meta:
+      targetEntity: PageMeta
+      mappedBy: page
+      cascade: [ delete ]
+  manyToOne:
+    parent:
+      targetEntity: Page
+      inversedBy: children

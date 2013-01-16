@@ -1,0 +1,5 @@
+SlugableUrlPage:
+    pattern:  /{fullpath}
+    defaults: { _controller: FulgurioLightCMSBundle:FrontPage:show }
+    requirements:
+        fullpath: ".*"

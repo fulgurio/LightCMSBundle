@@ -1,0 +1,9 @@
+services:
+    fulgurio_light_cms.action_listener:
+        class: Fulgurio\LightCMSBundle\EventListener\BeforeListener
+        arguments:
+            doctrine: "@doctrine"
+            kernel: "@kernel"
+            securityContext: "@security.context"
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

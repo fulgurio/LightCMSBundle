@@ -1,0 +1,19 @@
+Fulgurio\LightCMSBundle\Entity\PageMeta:
+  type: entity
+  repositoryClass: Fulgurio\LightCMSBundle\Repository\PageMetaRepository
+  table: page_meta
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    meta_key:
+      type: string
+      length: 32
+    meta_value:
+      type: text
+  manyToOne:
+    page:
+      targetEntity: Page
+      inversedBy: meta
