@@ -1,39 +1,40 @@
 fulgurio:
   lightcms:
-    lightcms_title:               LightCMS
-    cancel:                       Cancel
-    yes:                          Yes
-    no:                           No
-    popup_confirmation:           Popup
+    lightcms_title:                 LightCMS
+    cancel:                         Cancel
+    yes:                            Yes
+    no:                             No
+    popup_confirmation:             Popup
     header_link:
-      pages_link:                 Pages
+      pages_link:                   Pages
     pages:
-      title:                      Pages admin
-      legend:                     Pages
-      add_child_page_button:      Add new page
-      text_info:                  Select a page on the left tree to manage it
-      show:                       Show
-      edit:                       Edit
-      remove:                     Remove
+      title:                        Pages admin
+      legend:                       Pages
+      add_child_page_button:        Add new page
+      text_info:                    Select a page on the left tree to manage it
+      show:                         Show
+      edit:                         Edit
+      remove:                       Remove
+      recursive_remove_not_allowed: Page has childrens. Please remove them before and try to remove this one
       add_form:
-        title:                    Add a new child page admin
-        legend:                   Add a new child page
-        title_label:              Title
-        content_label:            Content
-        status_label:             Status
+        title:                      Add a new child page admin
+        legend:                     Add a new child page
+        title_label:                Title
+        content_label:              Content
+        status_label:               Status
         status:
-          draft:                  Draft
+          draft:                    Draft
           published:                Published
-        meta_keywords_label:      Meta keywords
-        meta_description_label:   Meta description
-        submit_button:            Save
-        success_msg:              Page has been created !
+        meta_keywords_label:        Meta keywords
+        meta_description_label:     Meta description
+        submit_button:              Save
+        success_msg:                Page has been created !
       edit_form:
-        title:                    Edit page admin
-        legend:                   Edit page
-        success_msg:              Page has been modified !
-      delete_confirm_message:     Are you sure to delete "%title%" ?
+        title:                      Edit page admin
+        legend:                     Edit page
+        success_msg:                Page has been modified !
+      delete_confirm_message:       Are you sure to delete "%title%" ?
     upload_file:
-      send_button:                Send
-      picture_label:              Picture file
-      file_must_be_picture_error: The file must be a picture
+      send_button:                  Send
+      picture_label:                Picture file
+      file_must_be_picture_error:   The file must be a picture

@@ -6,7 +6,8 @@
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
 {% block content %}
 <h1>{% trans from 'admin' %}fulgurio.lightcms.pages.legend{% endtrans %}</h1>
-<div class="row clearfix">
+{% include 'FulgurioLightCMSBundle::adminMessage.html.twig' %}
+<div class="row">
 	<div class="span4 treeview">
 {% if selectedPage is defined %}
 {% include 'FulgurioLightCMSBundle:AdminPage:tree.html.twig' with { 'pages': pageRoot, 'selectedPage' : selectedPage } %}

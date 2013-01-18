@@ -1,0 +1,3 @@
+{% if app.session.hasFlash('notice') %}	<div class="alert alert-info">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% if app.session.hasFlash('error') %}	<div class="alert alert-error">{{ app.session.flash('error')|trans }}</div>{% endif %}
+{% if app.session.hasFlash('success') %}	<div class="alert alert-success">{{ app.session.flash('success')|trans }}</div>{% endif %}

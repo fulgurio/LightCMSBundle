@@ -23,6 +23,7 @@ class FulgurioLightCMSExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('fulgurio_light_cms.tiny_mce', $config['tiny_mce']);
+        $container->setParameter('fulgurio_light_cms.allow_recursive_page_delete', $config['allow_recursive_page_delete']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

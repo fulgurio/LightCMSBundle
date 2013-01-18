@@ -86,7 +86,7 @@ class AdminPageController extends Controller
         if ($formHandler->process($page))
         {
             $this->get('session')->setFlash(
-                    'notice',
+                    'success',
                     $this->get('translator')->trans(
                             isset($options['pageId']) ? 'fulgurio.lightcms.pages.edit_form.success_msg' : 'fulgurio.lightcms.pages.add_form.success_msg',
                             array(),
@@ -113,10 +113,18 @@ class AdminPageController extends Controller
         {
             throw new AccessDeniedException();
         }
-        // @todo : add config to allow children recursive removing
         $request = $this->container->get('request');
         if ($request->request->get('confirm') === 'yes')
         {
+            if ($this->container->getParameter('fulgurio_light_cms.allow_recursive_page_delete') == FALSE
+            		&& $page->hasChildren())
+            {
+            	$this->get('session')->setFlash(
+            			'error',
+            			$this->get('translator')->trans('fulgurio.lightcms.pages.recursive_remove_not_allowed', array(), 'admin')
+            	);
+            	return new RedirectResponse($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
+            }
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($page);
             $em->flush();
