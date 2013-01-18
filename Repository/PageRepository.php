@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageRepository extends EntityRepository
 {
+    /**
+     * Get next position in tree
+     *
+     * @param integer $parentId
+     * @return integer
+     */
+    public function getNextPosition($parentId)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT MAX(p.position) FROM FulgurioLightCMSBundle:Page p WHERE p.parent=:parentId');
+        $query->setParameter('parentId', $parentId);
+        return ($query->getSingleScalarResult() + 1);
+    }
+
 }

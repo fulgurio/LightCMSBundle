@@ -1,0 +1,14 @@
+<ul>
+{% for page in pages %}
+	<li id="pid-{{ page.id }}" data-id="{{ page.id }}">
+{%   if selectedPage is defined and selectedPage == page %}
+		<a class="likeText">{{ page.title }}</a>
+{% else %}
+		<a href="{{ path('AdminPagesSelect', { pageId: page.id }) }}"{% if page.status == 'draft' %} class="draft"{% endif %}>{{ page.title }}</a>
+{% endif %}
+{%   if page.hasChildren %}
+{%     include 'FulgurioLightCMSBundle:AdminPage:tree.html.twig' with { 'pages': page.getChildren } %}
+{%   endif %}
+	</li>
+{% endfor %}
+</ul>

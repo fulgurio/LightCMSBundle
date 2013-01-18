@@ -28,6 +28,16 @@ class Page
         return '';
     }
 
+    /**
+     * Chech if page has children page
+     *
+     * @return boolean
+     */
+    public function hasChildren()
+    {
+    	return (count($this->getChildren()) > 0);
+    }
+
 
     /**
      * @var integer $id
@@ -48,6 +58,11 @@ class Page
      * @var string $slug
      */
     private $slug;
+
+    /**
+     * @var integer $position
+     */
+    private $position;
 
     /**
      * @var string $status
@@ -153,6 +168,26 @@ class Page
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**

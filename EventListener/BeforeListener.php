@@ -20,6 +20,8 @@ class BeforeListener
      * Constructor
      *
      * @param RegistryInterface $doctrine
+     * @param $kernel
+     * @$param $securityContext
      */
     public function __construct(RegistryInterface $doctrine, $kernel, $securityContext)
     {

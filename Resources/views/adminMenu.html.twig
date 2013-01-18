@@ -1,0 +1,5 @@
+				<nav class="nav-collapse collapse">
+					<ul class="nav">
+						<li{% if app.request.attributes.get('_route')|slice(0, 10) == 'AdminPages' %} class="active"{% endif %}><a href="{{ path('AdminPages') }}">{% trans from "admin" %}fulgurio.lightcms.header_link.pages_link{% endtrans %}</a></li>
+					</ul>
+				</nav>

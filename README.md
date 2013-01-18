@@ -14,7 +14,83 @@ Coming soon
 
 Installation
 ------------
-Coming soon
+
+Installation is not so hard
+
+1. Download FulgurioLightCMSBundle and dependent bundles
+2. Configure the Autoloader
+3. Enable the Bundle
+4. Import routing
+5. Try it !
+
+That's easy !
+
+### Step 1: Download DoctrineFixturesBundle
+
+First, you need to install [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization.
+
+**Using the vendors script**
+
+Add the following lines in your `deps` file (you can do at the same time of DoctrineFixturesBundle):
+
+``` ini
+[FulgurioLightCMSBundle]
+    git=http://github.com/fulgurio/LightCMSBundle.git
+    target=/bundles/Fulgurio/LightCMSBundle
+```
+
+Just download the bundle with vendors loading tool :
+
+``` bash
+$ php bin/vendors install
+```
+
+### Step 2: Configure the Autoloader
+
+Add the `Fulgurio` namespace to your autoloader:
+
+``` php
+<?php
+// app/autoload.php
+
+$loader->registerNamespaces(array(
+    // ...
+    'Fulgurio\\LightCMSBundle' => __DIR__.'/../vendor/bundles',
+));
+```
+
+### Step 3: Enable the bundle
+
+Finally, enable the bundle in the kernel:
+
+``` php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Fulgurio\LightCMSBundle\FulgurioLightCMSBundle(),
+    );
+}
+```
+
+### Step 4: Import routing file
+
+Now that you have activated and configured the bundle, all that is left to do is import the FulgurioLightCMSBundle routing file.
+
+You need to put it on the bottom of your file, to be the last routes used (if no route parse, LightCMS try to found the page into the database)
+
+``` yaml
+FulgurioLightCMSBundle:
+    resource: "@FulgurioLightCMSBundle/Resources/config/routing.yml"
+    prefix:   /
+```
+
+### Step 5: Try it !
+
+Just before to try, don't forget to clear your cache. And if everything's working well, you will see the homepage
 
 License
 -------

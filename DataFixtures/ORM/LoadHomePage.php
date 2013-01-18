@@ -20,6 +20,7 @@ class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedF
         $homepage->setContent('This is a sample text for initialisation of Light CMS');
         $homepage->setSlug('');
         $homepage->setFullpath('');
+        $homepage->setPosition(1);
         $homepage->setStatus('published');
         $meta1 = $this->addMeta($homepage, 'keywords', 'lightcms,fulgurio,content management system');
         $manager->persist($meta1);

@@ -19,6 +19,8 @@ Fulgurio\LightCMSBundle\Entity\Page:
       type: string
       length: 255
       nullable: true
+    position:
+      type: integer
     status:
       type: string
       length: 10
@@ -33,13 +35,13 @@ Fulgurio\LightCMSBundle\Entity\Page:
     children:
       targetEntity: Page
       mappedBy: parent
-#      cascade: [ delete ]
+#      cascade: [ remove ]
       orderBy:
         position: ASC
     meta:
       targetEntity: PageMeta
       mappedBy: page
-      cascade: [ delete ]
+      cascade: [ remove ]
   manyToOne:
     parent:
       targetEntity: Page

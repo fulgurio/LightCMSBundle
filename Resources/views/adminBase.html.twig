@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/admin.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/admin-jstree.css') }}" />
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.jstree.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.cookie.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/bootstrap.min.js') }}"></script>
+	<title>{% block title %}{% trans from 'admin' %}fulgurio.lightcms.lightcms_title{% endtrans %}{% endblock %}</title>
+</head>
+<body>
+<div class="container">
+	<header class="clearfix">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="{{ path('LightCMS_Page', { fullpath: ''}) }}">{% trans from 'admin' %}fulgurio.lightcms.lightcms_title{% endtrans %}</a>
+{% include 'FulgurioLightCMSBundle::adminMenu.html.twig' %}
+				</div>
+			</div>
+		</div>
+	</header>
+	{% if app.session.hasFlash('notice') %}<div class="alert alert-info">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% block content %}
+{#@todo}DASHBOARD#}
+{% endblock %}
+	<hr />
+	<footer>&copy;<a href="http://www.fulgurio.net" target="_blank">Fulgurio</a></footer>
+</div>
+{% include 'FulgurioLightCMSBundle::adminPopup.html.twig' %}
+{% block javascriptBottom %}{% endblock %}
+</body>
+</html>

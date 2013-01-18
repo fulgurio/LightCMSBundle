@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+/* Tree */
+.treeview .jstree-open ins,
+.treeview .jstree-closed ins {
+	cursor: pointer;
+}
+.treeview a.likeText {
+	color: #000;
+}

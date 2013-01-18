@@ -1,0 +1,27 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
+{% block content %}
+<h1>{% trans from 'admin' %}fulgurio.lightcms.pages.legend{% endtrans %}</h1>
+<div class="row clearfix">
+	<div class="span4 treeview">
+{% if selectedPage is defined %}
+{% include 'FulgurioLightCMSBundle:AdminPage:tree.html.twig' with { 'pages': pageRoot, 'selectedPage' : selectedPage } %}
+{% else %}
+{% include 'FulgurioLightCMSBundle:AdminPage:tree.html.twig' with { 'pages': pageRoot } %}
+{% endif %}
+	</div>
+	<div class="span8">
+{% block pageContent%}
+		<p>{% trans from 'admin' %}fulgurio.lightcms.pages.text_info{% endtrans %}</p>
+{% endblock %}
+	</div>
+</div>
+<script>
+$(".treeview").jstree({
+	"plugins" : [
+		"html_data",
+		"cookies",
+	],
+});
+</script>
+{% endblock %}

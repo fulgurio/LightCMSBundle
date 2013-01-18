@@ -1,4 +1,12 @@
-SlugableUrlPage:
+LightCMS_Admin_Page:
+    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_page.yml"
+    prefix:   /admin/pages
+
+LightCMS_Admin_Homepage:
+    pattern:   /admin
+    defaults: { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
+
+LightCMS_Page:
     pattern:  /{fullpath}
     defaults: { _controller: FulgurioLightCMSBundle:FrontPage:show }
     requirements:

@@ -1,0 +1,15 @@
+<form action="{{ action }}" method="post">
+	<p>{{ confirmationMessage }}</p>
+	<p>
+		<button type="submit" name="confirm" class="btn btn-primary btn-large" value="yes">{% trans from 'admin' %}fulgurio.lightcms.yes{% endtrans %}</button>
+		<button type="submit" name="confirm" class="btn btn-large popupClose" value="no">{% trans from 'admin' %}fulgurio.lightcms.no{% endtrans %}</button>
+	</p>
+</form>
+<script>
+$('.popupClose').click(function(e) {
+	if ($.nmTop()) {
+		e.preventDefault();
+		$.nmTop().close();
+	}
+});
+</script>

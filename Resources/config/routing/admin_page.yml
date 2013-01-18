@@ -1,0 +1,29 @@
+AdminPagesAdd:
+    pattern:  /add
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:add }
+
+AdminPagesAddChild:
+    pattern:  /{parentId}/add
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:add }
+
+AdminPagesSelect:
+    pattern:  /{pageId}
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:select }
+
+AdminPagesEdit:
+    pattern:  /{pageId}/edit
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:edit }
+
+AdminPagesRemove:
+    pattern:  /{pageId}/remove
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:remove }
+
+AdminPagePosition:
+    pattern:  /position/
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:changePosition }
+    requirements:
+        _method: POST
+
+AdminPages:
+    pattern:  /
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:list }
