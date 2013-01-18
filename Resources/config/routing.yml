@@ -1,6 +1,11 @@
+LightCMS_Admin_Upload_File:
+    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_upload_file.yml"
+    prefix:   /admin/
+
 LightCMS_Admin_Page:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_page.yml"
     prefix:   /admin/pages
+
 
 LightCMS_Admin_Homepage:
     pattern:   /admin

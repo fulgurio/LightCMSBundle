@@ -33,3 +33,7 @@ fulgurio:
         legend:                   Edit page
         success_msg:              Page has been modified !
       delete_confirm_message:     Are you sure to delete "%title%" ?
+    upload_file:
+      send_button:                Send
+      picture_label:              Picture file
+      file_must_be_picture_error: The file must be a picture

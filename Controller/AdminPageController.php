@@ -20,6 +20,7 @@ class AdminPageController extends Controller
      */
     public function listAction()
     {
+        $this->get('security.context')->isGranted('ROLE_ADMIN');
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
         return $this->render('FulgurioLightCMSBundle:AdminPage:list.html.twig', array(
             'pageRoot' => array($pageRoot)

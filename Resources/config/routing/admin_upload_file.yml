@@ -1,0 +1,3 @@
+AdminTinyMCEFileBrowser:
+    pattern:  /pages/filebrowser
+    defaults: { _controller: FulgurioLightCMSBundle:AdminUploadFile:tinyMCEBrowser }
