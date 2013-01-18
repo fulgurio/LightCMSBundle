@@ -51,7 +51,15 @@ class UploadedFile
      */
     public function getUploadRootDir()
     {
-        if (is_dir(__DIR__ . '/../../../../web/'))
+        if (is_dir(__DIR__ . '/../../../../../web/'))
+        {
+            if (!is_dir(__DIR__ . '/../../../../../web/' . $this->getUploadDir()))
+            {
+                mkdir(__DIR__ . '/../../../../../web/' . $this->getUploadDir(), 0777, TRUE);
+            }
+            return __DIR__ . '/../../../../../web/' . $this->getUploadDir();
+        }
+        else if (is_dir(__DIR__ . '/../../../../web/'))
         {
             if (!is_dir(__DIR__ . '/../../../../web/' . $this->getUploadDir()))
             {
