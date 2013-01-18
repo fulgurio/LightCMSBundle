@@ -20,7 +20,6 @@ class AdminPageController extends Controller
      */
     public function listAction()
     {
-        $this->get('security.context')->isGranted('ROLE_ADMIN');
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
         return $this->render('FulgurioLightCMSBundle:AdminPage:list.html.twig', array(
             'pageRoot' => array($pageRoot)
@@ -97,6 +96,7 @@ class AdminPageController extends Controller
             return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $page->getId())));
         }
         $options['form'] = $form->createView();
+        $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
         $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:add.html.twig';
         return $this->render($templateName, $options);
     }

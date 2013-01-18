@@ -22,6 +22,8 @@ class FulgurioLightCMSExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('fulgurio_light_cms.tiny_mce', $config['tiny_mce']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
