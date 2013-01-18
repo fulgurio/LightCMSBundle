@@ -8,6 +8,7 @@ use Fulgurio\LightCMSBundle\Form\AdminPageHandler;
 use Fulgurio\LightCMSBundle\Form\AdminPageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -109,7 +110,7 @@ class AdminPageController extends Controller
         $page = $this->getPage($pageId);
         if ($page->getSlug() == '')
         {
-        	throw new AccessDeniedException();
+            throw new AccessDeniedException();
         }
         // @todo : add config to allow children recursive removing
         $request = $this->container->get('request');
@@ -129,6 +130,68 @@ class AdminPageController extends Controller
             'action' => $this->generateUrl('AdminPagesRemove', array('pageId' => $pageId)),
             'confirmationMessage' => $this->get('translator')->trans('fulgurio.lightcms.pages.delete_confirm_message', array('%title%' => $page->getTitle()), 'admin'),
         ));
+    }
+
+    /**
+     * Change page position using ajax tree
+     * @return type
+     * @todo: check if we are owner ?
+     * @throws AccessDeniedException
+     */
+    public function changePositionAction()
+    {
+        $request = $this->get('request');
+        if ($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getEntityManager();
+            $pageRepository = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page');
+            $page = $this->getPage($request->request->get('pageId'));
+            $parentId = $request->request->get('parentId');
+            $position = $request->request->get('position');
+            if ($parentId != $page->getParent()->getId())
+            {
+                $pageRepository->downPagesPosition($parentId, $position);
+                $pageRepository->upPagesPosition($page->getParent(), $page->getPosition() + 1);
+                $page->setParent($pageRepository->find($parentId));
+                $models = $this->container->getParameter('fulgurio_light_cms.models');
+                $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\AdminPageHandler';
+                $formHandler = new $formHandlerClassName();
+                $formHandler->setDoctrine($this->getDoctrine());
+                $formHandler->makeUrl($page);
+                if ($page->hasChildren())
+                {
+                    foreach ($page->getChildren() as $children)
+                    {
+                        if ($children->getModel() != 'redirect')
+                        {
+                            $formHandler->makeUrl($children);
+                            $em->persist($children);
+                        }
+                    }
+                }
+                $em->persist($page);
+                $em->flush();
+            }
+            else
+            {
+                if ($position > $page->getPosition())
+                {
+                    $pageRepository->upPagesPosition($page->getParent(), $page->getPosition() + 1, $position - 1);
+                    --$position;
+                }
+                else
+                {
+                    $pageRepository->downPagesPosition($page->getParent(), $position, $page->getPosition() - 1);
+                }
+            }
+            $page->setPosition($position);
+            $em->persist($page);
+            $em->flush();
+            $response = new Response(json_encode(array('code' => 42)));
+            $response->headers->set('Content-Type', 'application/json');
+            return ($response);
+        }
+        throw new AccessDeniedException();
     }
 
     /**

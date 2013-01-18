@@ -13,6 +13,52 @@ use Doctrine\ORM\EntityRepository;
 class PageRepository extends EntityRepository
 {
     /**
+     * Up pages position
+     *
+     * @param integer $parentId
+     * @param integer $position
+     * @param integer $positionLimit
+     */
+    public function upPagesPosition($parentId, $position, $positionLimit = NULL)
+    {
+        if (is_null($positionLimit))
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.parent=:parentId');
+        }
+        else
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId');
+            $query->setParameter('positionLimit', $positionLimit);
+        }
+        $query->setParameter('position', $position);
+        $query->setParameter('parentId', $parentId);
+        $query->getResult();
+    }
+
+    /**
+     * Down pages position
+     *
+     * @param integer $parentId
+     * @param integer $position
+     * @param integer $positionLimit
+     */
+    public function downPagesPosition($parentId, $position, $positionLimit = NULL)
+    {
+        if (is_null($positionLimit))
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.parent=:parentId');
+        }
+        else
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId');
+            $query->setParameter('positionLimit', $positionLimit);
+        }
+        $query->setParameter('position', $position);
+        $query->setParameter('parentId', $parentId);
+        $query->getResult();
+    }
+
+    /**
      * Get next position in tree
      *
      * @param integer $parentId

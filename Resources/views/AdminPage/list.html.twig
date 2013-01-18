@@ -1,4 +1,8 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+{% block javascriptTop %}
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.jstree.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.cookie.js') }}"></script>
+{% endblock %}
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
 {% block content %}
 <h1>{% trans from 'admin' %}fulgurio.lightcms.pages.legend{% endtrans %}</h1>
@@ -18,10 +22,43 @@
 </div>
 <script>
 $(".treeview").jstree({
-	"plugins" : [
-		"html_data",
-		"cookies",
-	],
-});
+		"plugins" : [
+			"html_data",
+			"dnd",
+			"cookies",
+		],
+	})
+	.bind("move_node.jstree", function (e, data) {
+		var parentId = data.rslt.o.parent().parent().attr('data-id');
+		var pageId = data.rslt.o.attr('data-id');
+{#		switch (data.rslt.p) {
+			case 'inside':
+				console.log('on change de parent #' + data.rslt.o.parent().parent().attr('data-id') + ' avec un position = 1');
+				// en gros, cela revient à :
+				// - deplacer vers le haut les pages suivantes du même parent
+				// - changer de parent
+				// - mettre la position à 1
+				break;
+			case 'after':
+			case 'before':
+				console.log('Parent #' + data.rslt.o.parent().parent().attr('data-id') + ' avec un position = ' + (data.rslt.cp + 1));
+				break;
+			default:
+				console.log('cas non géré : ' + data.rslt.p);
+		}#}
+		$.ajax({
+			async : false,
+			type: 'POST',
+			url: "{{ path('AdminPagePosition') }}",
+			data : {
+				"parentId" : parentId,
+				"pageId" : pageId,
+				"position" : data.rslt.cp + 1,
+			},
+			success : function (r) {
+				//location.reload();
+			}
+		});
+	});
 </script>
 {% endblock %}
