@@ -20,7 +20,7 @@
 			<nav>
 				<ul class="nav nav-tabs">
 {% for child in pageRoot.children %}
-					<li{%   if app.request.attributes.get('fullpath') == child.fullpath %} class="active"{% endif %}><a href="{{ child.fullpath }}">{{ child.title }}</a></li>
+					<li{% if app.request.attributes.get('fullpath') == child.fullpath %} class="active"{% endif %}><a href="{{ path('LightCMS_Page', { fullpath: child.fullpath}) }}">{{ child.title }}</a></li>
 {% endfor %}
 				</ul>
 			</nav>
@@ -31,7 +31,7 @@
 					<ul class="breadcrumb">
 {% if parents is not null %}
 {%   for parent in parents %}
-						<li class="active"><a href="/app_dev.php/{{ parent.fullpath }}">{{ parent.title }}</a> <span class="divider">/</span></li>
+						<li class="active"><a href="{{ path('LightCMS_Page', { fullpath: parent.fullpath}) }}">{{ parent.title }}</a> <span class="divider">/</span></li>
 {%   endfor %}
 {% endif %}
 						<li>{{ page.title }}</li>
