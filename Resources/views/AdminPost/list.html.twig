@@ -1,0 +1,44 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.posts.title{% endtrans %}{% endblock %}
+{% block content %}
+<h1 class="pull-left">{% trans from 'admin' %}fulgurio.lightcms.posts.legend{% endtrans %}</h1>
+<a href="{{ path('AdminPostsAdd') }}" class="btn pull-right clearfix">{% trans from 'admin' %}fulgurio.lightcms.posts.add_post_button{% endtrans %}</a>
+<br class="clearfix" style="clear: both"/>
+{%  if posts is empty %}
+<p>{% trans from 'admin' %}fulgurio.lightcms.posts.no_post{% endtrans %}</p>
+{% else %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+{#}			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.title_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
+			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.published_at_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
+			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.status_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
+#}
+			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</th>
+			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.published_at_label{% endtrans %}</th>
+			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</th>
+			<th></th>
+		</tr>
+	</thead>
+{#}	<tfoot>
+		<tr>
+			<td colspan="4">{{ posts.render('FulgurioSocialNetworkBundle::adminPagination.html.twig')|raw }}</td>
+		</tr>
+	</tfoot>#}
+	<tbody>
+{%   for post in posts %}
+		<tr>
+			<td>{{ post.title }}</td>
+			<td>{{ post.createdat|date('fulgurio.lightcms.datetime_format'|trans({}, 'admin')) }}</td>
+			<td>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ post.status)|trans({}, 'admin') }}</td>
+			<td>
+				<a href="{{ path('LightCMS_Page', {fullpath: post.fullpath}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.posts.view_button{% endtrans %}" target="_blank"><i class="icon-eye-open"></i></a>
+				<a href="{{ path('AdminPostsEdit', {pageId: post.id}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.posts.edit_button{% endtrans %}"><i class=" icon-pencil"></i></a>
+				<a href="{{ path('AdminPostsRemove', {pageId: post.id}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.posts.remove_button{% endtrans %}" data-toggle="modal" data-target="#myModal"><i class="icon-trash"></i></a>
+			</td>
+		</tr>
+{%   endfor %}
+{% endif %}
+	</tbody>
+</table>
+{% endblock %}

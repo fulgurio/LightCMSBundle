@@ -1,12 +1,16 @@
 fulgurio:
   lightcms:
     lightcms_title:                 LightCMS
+    save:                           Save
     cancel:                         Cancel
     yes:                            Yes
     no:                             No
     popup_confirmation:             Popup
+    datetime_format:                Y-m-d
     header_link:
       pages_link:                   Pages
+      posts_link:                   Posts
+    page_not_found:                 Page not found
     pages:
       title:                        Pages admin
       legend:                       Pages
@@ -19,20 +23,40 @@ fulgurio:
       add_form:
         title:                      Add a new child page admin
         legend:                     Add a new child page
-        title_label:                Title
-        content_label:              Content
-        status_label:               Status
         status:
           draft:                    Draft
           published:                Published
+        title_label:                Title
+        content_label:              Content
+        status_label:               Status
+        published_at_label:         Published at
         meta_keywords_label:        Meta keywords
         meta_description_label:     Meta description
-        submit_button:              Save
         success_msg:                Page has been created !
       edit_form:
         title:                      Edit page admin
         legend:                     Edit page
         success_msg:                Page has been modified !
+      delete_confirm_message:       Are you sure to delete "%title%" ?
+    post_not_found:                 Post not found
+    posts:
+      posts_list_page_not_found:    Posts list page is not found, please load it with fixture or create it manually
+      title:                        Posts admin
+      legend:                       Posts
+      add_post_button:              Add new post
+      no_post:                      No post
+      edit_button:                  Edit
+      remove_button:                Remove
+      view_button:                  View
+      add_form:
+        title:                      Add a new post admin
+        legend:                     Add a new post
+        success_msg:                Post has been created !
+        published_at_label:         Published at
+      edit_form:
+        title:                      Edit post admin
+        legend:                     Edit post
+        success_msg:                Post has been modified !
       delete_confirm_message:       Are you sure to delete "%title%" ?
     upload_file:
       send_button:                  Send

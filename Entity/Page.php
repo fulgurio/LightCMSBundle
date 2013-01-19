@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Page
 {
     /**
+     * @var string $page_type
+     */
+    protected $page_type = 'page';
+
+    /**
      * Get meta value of a given meta key
      *
      * @param string $metaKey
@@ -80,6 +85,16 @@ class Page
     private $model;
 
     /**
+     * @var datetime $created_at
+     */
+    private $created_at;
+
+    /**
+     * @var datetime $updated_at
+     */
+    private $updated_at;
+
+    /**
      * @var Fulgurio\LightCMSBundle\Entity\Page
      */
     private $children;
@@ -99,15 +114,35 @@ class Page
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set page_type
+     *
+     * @param string $pageType
+     */
+    public function setPageType($pageType)
+    {
+        $this->page_type = $pageType;
+    }
+
+    /**
+     * Get page_type
+     *
+     * @return string 
+     */
+    public function getPageType()
+    {
+        return $this->page_type;
     }
 
     /**
@@ -123,7 +158,7 @@ class Page
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -143,7 +178,7 @@ class Page
     /**
      * Get fullpath
      *
-     * @return string
+     * @return string 
      */
     public function getFullpath()
     {
@@ -163,7 +198,7 @@ class Page
     /**
      * Get slug
      *
-     * @return string
+     * @return string 
      */
     public function getSlug()
     {
@@ -183,7 +218,7 @@ class Page
     /**
      * Get position
      *
-     * @return integer
+     * @return integer 
      */
     public function getPosition()
     {
@@ -203,7 +238,7 @@ class Page
     /**
      * Get status
      *
-     * @return string
+     * @return string 
      */
     public function getStatus()
     {
@@ -223,7 +258,7 @@ class Page
     /**
      * Get content
      *
-     * @return text
+     * @return text 
      */
     public function getContent()
     {
@@ -243,11 +278,51 @@ class Page
     /**
      * Get model
      *
-     * @return string
+     * @return string 
      */
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 
     /**
@@ -263,7 +338,7 @@ class Page
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return Doctrine\Common\Collections\Collection 
      */
     public function getChildren()
     {
@@ -283,7 +358,7 @@ class Page
     /**
      * Get meta
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return Doctrine\Common\Collections\Collection 
      */
     public function getMeta()
     {
@@ -303,7 +378,7 @@ class Page
     /**
      * Get parent
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page
+     * @return Fulgurio\LightCMSBundle\Entity\Page 
      */
     public function getParent()
     {

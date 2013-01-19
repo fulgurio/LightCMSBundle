@@ -1,0 +1,16 @@
+{% extends 'FulgurioLightCMSBundle::base.html.twig' %}
+{% block content %}
+			<h1>{{ currentPage.title }}</h1>
+{% if pages is not empty %}
+			<ul class="unstyled">
+{%   for page in pages %}
+				<li>
+					<article>
+						<h1>{{ page.title }}</h1>
+{{ page.content|raw }}
+					</article>
+				</li>
+{%   endfor %}
+			</ul>
+{% endif %}
+{% endblock %}

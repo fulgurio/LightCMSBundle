@@ -8,6 +8,9 @@ Fulgurio\LightCMSBundle\Entity\Page:
       id: true
       generator:
         strategy: AUTO
+    page_type:
+      type: string
+      length: 8
     title:
       type: string
       length: 255
@@ -31,11 +34,23 @@ Fulgurio\LightCMSBundle\Entity\Page:
       type: string
       length: 255
       nullable: true
+    created_at:
+      type: datetime
+      gedmo:
+        timestampable:
+          on: create
+      nullable: true
+    updated_at:
+      type: datetime
+      gedmo:
+        timestampable:
+          on: update
+      nullable: true
   oneToMany:
     children:
       targetEntity: Page
       mappedBy: parent
-#      cascade: [ remove ]
+      cascade: [ remove ]
       orderBy:
         position: ASC
     meta:

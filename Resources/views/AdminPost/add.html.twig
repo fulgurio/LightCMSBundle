@@ -2,14 +2,13 @@
 {% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
 {% block content %}
 {% if pageId is defined %}
-{%   set legend = 'fulgurio.lightcms.pages.edit_form.legend' %}
-{%   set action = path('AdminPagesEdit', { 'pageId' : pageId} ) %}
-{%   set cancelPath = path('AdminPagesSelect', { 'pageId' : pageId} ) %}
+{%   set legend = 'fulgurio.lightcms.posts.edit_form.legend' %}
+{%   set action = path('AdminPostsEdit', { 'pageId' : pageId} ) %}
 {% else %}
-{%   set legend = 'fulgurio.lightcms.pages.add_form.legend' %}
-{%   set action = path('AdminPagesAddChild', { 'parentId': parent.id }) %}
-{%   set cancelPath = path('AdminPagesSelect', { 'pageId' : parent.id} ) %}
+{%   set legend = 'fulgurio.lightcms.posts.add_form.legend' %}
+{%   set action = path('AdminPostsAdd') %}
 {% endif %}
+{%   set cancelPath = path('AdminPosts') %}
 <form action="{{ action }}" method="post">
 	<fieldset>
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
@@ -38,24 +37,12 @@
 					<label class="control-label" for="p_status">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</label>
 					<div class="controls">
 						<select name="{{ form.getChild('status').get('full_name') }}" class="input-xlarge" id="p_status" >
-
 {% for choice in form.getChild('status').get('choices') %}
 							<option value="{{ choice }}"{% if choice in form.getChild('status').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ choice)|trans({}, 'admin') }}</option>
 {% endfor %}
 						</select>
 					</div>
 				</div>
-				<noscript>
-					<div class="control-group">
-						<label class="control-label" for="p_position">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.position_label{% endtrans %}</label>
-						<div class="controls">
-							<input type="number" id="p_position" class="input-small" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />
-						</div>
-					</div>
-				</noscript>
-				<script>
-document.write('<input type="hidden" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />');
-				</script>
 			</div>
 			<div class="well span4 pull-right">
 				<div class="control-group">
@@ -73,7 +60,6 @@ document.write('<input type="hidden" name="{{ form.getChild('position').get('ful
 			</div>
 		</div>
 		<div class="form-actions">
-			<input type="hidden" name="{{ form.getChild('parent').get('full_name') }}" value="{{ form.getChild('parent').get('value') }}" />
 			<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
 			<button type="submit" class="btn btn-primary">{% trans from 'admin' %}fulgurio.lightcms.save{% endtrans %}</button>
 			<a href="{{ cancelPath }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.cancel{% endtrans %}</a>

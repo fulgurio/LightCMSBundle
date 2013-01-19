@@ -3,7 +3,6 @@
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
-use Fulgurio\LightCMSBundle\Entity\PageMenu;
 use Fulgurio\LightCMSBundle\Form\AdminPageHandler;
 use Fulgurio\LightCMSBundle\Form\AdminPageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +19,7 @@ class AdminPageController extends Controller
      */
     public function listAction()
     {
-        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
+        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
         return $this->render('FulgurioLightCMSBundle:AdminPage:list.html.twig', array(
             'pageRoot' => array($pageRoot)
         ));
@@ -33,7 +32,7 @@ class AdminPageController extends Controller
      */
     public function selectAction($pageId)
     {
-        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
+        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
         $page = $this->getPage($pageId);
         return $this->render('FulgurioLightCMSBundle:AdminPage:page.html.twig', array(
             'pageRoot' => array($pageRoot),
@@ -117,13 +116,13 @@ class AdminPageController extends Controller
         if ($request->request->get('confirm') === 'yes')
         {
             if ($this->container->getParameter('fulgurio_light_cms.allow_recursive_page_delete') == FALSE
-            		&& $page->hasChildren())
+                    && $page->hasChildren())
             {
-            	$this->get('session')->setFlash(
-            			'error',
-            			$this->get('translator')->trans('fulgurio.lightcms.pages.recursive_remove_not_allowed', array(), 'admin')
-            	);
-            	return new RedirectResponse($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
+                $this->get('session')->setFlash(
+                        'error',
+                        $this->get('translator')->trans('fulgurio.lightcms.pages.recursive_remove_not_allowed', array(), 'admin')
+                );
+                return new RedirectResponse($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
             }
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($page);
@@ -143,8 +142,8 @@ class AdminPageController extends Controller
 
     /**
      * Change page position using ajax tree
+     *
      * @return type
-     * @todo: check if we are owner ?
      * @throws AccessDeniedException
      */
     public function changePositionAction()
@@ -211,7 +210,7 @@ class AdminPageController extends Controller
      */
     private function getPage($pageId)
     {
-        if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('id' => $pageId)))
+        if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('id' => $pageId, 'page_type' => 'page')))
         {
             throw new NotFoundHttpException(
                 $this->get('translator')->trans('fulgurio.lightcms.page_not_found')

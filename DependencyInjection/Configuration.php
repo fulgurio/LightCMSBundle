@@ -52,6 +52,22 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+            ->children()
+                ->arrayNode('posts')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('fullpath')
+                            ->defaultValue('posts')
+                        ->end()
+                        ->scalarNode('format')
+                            ->defaultValue('Y/m/d')
+                        ->end()
+                        ->scalarNode('nb_per_page')
+                            ->defaultValue(10)
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
         ;
         return $treeBuilder;
     }

@@ -7,12 +7,21 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class BeforeListener
 {
     private $doctrine;
+
+    /**
+     * @var \AppKernel
+     */
     private $kernel;
     private $page;
+
+    /**
+     * @var SecurityContext
+     */
     private $securityContext;
 
 
@@ -21,9 +30,9 @@ class BeforeListener
      *
      * @param RegistryInterface $doctrine
      * @param $kernel
-     * @$param $securityContext
+     * @param SecurityContext $securityContext
      */
-    public function __construct(RegistryInterface $doctrine, $kernel, $securityContext)
+    public function __construct(RegistryInterface $doctrine, \AppKernel $kernel, SecurityContext $securityContext)
     {
         $this->doctrine = $doctrine;
         $this->kernel = $kernel;
@@ -59,11 +68,14 @@ class BeforeListener
         {
             if ($controller[0] instanceof FrontPageController)
             {
-                if (!($this->page = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath($fullpath)))
+                if (!($this->page = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => $fullpath))))
                 {
                     throw new NotFoundHttpException();
                 }
-                if ($this->page->getStatus() == 'draft')
+                if ($this->page->getStatus() === 'draft' && !(
+                         $this->securityContext->isGranted('ROLE_ADMIN')
+                         && !is_null($event->getRequest()->server->get('HTTP_REFERER'))
+                ))
                 {
                     throw new NotFoundHttpException();
                 }

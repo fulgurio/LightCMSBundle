@@ -2,14 +2,21 @@ LightCMS_Admin_Upload_File:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_upload_file.yml"
     prefix:   /admin/
 
-LightCMS_Admin_Page:
+LightCMS_Admin_Pages:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_page.yml"
     prefix:   /admin/pages
 
+LightCMS_Admin_Posts:
+    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_post.yml"
+    prefix:   /admin/posts
 
 LightCMS_Admin_Homepage:
     pattern:   /admin
     defaults: { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
+
+LightCMS_Posts:
+    pattern:   /posts/{pageNb}
+    defaults: { _controller: FulgurioLightCMSBundle:FrontPostPage:list, pageNb: 0 }
 
 LightCMS_Page:
     pattern:  /{fullpath}

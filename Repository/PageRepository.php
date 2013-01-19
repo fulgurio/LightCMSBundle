@@ -3,6 +3,7 @@
 namespace Fulgurio\LightCMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\Paginator;
 
 /**
  * PageRepository
@@ -23,13 +24,14 @@ class PageRepository extends EntityRepository
     {
         if (is_null($positionLimit))
         {
-            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.parent=:parentId');
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.parent=:parentId AND p.page_type=:pageType');
         }
         else
         {
-            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId');
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position-1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId AND p.page_type=:pageType');
             $query->setParameter('positionLimit', $positionLimit);
         }
+        $query->setParameter('pageType', 'page');
         $query->setParameter('position', $position);
         $query->setParameter('parentId', $parentId);
         $query->getResult();
@@ -46,13 +48,14 @@ class PageRepository extends EntityRepository
     {
         if (is_null($positionLimit))
         {
-            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.parent=:parentId');
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.parent=:parentId AND p.page_type=:pageType');
         }
         else
         {
-            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId');
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:Page p SET p.position=p.position+1 WHERE p.position>=:position AND p.position<=:positionLimit AND p.parent=:parentId AND p.page_type=:pageType');
             $query->setParameter('positionLimit', $positionLimit);
         }
+        $query->setParameter('pageType', 'page');
         $query->setParameter('position', $position);
         $query->setParameter('parentId', $parentId);
         $query->getResult();
@@ -66,9 +69,24 @@ class PageRepository extends EntityRepository
      */
     public function getNextPosition($parentId)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT MAX(p.position) FROM FulgurioLightCMSBundle:Page p WHERE p.parent=:parentId');
+        $query = $this->getEntityManager()->createQuery('SELECT MAX(p.position) FROM FulgurioLightCMSBundle:Page p WHERE p.parent=:parentId AND p.page_type=:pageType');
+        $query->setParameter('pageType', 'page');
         $query->setParameter('parentId', $parentId);
         return ($query->getSingleScalarResult() + 1);
     }
 
+    /**
+     * Find all posts
+     *
+     * @param $paginator
+     * @param integer $nbPostPerPage
+     * @return ArrayCollection
+     */
+    public function findAllPosts(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.page_type=:pageType ORDER BY p.created_at DESC');
+        $query->setParameter('pageType', 'post');
+        return ($query->getResult());
+//         return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
+    }
 }

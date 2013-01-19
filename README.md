@@ -21,13 +21,15 @@ Installation is not so hard
 2. Configure the Autoloader
 3. Enable the Bundle
 4. Import routing
-5. Try it !
+5. Configure your security.yml file
+6. Try it !
 
 That's easy !
 
-### Step 1: Download DoctrineFixturesBundle
+### Step 1: Download FulgurioLightCMSBundle and dependent bundles
 
-First, you need to install [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization.
+First, you need to install [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization
+and [KnpPaginator bundle.](https://github.com/KnpLabs/KnpPaginatorBundle)
 
 **Using the vendors script**
 
@@ -88,7 +90,18 @@ FulgurioLightCMSBundle:
     prefix:   /
 ```
 
-### Step 5: Try it !
+### Step 5: Configure your security.yml file
+
+You need to set on the anonymous access, and to limit admin access. Edit config/security.yml file and put the following configuration :
+```yaml
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+### Step 6: Try it !
 
 Just before to try, don't forget to clear your cache. And if everything's working well, you will see the homepage
 
