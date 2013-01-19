@@ -16,10 +16,9 @@ class FrontPageController extends Controller
     public function showAction()
     {
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
-        $request = $this->container->get('request');
         return $this->render('FulgurioLightCMSBundle:FrontPage:standard.html.twig', array(
             'pageRoot' => $pageRoot,
-            'page' => $this->page
+            'currentPage' => $this->page
         ));
     }
 
