@@ -100,6 +100,7 @@ You need to set on the anonymous access, and to limit admin access. Edit config/
             anonymous: ~
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+```
 
 ### Step 6: Try it !
 
