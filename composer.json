@@ -1,0 +1,29 @@
+{
+    "name": "fulgurio/light-cms-bundle",
+    "type": "symfony-bundle",
+    "description": "Light CMS using Symfony 2 framework",
+    "keywords": ["content management system", "cms", "blog"],
+    "homepage": "http://github.com/fulgurio/LightCMSBundle",
+    "license": "GPL",
+
+    "authors": [
+        {
+            "name": "Fulgurio",
+            "homepage": "http://fulgurio.net"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "2.*,<2.3",
+         "doctrine/doctrine-fixtures-bundle": "dev-master"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Fulgurio\\LightCMSBundle": ""
+        }
+    },
+
+    "target-dir": "Fulgurio/LightCMSBundle"
+}
