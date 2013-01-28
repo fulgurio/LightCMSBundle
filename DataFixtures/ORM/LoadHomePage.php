@@ -15,8 +15,11 @@ class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedF
      */
     public function load(ObjectManager $manager)
     {
+        $currentDate = new \DateTime();
         $homepage = new Page();
         $homepage->setPageType('page');
+        $homepage->setCreatedAt($currentDate);
+        $homepage->setUpdatedAt($currentDate);
         $homepage->setTitle('Home');
         $homepage->setContent('This is a sample text for initialisation of Light CMS');
         $homepage->setSlug('');

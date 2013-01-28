@@ -15,8 +15,11 @@ class LoadPostsData extends AbstractFixture implements FixtureInterface, Ordered
      */
     public function load(ObjectManager $manager)
     {
+        $currentDate = new \DateTime();
         $postsList = new Page();
         $postsList->setPageType('page');
+        $homepage->setCreatedAt($currentDate);
+        $homepage->setUpdatedAt($currentDate);
         $postsList->setTitle('Posts list');
         $postsList->setContent('');
         $postsList->setSlug('posts');
