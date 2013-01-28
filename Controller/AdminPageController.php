@@ -78,7 +78,7 @@ class AdminPageController extends Controller
     private function createPage($page, $options)
     {
         $form = $this->createForm(new AdminPageType(), $page);
-        $formHandler = new AdminPageHandler();
+-       $formHandler = new AdminPageHandler();
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));
         $formHandler->setDoctrine($this->getDoctrine());
@@ -96,7 +96,7 @@ class AdminPageController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
-        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:add.html.twig';
+        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:PageAdd.html.twig';
         return $this->render($templateName, $options);
     }
 
@@ -165,18 +165,7 @@ class AdminPageController extends Controller
                 $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\AdminPageHandler';
                 $formHandler = new $formHandlerClassName();
                 $formHandler->setDoctrine($this->getDoctrine());
-                $formHandler->makeUrl($page);
-                if ($page->hasChildren())
-                {
-                    foreach ($page->getChildren() as $children)
-                    {
-                        if ($children->getModel() != 'redirect')
-                        {
-                            $formHandler->makeUrl($children);
-                            $em->persist($children);
-                        }
-                    }
-                }
+                $formHandler->makeFullpath($page);
                 $em->persist($page);
                 $em->flush();
             }
