@@ -59,6 +59,7 @@ class AdminPageHandler
                 // New page
                 if ($page->getId() == 0)
                 {
+                    $page->setCreatedAt(new \DateTime());
                     if ($page->getPosition() == NULL)
                     {
                         $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
@@ -66,6 +67,7 @@ class AdminPageHandler
                 }
                 $page->setSlug($this->makeSlug($page->getTitle()));
                 $this->makeFullpath($page);
+                $page->setUpdatedAt(new \DateTime());
                 $em->persist($page);
                 $em->flush();
                 return (TRUE);
@@ -120,7 +122,6 @@ class AdminPageHandler
 
     /**
      * Update page metas
-     * Note: we never remove meta from db
      *
      * @param Page $page
      * @param array $data

@@ -8,6 +8,10 @@ Fulgurio\LightCMSBundle\Entity\Page:
       id: true
       generator:
         strategy: AUTO
+    model:
+      type: string
+      length: 16
+      nullable: true
     page_type:
       type: string
       length: 8
@@ -30,21 +34,11 @@ Fulgurio\LightCMSBundle\Entity\Page:
     content:
       type: text
       nullable: true
-    model:
-      type: string
-      length: 255
-      nullable: true
     created_at:
       type: datetime
-      gedmo:
-        timestampable:
-          on: create
       nullable: true
     updated_at:
       type: datetime
-      gedmo:
-        timestampable:
-          on: update
       nullable: true
   oneToMany:
     children:
