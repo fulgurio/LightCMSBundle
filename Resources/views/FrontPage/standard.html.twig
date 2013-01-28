@@ -7,7 +7,7 @@
 					<ul class="breadcrumb">
 {% if parents is not null %}
 {%   for parent in parents %}
-						<li class="active"><a href="{{ path('LightCMS_Page', { fullpath: parent.fullpath}) }}">{{ parent.title }}</a> <span class="divider">/</span></li>
+						<li class="active"><a href="{{ pagePath(parent) }}">{{ parent.title }}</a> <span class="divider">/</span></li>
 {%   endfor %}
 {% endif %}
 						<li>{{ currentPage.title }}</li>

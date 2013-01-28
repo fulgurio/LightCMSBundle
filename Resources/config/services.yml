@@ -11,3 +11,5 @@ services:
         class: Fulgurio\LightCMSBundle\Extension\LightCMSTwigExtension
         tags:
             -  { name: twig.extension }
+        arguments:
+            router: "@router"

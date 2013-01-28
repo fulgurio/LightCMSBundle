@@ -2,9 +2,28 @@
 namespace Fulgurio\LightCMSBundle\Extension;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LightCMSTwigExtension extends \Twig_Extension
 {
+    /**
+     * Routing generator object
+     *
+     * @var UrlGeneratorInterface
+     */
+    private $generator;
+
+
+    /**
+     * Constructor
+     *
+     * @param UrlGeneratorInterface $generator
+     */
+    public function __construct(UrlGeneratorInterface $generator)
+    {
+    	$this->generator = $generator;
+    }
+
     /**
      * (non-PHPdoc)
      * @see Twig_Extension::getFunctions()
@@ -12,8 +31,20 @@ class LightCMSTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'dataForBreadcrumb' =>        new \Twig_Function_Method($this, 'getDataForBreadcrumb')
+            'dataForBreadcrumb' => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
+            'pagePath'          => new \Twig_Function_Method($this, 'getPagePath'),
         );
+    }
+
+    /**
+     * Get path, like path twig extension, but more extensible (for futur)
+     *
+     * @param Page $page
+     * @return string
+     */
+    public function getPagePath(Page $page)
+    {
+        return $this->generator->generate('LightCMS_Page', array('fullpath' => $page->getFullpath()), false);
     }
 
     /**
