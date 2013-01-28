@@ -11,7 +11,7 @@ LightCMS_Admin_Posts:
     prefix:   /admin/posts
 
 LightCMS_Admin_Homepage:
-    pattern:   /admin
+    pattern:   /admin/
     defaults: { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
 
 LightCMS_Posts:
