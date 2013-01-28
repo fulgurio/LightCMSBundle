@@ -78,7 +78,7 @@ class AdminPageController extends Controller
     private function createPage($page, $options)
     {
         $form = $this->createForm(new AdminPageType(), $page);
--       $formHandler = new AdminPageHandler();
+        $formHandler = new AdminPageHandler();
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));
         $formHandler->setDoctrine($this->getDoctrine());
@@ -161,9 +161,7 @@ class AdminPageController extends Controller
                 $pageRepository->downPagesPosition($parentId, $position);
                 $pageRepository->upPagesPosition($page->getParent(), $page->getPosition() + 1);
                 $page->setParent($pageRepository->find($parentId));
-                $models = $this->container->getParameter('fulgurio_light_cms.models');
-                $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\AdminPageHandler';
-                $formHandler = new $formHandlerClassName();
+                $formHandler = new AdminPageHandler();
                 $formHandler->setDoctrine($this->getDoctrine());
                 $formHandler->makeFullpath($page);
                 $em->persist($page);
