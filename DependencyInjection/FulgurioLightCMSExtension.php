@@ -26,6 +26,17 @@ class FulgurioLightCMSExtension extends Extension
         $container->setParameter('fulgurio_light_cms.tiny_mce', $config['tiny_mce']);
         $container->setParameter('fulgurio_light_cms.posts', $config['posts']);
 
+        if (isset($config['models']))
+        {
+            $config['models']['standard'] = array(
+                'name' => 'standard',
+                'front' => array(
+                    'template' => 'FulgurioLightCMSBundle:FrontPage:standard.html.twig'
+                )
+            );
+            $container->setParameter('fulgurio_light_cms.models', $config['models']);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

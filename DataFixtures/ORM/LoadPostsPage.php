@@ -18,6 +18,7 @@ class LoadPostsData extends AbstractFixture implements FixtureInterface, Ordered
         $currentDate = new \DateTime();
         $postsList = new Page();
         $postsList->setPageType('page');
+        $postsList->setModel('standard');
         $postsList->setCreatedAt($currentDate);
         $postsList->setUpdatedAt($currentDate);
         $postsList->setTitle('Posts list');

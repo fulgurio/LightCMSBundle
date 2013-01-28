@@ -67,8 +67,32 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+            ->children()
+                ->arrayNode('models')
+                    ->useAttributeAsKey('name')
+                    ->addDefaultsIfNotSet()
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->end()
+                            ->scalarNode('file')->end()
+                            ->arrayNode('back')
+                                ->children()
+                                    ->scalarNode('form')->end()
+                                    ->scalarNode('handler')->end()
+                                    ->scalarNode('template')->end()
+                                ->end()
+                            ->end()
+                            ->arrayNode('front')
+                                ->children()
+                                    ->scalarNode('controller')->end()
+                                    ->scalarNode('template')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
-        ;
         return $treeBuilder;
     }
 }

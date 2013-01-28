@@ -50,6 +50,10 @@ class AdminPageHandler
     {
         if ($this->request->getMethod() == 'POST')
         {
+            if ($this->request->get('realSubmit') !== '1')
+            {
+                return FALSE;
+            }
             $this->form->bindRequest($this->request);
             if ($this->form->isValid())
             {
@@ -68,6 +72,7 @@ class AdminPageHandler
                 $page->setSlug($this->makeSlug($page->getTitle()));
                 $this->makeFullpath($page);
                 $page->setUpdatedAt(new \DateTime());
+                $this->beforePersist($page);
                 $em->persist($page);
                 $em->flush();
                 return (TRUE);
@@ -202,6 +207,16 @@ class AdminPageHandler
         $slug = strtr(utf8_decode($slug), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
         $slug = preg_replace(array('`[^a-z0-9]`i', '`[-]+`'), '-', $slug);
         return ($slug);
+    }
+
+    /**
+     * Action to do before persist data object
+     *
+     * @param Page $page
+     */
+    public function beforePersist(Page &$page)
+    {
+        // nothing
     }
 
     /**

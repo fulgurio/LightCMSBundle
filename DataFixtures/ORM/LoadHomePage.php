@@ -18,6 +18,7 @@ class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedF
         $currentDate = new \DateTime();
         $homepage = new Page();
         $homepage->setPageType('page');
+        $homepage->setModel('standard');
         $homepage->setCreatedAt($currentDate);
         $homepage->setUpdatedAt($currentDate);
         $homepage->setTitle('Home');

@@ -26,10 +26,15 @@ fulgurio:
         status:
           draft:                    Draft
           published:                Published
+        model_label:                Page model
+        model:
+          standard:                 Standard
+          redirect:                 Redirect
         title_label:                Title
         content_label:              Content
         status_label:               Status
         published_at_label:         Published at
+        redirection_target_label:   Redirection target
         meta_keywords_label:        Meta keywords
         meta_description_label:     Meta description
         success_msg:                Page has been created !

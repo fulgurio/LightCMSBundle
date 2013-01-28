@@ -32,6 +32,7 @@ class AdminPostHandler extends AdminPageHandler
                 $page->setSlug($this->makeSlug($page->getTitle()));
                 $this->makeFullpath($page);
                 $page->setPageType('post');
+                $page->setModel('post');
                 $page->setPosition(0);
                 if ($page->getId() == 0)
                 {
