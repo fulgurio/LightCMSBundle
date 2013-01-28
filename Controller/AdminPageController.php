@@ -96,7 +96,7 @@ class AdminPageController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
-        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:PageAdd.html.twig';
+        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:add.html.twig';
         return $this->render($templateName, $options);
     }
 
