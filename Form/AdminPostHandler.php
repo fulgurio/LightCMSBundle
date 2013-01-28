@@ -33,6 +33,11 @@ class AdminPostHandler extends AdminPageHandler
                 $this->makeFullpath($page);
                 $page->setPageType('post');
                 $page->setPosition(0);
+                if ($page->getId() == 0)
+                {
+                    $page->setCreatedAt(new \DateTime());
+                }
+                $page->setUpdatedAt(new \DateTime());
                 $em->persist($page);
                 $em->flush();
                 return (TRUE);
