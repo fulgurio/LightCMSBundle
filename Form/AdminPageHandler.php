@@ -117,6 +117,17 @@ class AdminPageHandler
             $slug = $this->addSuffixNumber($page->getSlug(), $page);
             $page->setFullpath(($parentFullpath != '' ? ($parentFullpath . '/') : '') . $slug);
             $page->setSlug($slug);
+            if ($page->hasChildren())
+            {
+                foreach ($page->getChildren() as $children)
+                {
+//                         if ($children->getModel() != 'redirect')
+//                     {
+                    $this->makeFullpath($children);
+                    $this->doctrine->getEntityManager()->persist($children);
+//                     }
+                }
+            }
         }
     }
 
