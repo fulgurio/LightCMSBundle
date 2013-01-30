@@ -6,6 +6,7 @@ use Fulgurio\LightCMSBundle\Entity\PageMeta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminPageHandler
 {
@@ -217,6 +218,50 @@ class AdminPageHandler
     public function beforePersist(Page &$page)
     {
         // nothing
+    }
+
+    /**
+     * Get upload file dir
+     *
+     * @throws \Exception
+     */
+    protected function getUploadDir()
+    {
+        $dir = __DIR__ . '/../../../../web/';
+        if (!is_dir($dir))
+        {
+            $dir = __DIR__ . '/../../../../../web';
+            if (!is_dir($dir))
+            {
+                $dir = __DIR__ . '/../../../../../../web';
+                if (!is_dir($dir))
+                {
+                    throw new \Exception('Upload dir not found');
+                }
+            }
+        }
+        if (!is_dir($dir . $this->getUploadUrl()))
+        {
+            if (!is_writable($dir))
+            {
+                throw new \Exception($dir . ' is not writable');
+            }
+            else
+            {
+                mkdir($dir . $this->getUploadUrl());
+            }
+        }
+        return ($dir . $this->getUploadUrl());
+    }
+
+    /**
+     * Upload path url
+     *
+     * @return string
+     */
+    protected function getUploadUrl()
+    {
+        return ('/uploads/');
     }
 
     /**
