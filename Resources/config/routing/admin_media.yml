@@ -1,0 +1,15 @@
+AdminMediasAdd:
+    pattern:  /add
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:add }
+
+AdminMediasEdit:
+    pattern:  /edit/{mediaId}
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:edit }
+
+AdminMediasRemove:
+    pattern:  /remove/{mediaId}
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:remove }
+
+AdminMedias:
+    pattern:  /
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:list }

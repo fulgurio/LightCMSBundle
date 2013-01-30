@@ -2,6 +2,7 @@ fulgurio:
   lightcms:
     lightcms_title:                 LightCMS
     save:                           Save
+    search:                         Search
     cancel:                         Cancel
     yes:                            Yes
     no:                             No
@@ -10,6 +11,7 @@ fulgurio:
     header_link:
       pages_link:                   Pages
       posts_link:                   Posts
+      medias_link:                  Medias
     page_not_found:                 Page not found
     pages:
       title:                        Pages admin
@@ -63,6 +65,28 @@ fulgurio:
         legend:                     Edit post
         success_msg:                Post has been modified !
       delete_confirm_message:       Are you sure to delete "%title%" ?
+    medias:
+      title:                        Medias
+      no_media:                     No media
+      add_new_media:                Add new media
+      select_file:                  Select a file
+      add_form:
+        add_files:                  Add files ...
+        start_upload:               Start upload
+        cancel_upload:              Cancel upload
+        start:                      Start
+        cancel:                     Cancel
+        error:                      Error
+        delete:                     Delete
+        title:                      Add a new media
+        file_is_not_a_picture:      File "%FILE%" is not a picture
+        legend:                     Add a new media
+        success_msg:                Media has been created !
+      edit_form:
+        title:                      Edit media admin
+        legend:                     Edit medias 
+        success_msg:                Media has been modified !
+      delete_confirm_message:       Are you sure to delete "%FILENAME%" ?
     upload_file:
       send_button:                  Send
       picture_label:                Picture file

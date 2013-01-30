@@ -1,0 +1,26 @@
+Fulgurio\LightCMSBundle\Entity\Media:
+  type: entity
+  repositoryClass: Fulgurio\LightCMSBundle\Repository\MediaRepository
+  table: media
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    original_name:
+      type: string
+      length: 32
+    full_path:
+      type: string
+      length: 255
+      nullable: true
+    media_type:
+      type: string
+      length: 16
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true

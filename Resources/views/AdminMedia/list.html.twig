@@ -1,0 +1,47 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.medias.title{% endtrans %}{% endblock %}
+{% block content %}
+{% if app.session.hasFlash('notice') %}			<div class="alert alert-success">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% if medias is not empty %}
+			<form method="post" action="{{ path('AdminMedias') }}">
+{#}				<div class="input-append pull-left">
+					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
+					<button type="submit" class="btn">{% trans from 'admin' %}fulgurio.lightcms.search{% endtrans %}</button>
+				</div>#}
+{% endif %}
+			<div class="clearfix">
+				<a class="btn pull-right" href="{{ path('AdminMediasAdd') }}">{% trans from 'admin' %}fulgurio.lightcms.medias.add_new_media{% endtrans %}</a>
+			</div>
+{% if medias is empty %}
+			<p>{% trans from 'admin' %}fulgurio.lightcms.medias.no_media{% endtrans %}</p>
+{% else %}
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{#Cover#}</th>
+{#}							<th>{{ knp_pagination_sortable(medias, 'fulgurio.lightcms.medias.artist'|trans, 'm.name')|raw }}</th>
+							<th>{{ knp_pagination_sortable(medias, 'fulgurio.lightcms.medias.title'|trans, 'm.fullpath')|raw }}</th>
+#}							<th>{% trans from 'admin' %}fulgurio.lightcms.medias.title1{% endtrans %}</th>
+							<th>{% trans from 'admin' %}fulgurio.lightcms.medias.title2{% endtrans %}</th>
+							<th>{#Options#}</th>
+						</tr>
+					</thead>
+					<tbody>
+{% for media in medias %}
+						<tr>
+							<td><img src="{% if media.fullPath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{{ media.fullPath }}{% endif %}" class="img-polaroid" alt=""></td>
+							<td>{{ media.originalName }}</td>
+							<td>{{ media.fullPath }}</td>
+							<td>
+{#}								<a href="{{ path('AdminMediasEdit', {mediaId: media.id}) }}" class="icon-edit"></a>#}
+								<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+							</td>
+						</tr>
+{% endfor %}
+					</tbody>
+				</table>
+{#{{ medias.render('FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}#}
+			</form>
+{% include 'FulgurioLightCMSBundle::adminPopup.html.twig' %}
+{% endif %}
+{% endblock %}

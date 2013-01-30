@@ -19,6 +19,7 @@ class Page
      */
     private $model = 'standard';
 
+
     /**
      * Get meta value of a given meta key
      *
