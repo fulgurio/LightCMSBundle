@@ -13,6 +13,7 @@ Fulgurio\LightCMSBundle\Entity\PageMeta:
       length: 32
     meta_value:
       type: text
+      nullable: true
   manyToOne:
     page:
       targetEntity: Page
