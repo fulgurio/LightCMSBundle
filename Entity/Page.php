@@ -15,6 +15,11 @@ class Page
     protected $page_type = 'page';
 
     /**
+     * @var string $model
+     */
+    private $model = 'standard';
+
+    /**
      * Get meta value of a given meta key
      *
      * @param string $metaKey
@@ -80,11 +85,6 @@ class Page
     private $content;
 
     /**
-     * @var string $model
-     */
-    private $model;
-
-    /**
      * @var datetime $created_at
      */
     private $created_at;
@@ -114,11 +114,11 @@ class Page
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -138,7 +138,7 @@ class Page
     /**
      * Get page_type
      *
-     * @return string 
+     * @return string
      */
     public function getPageType()
     {
@@ -158,7 +158,7 @@ class Page
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -178,7 +178,7 @@ class Page
     /**
      * Get fullpath
      *
-     * @return string 
+     * @return string
      */
     public function getFullpath()
     {
@@ -198,7 +198,7 @@ class Page
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -218,7 +218,7 @@ class Page
     /**
      * Get position
      *
-     * @return integer 
+     * @return integer
      */
     public function getPosition()
     {
@@ -238,7 +238,7 @@ class Page
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -258,7 +258,7 @@ class Page
     /**
      * Get content
      *
-     * @return text 
+     * @return text
      */
     public function getContent()
     {
@@ -278,7 +278,7 @@ class Page
     /**
      * Get model
      *
-     * @return string 
+     * @return string
      */
     public function getModel()
     {
@@ -298,7 +298,7 @@ class Page
     /**
      * Get created_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -318,7 +318,7 @@ class Page
     /**
      * Get updated_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -338,7 +338,7 @@ class Page
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -358,7 +358,7 @@ class Page
     /**
      * Get meta
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getMeta()
     {
@@ -378,7 +378,7 @@ class Page
     /**
      * Get parent
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page 
+     * @return Fulgurio\LightCMSBundle\Entity\Page
      */
     public function getParent()
     {
