@@ -3,7 +3,6 @@ namespace Fulgurio\LightCMSBundle\Form;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
-use Fulgurio\LightCMSBundle\Entity\Page;
 
 class AdminPageHandler extends AbstractAdminHandler
 {
