@@ -20,6 +20,7 @@ class AdminMediaHandler extends AbstractAdminHandler
             $this->form->bindRequest($this->request);
             if ($this->form->isValid())
             {
+                $currentDate = new \DateTime();
                 $file = $this->form->get('media')->getData();
                 if (!is_null($file))
                 {
@@ -29,20 +30,20 @@ class AdminMediaHandler extends AbstractAdminHandler
                         unlink($oldFile);
                     }
                     $filename = sha1(uniqid(mt_rand(), TRUE)) . '.' . $file->guessExtension();
-//                     $file->move($this->getUploadDir(), $filename);
                     $media->setFullPath($this->getUploadUrl() . $filename);
                     $media->setOriginalName($file->getClientOriginalName());
                     $mimeType = $file->getMimeType();
                     $mediaType = preg_split('/\//', $mimeType);
                     $media->setMediaType($mediaType[0]);
+                    $file->move($this->getUploadDir(), $filename);
 //                     $file->getClientSize();
                 }
                 // New media
                 if ($media->getId() == 0)
                 {
-                    $media->setCreatedAt(new \DateTime());
+                    $media->setCreatedAt($currentDate);
                 }
-                $media->setUpdatedAt(new \DateTime());
+                $media->setUpdatedAt($currentDate);
                 $em = $this->doctrine->getEntityManager();
                 $em->persist($media);
                 $em->flush();

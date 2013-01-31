@@ -20,8 +20,8 @@ class AdminMediaType extends AbstractType
         $builder
             ->add('media', 'file', array('invalid_message' => 'shalama.baseland.home.add_form.invalid_picture', 'property_path' => FALSE))
             ->addValidator(new CallbackValidator(function(FormInterface $form) {
-                $media= $form->get('media');
-                $file = $media->getData();
+                $media = $form->get('media');
+                $file  = $media->getData();
                 if (!is_null($file) && !AdminMediaType::isImage($file))
                 {
                     $media->addError(new FormError('fulgurio.lightcms.medias.add_form.file_is_not_a_picture', array('admin', array('%FILE%' => $file->getClientOriginalName()))));
