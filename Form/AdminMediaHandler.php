@@ -3,6 +3,7 @@ namespace Fulgurio\LightCMSBundle\Form;
 
 use Fulgurio\LightCMSBundle\Entity\Media;
 use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
+use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminMediaHandler extends AbstractAdminHandler
 {
@@ -24,18 +25,18 @@ class AdminMediaHandler extends AbstractAdminHandler
                 $file = $this->form->get('media')->getData();
                 if (!is_null($file))
                 {
-                    $oldFile = substr($this->getUploadDir(), 0, -mb_strlen($this->getUploadUrl())) . $media->getFullpath();
+                    $oldFile = LightCMSUtils::getUploadDir(FALSE) . $media->getFullpath();
                     if (is_file($oldFile))
                     {
                         unlink($oldFile);
                     }
-                    $filename = sha1(uniqid(mt_rand(), TRUE)) . '.' . $file->guessExtension();
-                    $media->setFullPath($this->getUploadUrl() . $filename);
+                    $filename = LightCMSUtils::getUniqName($file, LightCMSUtils::getUploadDir());
+                    $media->setFullPath(LightCMSUtils::getUploadUrl() . $filename);
                     $media->setOriginalName($file->getClientOriginalName());
                     $mimeType = $file->getMimeType();
                     $mediaType = preg_split('/\//', $mimeType);
                     $media->setMediaType($mediaType[0]);
-                    $file->move($this->getUploadDir(), $filename);
+                    $file->move(LightCMSUtils::getUploadDir(), $filename);
 //                     $file->getClientSize();
                 }
                 // New media

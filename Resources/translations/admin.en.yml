@@ -4,6 +4,7 @@ fulgurio:
     save:                           Save
     search:                         Search
     cancel:                         Cancel
+    back:                           Back
     yes:                            Yes
     no:                             No
     popup_confirmation:             Popup

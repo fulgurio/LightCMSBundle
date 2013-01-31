@@ -5,6 +5,7 @@ namespace Fulgurio\LightCMSBundle\Controller;
 use Fulgurio\LightCMSBundle\Entity\Media;
 use Fulgurio\LightCMSBundle\Form\AdminMediaHandler;
 use Fulgurio\LightCMSBundle\Form\AdminMediaType;
+use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +73,7 @@ class AdminMediaController extends Controller
                 		'url' => $media->getFullPath(),
 //                 		'thumbnail_url' => 'http://',
                 		'delete_url' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $media->getId(), 'confirm' => 'yes')),
-                		'delete_type' => 'DELETE'
+                		'delete_type' => 'GET'
                 	)
                 )));
         	}
@@ -99,11 +100,15 @@ class AdminMediaController extends Controller
     {
         $media = $this->getMedia($mediaId);
         $request = $this->container->get('request');
-        if ($request->request->get('confirm') === 'yes')
+        if ($request->request->get('confirm') === 'yes' || $request->get('confirm') === 'yes')
         {
+            $filename = LightCMSUtils::getUploadDir(FALSE) . $media->getFullPath();
+            if (is_file($filename))
+            {
+                unlink($filename);
+            }
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($media);
-            //@todo : remove file
             $em->flush();
             return new RedirectResponse($this->generateUrl('AdminMedias'));
         }
