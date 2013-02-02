@@ -1,5 +1,7 @@
 {% extends 'FulgurioLightCMSBundle:AdminPage:list.html.twig' %}
+
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
+
 {% block pageContent%}
 		<section>
 			<a href="{{ path('LightCMS_Page', { fullpath: selectedPage.fullpath }) }}" target="_blank" title="{% trans from 'admin' %}fulgurio.lightcms.pages.show{% endtrans %}" class="btn"><i class="icon-search"></i></a>
@@ -11,8 +13,6 @@
 		</section>
 		<article>
 			<h2>{{ selectedPage.title }}</h2>
-{% autoescape false %}
-			{{ selectedPage.content }}
-{% endautoescape %}
+			{{ selectedPage.content|striptags }}
 		</article>
 {% endblock %}

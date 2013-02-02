@@ -34,7 +34,7 @@ class AdminPageController extends Controller
     {
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
         $page = $this->getPage($pageId);
-        return $this->render('FulgurioLightCMSBundle:AdminPage:page.html.twig', array(
+        return $this->render('FulgurioLightCMSBundle:AdminPage:PageView.html.twig', array(
             'pageRoot' => array($pageRoot),
             'selectedPage' => $page
         ));

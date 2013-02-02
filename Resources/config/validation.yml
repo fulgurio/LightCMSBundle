@@ -1,0 +1,8 @@
+Fulgurio\LightCMSBundle\Entity\Page:
+    properties:
+        title:
+            - NotBlank: { message: fulgurio.lightcms.pages.add_form.title_is_required }
+        model:
+            - NotBlank: { message: fulgurio.lightcms.pages.add_form.model_is_required }
+        status:
+            - Choice: { choices: [draft, published], message: fulgurio.lightcms.pages.add_form.status_is_required }

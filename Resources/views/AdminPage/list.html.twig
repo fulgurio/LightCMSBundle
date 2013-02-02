@@ -1,9 +1,7 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
-{% block javascriptTop %}
-	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.jstree.js') }}"></script>
-	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.cookie.js') }}"></script>
-{% endblock %}
+
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
+
 {% block content %}
 <h1>{% trans from 'admin' %}fulgurio.lightcms.pages.legend{% endtrans %}</h1>
 {% include 'FulgurioLightCMSBundle::adminMessage.html.twig' %}
@@ -62,4 +60,9 @@ $(".treeview").jstree({
 		});
 	});
 </script>
+{% endblock %}
+
+{% block javascriptTop %}
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.jstree.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.cookie.js') }}"></script>
 {% endblock %}

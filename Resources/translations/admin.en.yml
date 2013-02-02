@@ -30,12 +30,15 @@ fulgurio:
           draft:                    Draft
           published:                Published
         model_label:                Page model
+        model_is_required:          Model is required
         model:
           standard:                 Standard
           redirect:                 Redirect
         title_label:                Title
+        title_is_required:          Title is required
         content_label:              Content
         status_label:               Status
+        status_is_required:         Status is required
         published_at_label:         Published at
         redirection_target_label:   Redirection target
         meta_keywords_label:        Meta keywords
