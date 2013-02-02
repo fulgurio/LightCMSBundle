@@ -64,26 +64,26 @@ class AdminMediaController extends Controller
         $formHandler->setDoctrine($this->getDoctrine());
         if ($formHandler->process($media))
         {
-        	if ($request->isXmlHttpRequest())
-        	{
+            if ($request->isXmlHttpRequest())
+            {
                 return $this->jsonResponse((object) array('files' => array(
-                	(object) array(
-                		'name' => $media->getOriginalName(),
-//                 		'size' => '606',
-                		'url' => $media->getFullPath(),
-//                 		'thumbnail_url' => 'http://',
-                		'delete_url' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $media->getId(), 'confirm' => 'yes')),
-                		'delete_type' => 'GET'
-                	)
-                )));
-        	}
-            $this->get('session')->setFlash(
-                    'success',
-                    $this->get('translator')->trans(
-                            isset($options['pageId']) ? 'fulgurio.lightcms.medias.edit_form.success_msg' : 'fulgurio.lightcms.medias.add_form.success_msg',
-                            array(),
-                            'admin'
+                    (object) array(
+                        'id' => $media->getId(),
+                        'name' => $media->getOriginalName(),
+                        'url' => $media->getFullPath(),
+                        'thumbnail_url' => $media->getFullPath(),
+                        'delete_url' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $media->getId(), 'confirm' => 'yes')),
+                        'delete_type' => 'GET'
                     )
+                )));
+            }
+            $this->get('session')->setFlash(
+                'success',
+                $this->get('translator')->trans(
+                    isset($options['pageId']) ? 'fulgurio.lightcms.medias.edit_form.success_msg' : 'fulgurio.lightcms.medias.add_form.success_msg',
+                    array(),
+                    'admin'
+                )
             );
             return $this->redirect($this->generateUrl('AdminMedias'));
         }
