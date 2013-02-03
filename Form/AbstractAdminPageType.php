@@ -14,6 +14,13 @@ abstract class AbstractAdminPageType extends AbstractType
      */
     private $models;
 
+    /**
+     * Languages
+     *
+     * @var array
+     */
+    protected $langs;
+
 
     /**
      * Constructor
@@ -23,6 +30,10 @@ abstract class AbstractAdminPageType extends AbstractType
     public function __construct($container)
     {
         $this->models = $container->getParameter('fulgurio_light_cms.models');
+        if ($container->hasParameter('fulgurio_light_cms.languages'))
+        {
+            $this->langs = $container->getParameter('fulgurio_light_cms.languages');
+        }
     }
 
     /**
@@ -53,8 +64,16 @@ abstract class AbstractAdminPageType extends AbstractType
                 'required' => TRUE,
                 )
             )
-            ->add('position', 'number')
+            ->add('sourceId')
         ;
+        if (!empty($this->langs) && count($this->langs) > 1)
+        {
+            $builder->add('lang', 'choice', array(
+                    'choices'       => $this->langs,
+                    'required'      => TRUE,
+                )
+            );
+        }
     }
 
     /**

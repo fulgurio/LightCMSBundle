@@ -111,6 +111,10 @@ class AdminPageController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
+        if ($page->getParent()->getMetaValue('is_home') && $this->container->hasParameter('fulgurio_light_cms.languages'))
+        {
+            $options['useMultiLang'] = TRUE;
+        }
         $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:models:standardAdminAddForm.html.twig';
         return $this->render($templateName, $options);
     }
@@ -153,6 +157,28 @@ class AdminPageController extends Controller
             'action' => $this->generateUrl('AdminPagesRemove', array('pageId' => $pageId)),
             'confirmationMessage' => $this->get('translator')->trans('fulgurio.lightcms.pages.delete_confirm_message', array('%title%' => $page->getTitle()), 'admin'),
         ));
+    }
+
+    public function copyAction($sourceId, $targetId, $lang)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $source = $this->getPage($sourceId);
+        $target = $this->getPage($targetId);
+        $newPage = clone($source);
+        $newPage->setParent($target);
+        // Children page
+        if ($target->getLang())
+        {
+            $newPage->setLang($target->getLang());
+        }
+        else
+        {
+            $newPage->setLang($lang);
+            $newPage->setPosition($em->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($target));
+        }
+        $newPage->setStatus('draft');
+        $newPage->setSourceId($sourceId);
+        return $this->createPage($newPage, array('pageMetas' => $this->getPageMetas($sourceId), 'parent' => $target));
     }
 
     /**

@@ -18,6 +18,7 @@ fulgurio:
       title:                        Pages admin
       legend:                       Pages
       add_child_page_button:        Add new page
+      copy_language_page:           Copy page into following languages
       text_info:                    Select a page on the left tree to manage it
       show:                         Show
       edit:                         Edit
@@ -35,6 +36,7 @@ fulgurio:
           standard:                 Standard
           postsList:                Posts list
           redirect:                 Redirect
+        lang_label:                 Language
         title_label:                Title
         title_is_required:          Title is required
         content_label:              Content

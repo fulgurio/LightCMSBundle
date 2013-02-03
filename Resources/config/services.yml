@@ -13,4 +13,5 @@ services:
             -  { name: twig.extension }
         arguments:
             router: "@router"
+            doctrine: "@doctrine"
             container: "@service_container"

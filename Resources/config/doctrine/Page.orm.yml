@@ -34,6 +34,13 @@ Fulgurio\LightCMSBundle\Entity\Page:
     content:
       type: text
       nullable: true
+    lang:
+      type: string
+      length: 2
+      nullable: true
+    source_id:
+      type: integer
+      nullable: true
     created_at:
       type: datetime
       nullable: true

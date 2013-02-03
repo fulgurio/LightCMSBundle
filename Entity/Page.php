@@ -86,6 +86,16 @@ class Page
     private $content;
 
     /**
+     * @var string $lang
+     */
+    private $lang;
+
+    /**
+     * @var integer $source_id
+     */
+    private $source_id;
+
+    /**
      * @var datetime $created_at
      */
     private $created_at;
@@ -115,15 +125,35 @@ class Page
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set model
+     *
+     * @param string $model
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * Get model
+     *
+     * @return string 
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -139,7 +169,7 @@ class Page
     /**
      * Get page_type
      *
-     * @return string
+     * @return string 
      */
     public function getPageType()
     {
@@ -159,7 +189,7 @@ class Page
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -179,7 +209,7 @@ class Page
     /**
      * Get fullpath
      *
-     * @return string
+     * @return string 
      */
     public function getFullpath()
     {
@@ -199,7 +229,7 @@ class Page
     /**
      * Get slug
      *
-     * @return string
+     * @return string 
      */
     public function getSlug()
     {
@@ -219,7 +249,7 @@ class Page
     /**
      * Get position
      *
-     * @return integer
+     * @return integer 
      */
     public function getPosition()
     {
@@ -239,7 +269,7 @@ class Page
     /**
      * Get status
      *
-     * @return string
+     * @return string 
      */
     public function getStatus()
     {
@@ -259,7 +289,7 @@ class Page
     /**
      * Get content
      *
-     * @return text
+     * @return text 
      */
     public function getContent()
     {
@@ -267,23 +297,43 @@ class Page
     }
 
     /**
-     * Set model
+     * Set lang
      *
-     * @param string $model
+     * @param string $lang
      */
-    public function setModel($model)
+    public function setLang($lang)
     {
-        $this->model = $model;
+        $this->lang = $lang;
     }
 
     /**
-     * Get model
+     * Get lang
      *
-     * @return string
+     * @return string 
      */
-    public function getModel()
+    public function getLang()
     {
-        return $this->model;
+        return $this->lang;
+    }
+
+    /**
+     * Set source_id
+     *
+     * @param integer $sourceId
+     */
+    public function setSourceId($sourceId)
+    {
+        $this->source_id = $sourceId;
+    }
+
+    /**
+     * Get source_id
+     *
+     * @return integer 
+     */
+    public function getSourceId()
+    {
+        return $this->source_id;
     }
 
     /**
@@ -299,7 +349,7 @@ class Page
     /**
      * Get created_at
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getCreatedAt()
     {
@@ -319,7 +369,7 @@ class Page
     /**
      * Get updated_at
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getUpdatedAt()
     {
@@ -339,7 +389,7 @@ class Page
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return Doctrine\Common\Collections\Collection 
      */
     public function getChildren()
     {
@@ -359,7 +409,7 @@ class Page
     /**
      * Get meta
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return Doctrine\Common\Collections\Collection 
      */
     public function getMeta()
     {
@@ -379,7 +429,7 @@ class Page
     /**
      * Get parent
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page
+     * @return Fulgurio\LightCMSBundle\Entity\Page 
      */
     public function getParent()
     {

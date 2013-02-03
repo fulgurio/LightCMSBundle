@@ -11,8 +11,20 @@
 {% endif %}
 			<a href="{{ path('AdminPagesAddChild', {parentId: selectedPage.id}) }}" class="btn pull-right">{% trans from 'admin' %}fulgurio.lightcms.pages.add_child_page_button{% endtrans %}</a>
 		</section>
+{% if targetCopyPages is not empty %}
+<br />
+		<div class="pull-right">
+		{% trans from 'admin' %}fulgurio.lightcms.pages.copy_language_page{% endtrans %} :
+{%   for lang, targetPage in targetCopyPages %}
+			&nbsp;<a href="{{ path('AdminPagesCopy', {'sourceId': selectedPage.id, 'targetId': targetPage, 'lang': lang }) }}" class="btn"><img src="{{ asset('bundles/fulguriolightcms/img/flags/' ~ lang ~ '.png') }}" alt="{{ lang }}" /></a>
+{%   endfor %}
+		</div>
+		<div class="clearfix"></div>
+{% endif %}
 		<article>
 			<h2>{{ selectedPage.title }}</h2>
 			{{ selectedPage.content|striptags }}
 		</article>
 {% endblock %}
+
+{% set targetCopyPages = needTranslatedPages(selectedPage) %}

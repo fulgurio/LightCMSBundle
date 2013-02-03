@@ -44,12 +44,17 @@ class AdminPageHandler extends AbstractAdminHandler
                 if ($page->getId() == 0)
                 {
                     $page->setCreatedAt(new \DateTime());
-                    if ($page->getPosition() == NULL)
-                    {
-                        $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
-                    }
+                    $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
                 }
-                $page->setSlug($this->makeSlug($page->getTitle()));
+                $page->setSlug($this->makeSlug(isset($data['lang']) ? $data['lang'] : $page->getTitle()));
+                if (isset($data['lang']))
+                {
+                    $page->setLang($data['lang']);
+                }
+                else if ($page->getParent())
+                {
+                    $page->setLang($page->getParent()->getLang());
+                }
                 $this->makeFullpath($page);
                 $page->setUpdatedAt(new \DateTime());
                 $this->beforePersist($page);
@@ -106,11 +111,8 @@ class AdminPageHandler extends AbstractAdminHandler
             {
                 foreach ($page->getChildren() as $children)
                 {
-//                         if ($children->getModel() != 'redirect')
-//                     {
                     $this->makeFullpath($children);
                     $this->doctrine->getEntityManager()->persist($children);
-//                     }
                 }
             }
         }
@@ -125,8 +127,14 @@ class AdminPageHandler extends AbstractAdminHandler
     protected function updatePageMetas(Page $page, $data)
     {
         $em = $this->doctrine->getEntityManager();
-        $em->persist($this->initMetaEntity($page, 'meta_keywords', $data['meta_keywords']));
-        $em->persist($this->initMetaEntity($page, 'meta_description', $data['meta_description']));
+        if (isset($data['meta_keywords']) && trim($data['meta_keywords']) != '')
+        {
+            $em->persist($this->initMetaEntity($page, 'meta_keywords', $data['meta_keywords']));
+        }
+        if (isset($data['meta_description']) && trim($data['meta_description']) != '')
+        {
+            $em->persist($this->initMetaEntity($page, 'meta_description', $data['meta_description']));
+        }
     }
 
     /**

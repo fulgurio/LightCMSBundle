@@ -18,6 +18,10 @@ AdminPagesRemove:
     pattern:  /{pageId}/remove
     defaults: { _controller: FulgurioLightCMSBundle:AdminPage:remove }
 
+AdminPagesCopy:
+    pattern:  /{sourceId}/copy/{lang}/{targetId}/
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:copy }
+
 AdminPagePosition:
     pattern:  /position/
     defaults: { _controller: FulgurioLightCMSBundle:AdminPage:changePosition }

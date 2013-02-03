@@ -31,8 +31,11 @@ class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedF
         $manager->persist($meta1);
         $meta2 = $this->addMeta($homepage, 'meta_description', 'Light content management system, using Symfony 2 framework');
         $manager->persist($meta2);
+        $meta3 = $this->addMeta($homepage, 'is_home', TRUE);
+        $manager->persist($meta3);
         $homepage->addPageMeta($meta1);
         $homepage->addPageMeta($meta2);
+        $homepage->addPageMeta($meta3);
         $manager->persist($homepage);
         $this->addReference('homepage', $homepage);
         $manager->flush();

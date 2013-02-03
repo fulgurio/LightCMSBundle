@@ -14,6 +14,13 @@ class LightCMSTwigExtension extends \Twig_Extension
     private $generator;
 
     /**
+     * Doctrine object
+     *
+     * @var UrlGeneratorInterface
+     */
+    private $doctrine;
+
+    /**
      * Container
      *
      * @var unknown
@@ -26,9 +33,10 @@ class LightCMSTwigExtension extends \Twig_Extension
      *
      * @param UrlGeneratorInterface $generator
      */
-    public function __construct(UrlGeneratorInterface $generator, $container)
+    public function __construct(UrlGeneratorInterface $generator, $doctrine, $container)
     {
         $this->generator = $generator;
+        $this->doctrine  = $doctrine;
         $this->container = $container;
     }
 
@@ -42,6 +50,7 @@ class LightCMSTwigExtension extends \Twig_Extension
             'dataForBreadcrumb' => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
             'pagePath'          => new \Twig_Function_Method($this, 'getPagePath'),
             'allowChildrens'    => new \Twig_Function_Method($this, 'allowChildrens'),
+            'needTranslatedPages'    => new \Twig_Function_Method($this, 'needTranslatedPages'),
         );
     }
 
@@ -78,10 +87,84 @@ class LightCMSTwigExtension extends \Twig_Extension
         return NULL;
     }
 
+    /**
+     * Check if page model allow children
+     *
+     * @param Page $page
+     */
     public function allowChildrens(Page $page)
     {
         $models = $this->container->getParameter('fulgurio_light_cms.models');
         return ($models[$page->getModel()]['allow_childrens']);
+    }
+
+    /**
+     * Get parent page to copy page for translation
+     * @param Page $page
+     * @return multitype:number
+     */
+    public function needTranslatedPages(Page $page)
+    {
+       // Route page
+       if (!$page->getParent() || !is_null($page->getSourceId()))
+       {
+            return FALSE;
+       }
+       if ($this->container->hasParameter('fulgurio_light_cms.languages'))
+       {
+            $availableLangs = $this->container->getParameter('fulgurio_light_cms.languages');
+            $nbAvailableLangs = count($availableLangs);
+            $availableTranslatedPages = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('source_id' => $page->getId()), array('lang' => 'ASC'));
+            $nbAvailableTranslatedPages = count($availableTranslatedPages);
+            $availableTranslatedParents = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('source_id' => $page->getParent()->getId()), array('lang' => 'ASC'));
+            $nbAvailableTranslatedParents = count($availableTranslatedParents);
+            // If we create a new page
+            if ($page->getParent()->getMetaValue('is_home') == '1' && $nbAvailableLangs != $availableTranslatedPages)
+            {
+                $langs = array_flip($availableLangs);
+                foreach ($availableTranslatedPages as $availableTranslatedPage)
+                {
+                    unset($langs[$availableTranslatedPage->getLang()]);
+                }
+                foreach ($langs as $lang => $value)
+                {
+                    if ($lang == $page->getLang())
+                    {
+                        unset($langs[$lang]);
+                    }
+                    else
+                    {
+                        $langs[$lang] = $page->getParent()->getId();
+                    }
+                }
+                return ($langs);
+            }
+            // Normal children page
+            else if ($nbAvailableTranslatedPages != $nbAvailableTranslatedParents && $nbAvailableTranslatedParents < $nbAvailableLangs)
+            {
+                $langs = array_flip($availableLangs);
+                foreach ($availableTranslatedPages as $availableTranslatedPage)
+                {
+                    unset($langs[$availableTranslatedPage->getLang()]);
+                }
+                foreach ($availableTranslatedParents as $availableTranslatedParent)
+                {
+                    if (isset($langs[$availableTranslatedParent->getLang()]))
+                    {
+                        $langs[$availableTranslatedParent->getLang()] = $availableTranslatedParent->getId();
+                    }
+                }
+                foreach ($langs as $lang => $value)
+                {
+                    if (is_null($value) || $lang == $page->getLang())
+                    {
+                        unset($langs[$lang]);
+                    }
+                }
+                return ($langs);
+            }
+        }
+        return FALSE;
     }
 
     /**

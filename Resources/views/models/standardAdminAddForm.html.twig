@@ -66,19 +66,20 @@
 						</select>
 					</div>
 				</div>
-				<noscript>
-					<div class="control-group">
-						<label class="control-label" for="p_position">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.position_label{% endtrans %}</label>
-						<div class="controls">
-							<input type="number" id="p_position" class="input-small" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />
-						</div>
-					</div>
-				</noscript>
-				<script>
-document.write('<input type="hidden" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />');
-				</script>
 			</div>
 			<div class="well span4 pull-right">
+{% if useMultiLang is defined %}
+				<div class="control-group">
+					<label class="control-label" for="p_lang">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
+					<div class="controls">
+						<select name="{{ form.getChild('lang').get('full_name') }}" class="input-small" id="p_lang" >
+{% for choice in form.getChild('lang').get('choices') %}
+							<option value="{{ choice }}"{% if choice in form.getChild('lang').get('value') %} selected="selected"{% endif %}>{{ choice }}</option>
+{% endfor %}
+						</select>
+					</div>
+				</div>
+{% endif %}
 				<div class="control-group">
 					<label class="control-label" for="p_meta_keywords">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.meta_keywords_label{% endtrans %}</label>
 					<div class="controls">
@@ -95,6 +96,7 @@ document.write('<input type="hidden" name="{{ form.getChild('position').get('ful
 		</div>
 		<div class="form-actions">
 			<input type="hidden" name="{{ form.getChild('parent').get('full_name') }}" value="{{ form.getChild('parent').get('value') }}" />
+			<input type="hidden" name="{{ form.getChild('sourceId').get('full_name') }}" value="{{ form.getChild('sourceId').get('value') }}" />
 			<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
 			<button type="submit" class="btn btn-primary" name="realSubmit" value="1">{% trans from 'admin' %}fulgurio.lightcms.save{% endtrans %}</button>
 			<a href="{{ cancelPath }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.cancel{% endtrans %}</a>
