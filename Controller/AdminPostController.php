@@ -46,7 +46,6 @@ class AdminPostController extends Controller
     {
         $options = array(
             'pageId' => $pageId,
-            'pageMetas' => $this->getPageMetas($pageId)
         );
         $post = $this->getPost($pageId);
         return $this->createPage($post, $options);
@@ -124,8 +123,7 @@ class AdminPostController extends Controller
      */
     private function getPostsListPage()
     {
-        $config = $this->container->getParameter('fulgurio_light_cms.posts');
-        if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => $config['fullpath'], 'page_type' => 'page')))
+        if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('model' => 'postsList', 'page_type' => 'page')))
         {
             throw new NotFoundHttpException(
                 $this->get('translator')->trans('fulgurio.lightcms.posts.posts_list_page_not_found', array(), 'admin')
@@ -149,22 +147,5 @@ class AdminPostController extends Controller
             );
         }
         return ($page);
-    }
-
-    /**
-     * Get meta data from given ID page
-     *
-     * @param integer $pageId
-     * @return array
-     */
-    private function getPageMetas($pageId)
-    {
-        $pageMetas = array();
-        $metas = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:PageMeta')->findByPage($pageId);
-        foreach ($metas as $meta)
-        {
-            $pageMetas[$meta->getMetaKey()] = $meta;
-        }
-        return ($pageMetas);
     }
 }

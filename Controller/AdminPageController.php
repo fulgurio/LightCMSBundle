@@ -49,8 +49,13 @@ class AdminPageController extends Controller
      */
     public function addAction($parentId)
     {
+        $models = $this->container->getParameter('fulgurio_light_cms.models');
         $page = new Page();
         $parent = $this->getPage($parentId);
+        if (!$models[$parent->getModel()]['allow_childrens'])
+        {
+            throw new AccessDeniedException();
+        }
         $page->setParent($parent);
         return $this->createPage($page, array('parent' => $parent));
     }

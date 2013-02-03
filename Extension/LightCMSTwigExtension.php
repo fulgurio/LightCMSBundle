@@ -13,15 +13,23 @@ class LightCMSTwigExtension extends \Twig_Extension
      */
     private $generator;
 
+    /**
+     * Container
+     *
+     * @var unknown
+     */
+    private $container;
+
 
     /**
      * Constructor
      *
      * @param UrlGeneratorInterface $generator
      */
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(UrlGeneratorInterface $generator, $container)
     {
-    	$this->generator = $generator;
+        $this->generator = $generator;
+        $this->container = $container;
     }
 
     /**
@@ -33,6 +41,7 @@ class LightCMSTwigExtension extends \Twig_Extension
         return array(
             'dataForBreadcrumb' => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
             'pagePath'          => new \Twig_Function_Method($this, 'getPagePath'),
+            'allowChildrens'    => new \Twig_Function_Method($this, 'allowChildrens'),
         );
     }
 
@@ -69,12 +78,18 @@ class LightCMSTwigExtension extends \Twig_Extension
         return NULL;
     }
 
+    public function allowChildrens(Page $page)
+    {
+        $models = $this->container->getParameter('fulgurio_light_cms.models');
+        return ($models[$page->getModel()]['allow_childrens']);
+    }
+
     /**
      * (non-PHPdoc)
      * @see Twig_ExtensionInterface::getName()
      */
     public function getName()
     {
-    	return 'LightCMS_extension';
+        return 'LightCMS_extension';
     }
 }
