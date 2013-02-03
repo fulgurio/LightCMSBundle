@@ -91,11 +91,6 @@ class AdminPostController extends Controller
     public function removeAction($pageId)
     {
         $post = $this->getPost($pageId);
-        $config = $this->container->getParameter('fulgurio_light_cms.posts');
-        if ($post->getSlug() == $config['fullpath'])
-        {
-            throw new AccessDeniedException();
-        }
         $request = $this->container->get('request');
         if ($request->request->get('confirm') === 'yes')
         {
