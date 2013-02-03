@@ -1,0 +1,18 @@
+{% extends 'FulgurioLightCMSBundle:AdminPage:list.html.twig' %}
+
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
+
+{% block pageContent%}
+		<section>
+			<a href="{{ path('LightCMS_Page', { fullpath: selectedPage.fullpath }) }}" target="_blank" title="{% trans from 'admin' %}fulgurio.lightcms.pages.show{% endtrans %}" class="btn"><i class="icon-search"></i></a>
+			<a href="{{ path('AdminPagesEdit', {pageId: selectedPage.id}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.pages.edit{% endtrans %}" class="btn"><i class="icon-pencil"></i></a>
+{% if selectedPage.getFullpath() != '' %}
+			<a href="{{ path('AdminPagesRemove', {pageId: selectedPage.id}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.pages.remove{% endtrans %}" class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-trash"></i></a>
+{% endif %}
+			<a href="{{ path('AdminPosts', {parentId: selectedPage.id}) }}" class="btn pull-right">{% trans from 'admin' %}fulgurio.lightcms.posts.go_to_posts_manager{% endtrans %}</a>
+		</section>
+		<article>
+			<h2>{{ selectedPage.title }}</h2>
+			<p>{% trans from 'admin' %}fulgurio.lightcms.redirect.redirection_link{% endtrans %} : <a href="{{ selectedPage.getMetaValue('target_link') }}" target="_blank">{{ selectedPage.getMetaValue('target_link') }}</a></p>
+		</article>
+{% endblock %}

@@ -29,7 +29,7 @@
 {%   for post in posts %}
 		<tr>
 			<td>{{ post.title }}</td>
-			<td>{{ post.createdat|date('fulgurio.lightcms.datetime_format'|trans({}, 'admin')) }}</td>
+			<td>{{ post.createdAt|date('fulgurio.lightcms.datetime_format'|trans({}, 'admin')) }}</td>
 			<td>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ post.status)|trans({}, 'admin') }}</td>
 			<td>
 				<a href="{{ path('LightCMS_Page', {fullpath: post.fullpath}) }}" title="{% trans from 'admin' %}fulgurio.lightcms.posts.view_button{% endtrans %}" target="_blank"><i class="icon-eye-open"></i></a>

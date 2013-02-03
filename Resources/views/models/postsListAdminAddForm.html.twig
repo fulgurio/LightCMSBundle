@@ -1,5 +1,7 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+
 {% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
+
 {% block content %}
 {% if pageId is defined %}
 {%   set legend = 'fulgurio.lightcms.pages.edit_form.legend' %}
@@ -15,23 +17,26 @@
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
 {% if form.getChild('model').get('errors')
     or form.getChild('title').get('errors')
+    or form.getChild('nb_posts_per_page').get('errors')
     or form.getChild('status').get('errors') %}
 			<div class="alert alert-error">
 {%   for error in form.getChild('model').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 {%   for error in form.getChild('title').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.getChild('nb_posts_per_page').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 {%   for error in form.getChild('status').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 			</div>
 {% endif %}
 		<div class="row">
-{% if form.getChild('model').get('choices')|length > 1 %}
+{% if pageId is not defined %}
+{%   if form.getChild('model').get('choices')|length > 1 %}
 			<div class="span7">
 				<div class="control-group">
 					<label class="control-label" for="p_model">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
 					<div class="controls form-inline">
 						<select name="{{ form.getChild('model').get('full_name') }}" class="input-xlarge span2" id="p_model" >
-{%   for choiceName, choice in form.getChild('model').get('choices') %}
+{%     for choiceName, choice in form.getChild('model').get('choices') %}
 							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'standard' and pageId is not defined) %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
-{%   endfor %}
+{%     endfor %}
 						</select>
 						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
 					</div>
@@ -39,6 +44,9 @@
 			</div>
 {%   else %}
 			<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="standard" />
+{%   endif %}
+{% else %}
+			<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="postsList" />
 {% endif %}
 			<div class="span7">
 				<div class="control-group">
@@ -47,10 +55,16 @@
 						<input type="text" id="p_title" class="input-xlarge" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" required="required" />
 					</div>
 				</div>
+{# 				<div class="control-group">#}
+{# 					<label class="control-label" for="p_content">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.content_label{% endtrans %}</label>#}
+{# 					<div class="controls">#}
+{# 						<textarea class="input-xlarge tinymce" id="p_content" name="{{ form.getChild('content').get('full_name') }}">{{ form.getChild('content').get('value') }}</textarea>#}
+{# 					</div>#}
+{# 				</div>#}
 				<div class="control-group">
-					<label class="control-label" for="p_content">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.content_label{% endtrans %}</label>
+					<label class="control-label" for="p_nb_posts_per_page">{% trans from "admin" %}fulgurio.lightcms.posts.add_form.nb_posts_per_page{% endtrans %}</label>
 					<div class="controls">
-						<textarea class="input-xlarge tinymce" id="p_content" name="{{ form.getChild('content').get('full_name') }}">{{ form.getChild('content').get('value') }}</textarea>
+						<input type="text" id="p_nb_posts_per_page" class="input-xlarge" name="{{ form.getChild('nb_posts_per_page').get('full_name') }}" value="{% if form.getChild('nb_posts_per_page').get('value') %}{{ form.getChild('nb_posts_per_page').get('value') }}{% else %}{% if pageMetas['nb_posts_per_page'] is defined %}{{ pageMetas['nb_posts_per_page'].metaValue }}{% endif %}{% endif %}" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -64,17 +78,17 @@
 						</select>
 					</div>
 				</div>
-				<noscript>
-					<div class="control-group">
-						<label class="control-label" for="p_position">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.position_label{% endtrans %}</label>
-						<div class="controls">
-							<input type="number" id="p_position" class="input-small" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />
-						</div>
-					</div>
-				</noscript>
-				<script>
-document.write('<input type="hidden" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />');
-				</script>
+{# 				<noscript>#}
+{# 					<div class="control-group">#}
+{# 						<label class="control-label" for="p_position">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.position_label{% endtrans %}</label>#}
+{# 						<div class="controls">#}
+{# 							<input type="number" id="p_position" class="input-small" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />#}
+{# 						</div>#}
+{# 					</div>#}
+{# 				</noscript>#}
+{# 				<script>#}
+{# document.write('<input type="hidden" name="{{ form.getChild('position').get('full_name') }}" value="{{ form.getChild('position').get('value') }}" />');#}
+{# 				</script>#}
 			</div>
 			<div class="well span4 pull-right">
 				<div class="control-group">
@@ -100,43 +114,44 @@ document.write('<input type="hidden" name="{{ form.getChild('position').get('ful
 	</fieldset>
 </form>
 {% endblock %}
+
 {% block javascriptBottom %}
-<script src="{{ asset('bundles/fulguriolightcms/js/tiny_mce/jquery.tinymce.js') }}"></script>
-<script>
-$(function() {
-	$('textarea.tinymce').tinymce({
-		// Location of TinyMCE script
-		script_url : '{{ asset('bundles/fulguriolightcms/js/tiny_mce/tiny_mce.js') }}',
-{% if tiny_mce.content_css is defined %}		content_css: '{{ asset(tiny_mce.content_css) }}',{% endif %}
-		// General options
-		theme : "{{ tiny_mce.theme }}",
-		skin : "{{ tiny_mce.skin }}",
-		plugins : "{{ tiny_mce.plugins }}",
-		theme_advanced_buttons1 : "{{ tiny_mce.theme_advanced_buttons1 }}",
-		theme_advanced_buttons2 : "{{ tiny_mce.theme_advanced_buttons2 }}",
-		theme_advanced_buttons3 : "{{ tiny_mce.theme_advanced_buttons3 }}",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
-		theme_advanced_resize_horizontal: false,
-		file_browser_callback: 'filesBrowser',
-	});
-	$('#p_model').change(function() {
-		$('#p_form').submit();
-	});
-});
-function filesBrowser(fid, url, type, win) {
-	tinyMCE.activeEditor.windowManager.open({
-		file : "{{ path('AdminTinyMCEFileBrowser') }}",
-		width : 420,
-		height : 144,
-		resizable : "no",
-		close_previous : "no"
-	}, {
-		window : win,
-		input : fid
-	});
-}
-</script>
+{# <script src="{{ asset('bundles/fulguriolightcms/js/tiny_mce/jquery.tinymce.js') }}"></script>#}
+{# <script>#}
+{# $(function() {#}
+{# 	$('textarea.tinymce').tinymce({#}
+{# 		// Location of TinyMCE script#}
+{# 		script_url : '{{ asset('bundles/fulguriolightcms/js/tiny_mce/tiny_mce.js') }}',#}
+{# {% if tiny_mce.content_css is defined %}		content_css: '{{ asset(tiny_mce.content_css) }}',{% endif %}#}
+{# 		// General options#}
+{# 		theme : "{{ tiny_mce.theme }}",#}
+{# 		skin : "{{ tiny_mce.skin }}",#}
+{# 		plugins : "{{ tiny_mce.plugins }}",#}
+{# 		theme_advanced_buttons1 : "{{ tiny_mce.theme_advanced_buttons1 }}",#}
+{# 		theme_advanced_buttons2 : "{{ tiny_mce.theme_advanced_buttons2 }}",#}
+{# 		theme_advanced_buttons3 : "{{ tiny_mce.theme_advanced_buttons3 }}",#}
+{# 		theme_advanced_toolbar_location : "top",#}
+{# 		theme_advanced_toolbar_align : "left",#}
+{# 		theme_advanced_statusbar_location : "bottom",#}
+{# 		theme_advanced_resizing : true,#}
+{# 		theme_advanced_resize_horizontal: false,#}
+{# 		file_browser_callback: 'filesBrowser',#}
+{# 	});#}
+{# 	$('#p_model').change(function() {#}
+{# 		$('#p_form').submit();#}
+{# 	});#}
+{# });#}
+{# function filesBrowser(fid, url, type, win) {#}
+{# 	tinyMCE.activeEditor.windowManager.open({#}
+{# 		file : "{{ path('AdminTinyMCEFileBrowser') }}",#}
+{# 		width : 420,#}
+{# 		height : 144,#}
+{# 		resizable : "no",#}
+{# 		close_previous : "no"#}
+{# 	}, {#}
+{# 		window : win,#}
+{# 		input : fid#}
+{# 	});#}
+{# }#}
+{# </script>#}
 {% endblock %}

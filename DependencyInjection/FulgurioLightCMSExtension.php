@@ -35,7 +35,38 @@ class FulgurioLightCMSExtension extends Extension
             $config['models']['standard'] = array(
                 'name' => 'standard',
                 'front' => array(
-                    'template' => 'FulgurioLightCMSBundle:FrontPage:standard.html.twig'
+                    'template' => 'FulgurioLightCMSBundle:models:standardFront.html.twig'
+                )
+            );
+        }
+        if (!isset($config['models']['postsList']))
+        {
+            $config['models']['postsList'] = array(
+                'name' => 'posts_list',
+                'back' => array(
+                    'form' =>     'Fulgurio\LightCMSBundle\Form\AdminPostsListPageType',
+                    'handler' =>  'Fulgurio\LightCMSBundle\Form\AdminPostsListPageHandler',
+                    'template' => 'FulgurioLightCMSBundle:models:postsListAdminAddForm.html.twig',
+                    'view' =>     'FulgurioLightCMSBundle:models:postsListAdminView.html.twig',
+                ),
+                'front' => array(
+                    'template' =>   'FulgurioLightCMSBundle:models:standardFront.html.twig',
+                    'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontPostPageController::list',
+                )
+            );
+        }
+        if (!isset($config['models']['redirect']))
+        {
+            $config['models']['redirect'] = array(
+                'name' => 'redirect',
+                'back' => array(
+                    'form' =>     'Fulgurio\LightCMSBundle\Form\AdminRedirectPageType',
+                    'handler' =>  'Fulgurio\LightCMSBundle\Form\AdminRedirectPageHandler',
+                    'template' => 'FulgurioLightCMSBundle:models:redirectAdminAddForm.html.twig',
+                    'view' =>     'FulgurioLightCMSBundle:models:redirectAdminView.html.twig',
+                ),
+                'front' => array(
+                    'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontRedirectPageController::redirect',
                 )
             );
         }

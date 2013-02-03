@@ -33,6 +33,7 @@ fulgurio:
         model_is_required:          Model is required
         model:
           standard:                 Standard
+          postsList:                Posts list
           redirect:                 Redirect
         title_label:                Title
         title_is_required:          Title is required
@@ -51,6 +52,7 @@ fulgurio:
       delete_confirm_message:       Are you sure to delete "%title%" ?
     post_not_found:                 Post not found
     posts:
+      go_to_posts_manager:          Go to posts manager
       posts_list_page_not_found:    Posts list page is not found, please load it with fixture or create it manually
       title:                        Posts admin
       legend:                       Posts
@@ -62,6 +64,8 @@ fulgurio:
       add_form:
         title:                      Add a new post admin
         legend:                     Add a new post
+        nb_posts_per_page:          Number of posts per page
+        invalid_nb_posts_per_page:  Number of posts per page is not a valid number
         success_msg:                Post has been created !
         published_at_label:         Published at
       edit_form:
@@ -69,6 +73,10 @@ fulgurio:
         legend:                     Edit post
         success_msg:                Post has been modified !
       delete_confirm_message:       Are you sure to delete "%title%" ?
+    redirect:
+      redirection_link:             Redirection link
+      add_form:
+        target_link:                Target link
     medias:
       title:                        Medias
       no_media:                     No media

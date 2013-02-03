@@ -18,10 +18,6 @@ LightCMS_Admin_Homepage:
     pattern:   /admin/
     defaults: { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
 
-LightCMS_Posts:
-    pattern:   /posts/{pageNb}
-    defaults: { _controller: FulgurioLightCMSBundle:FrontPostPage:list, pageNb: 0 }
-
 LightCMS_Page:
     pattern:  /{fullpath}
     defaults: { _controller: FulgurioLightCMSBundle:FrontPage:show }

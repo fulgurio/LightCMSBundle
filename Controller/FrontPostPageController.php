@@ -2,30 +2,31 @@
 
 namespace Fulgurio\LightCMSBundle\Controller;
 
-use Fulgurio\LightCMSBundle\Entity\Page;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Fulgurio\LightCMSBundle\Controller\FrontPageController;
 
-class FrontPostPageController extends Controller
+class FrontPostPageController extends FrontPageController
 {
     /**
      * Display page
-     *
+     * @todo : pagination
      */
-    public function listAction($pageNb)
+    public function listAction()
     {
-        $pageNb = intval((is_string($pageNb) && substr($pageNb, 0, 5) == 'page-') ? substr($pageNb, 5) : $pageNb + 1);
-        --$pageNb;
+//         $pageNb = intval((is_string($pageNb) && substr($pageNb, 0, 5) == 'page-') ? substr($pageNb, 5) : $pageNb + 1);
+//         --$pageNb;
+        $pageNb = 0;
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => ''));// @todo : mettre en service
         $config = $this->container->getParameter('fulgurio_light_cms.posts');
-        $currentPage = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => $config['fullpath']));
+        $currentPage = $this->page;
+        $nbPerPage = $this->page->getMetaValue('nb_posts_per_page') ? $this->page->getMetaValue('nb_posts_per_page') : $config['nb_per_page'];
         $pages = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findBy(
                 array('page_type' => 'post', 'status' => 'published'),
                 array('created_at' => 'DESC'),
-                $config['nb_per_page'],
-                $config['nb_per_page'] * $pageNb);
-        return $this->render('FulgurioLightCMSBundle:FrontPage:postsList.html.twig', array(
+                $nbPerPage,
+                $nbPerPage * $pageNb);
+        return $this->render('FulgurioLightCMSBundle:models:postsListFront.html.twig', array(
             'pageRoot' => $pageRoot,
-            'currentPage' => $currentPage,
+            'currentPage' => $this->page,
             'pages' => $pages,
         ));
     }

@@ -81,6 +81,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('form')->end()
                                     ->scalarNode('handler')->end()
                                     ->scalarNode('template')->end()
+                                    ->scalarNode('view')->end()
                                 ->end()
                             ->end()
                             ->arrayNode('front')

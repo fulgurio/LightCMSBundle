@@ -32,9 +32,11 @@ class AdminPageController extends Controller
      */
     public function selectAction($pageId)
     {
+        $models = $this->container->getParameter('fulgurio_light_cms.models');
         $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
         $page = $this->getPage($pageId);
-        return $this->render('FulgurioLightCMSBundle:AdminPage:PageView.html.twig', array(
+        $templateName = isset($models[$page->getModel()]['back']['view']) ? $models[$page->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
+        return $this->render($templateName, array(
             'pageRoot' => array($pageRoot),
             'selectedPage' => $page
         ));
@@ -104,7 +106,7 @@ class AdminPageController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
-        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:AdminPage:PageAdd.html.twig';
+        $templateName = isset($models[$page->getModel()]['back']['template']) ? $models[$page->getModel()]['back']['template'] : 'FulgurioLightCMSBundle:models:standardAdminAddForm.html.twig';
         return $this->render($templateName, $options);
     }
 

@@ -18,7 +18,7 @@ class LoadPostsData extends AbstractFixture implements FixtureInterface, Ordered
         $currentDate = new \DateTime();
         $postsList = new Page();
         $postsList->setPageType('page');
-        $postsList->setModel('standard');
+        $postsList->setModel('postsList');
         $postsList->setCreatedAt($currentDate);
         $postsList->setUpdatedAt($currentDate);
         $postsList->setTitle('Posts list');
@@ -26,8 +26,8 @@ class LoadPostsData extends AbstractFixture implements FixtureInterface, Ordered
         $postsList->setSlug('posts');
         $postsList->setFullpath('posts');
         $postsList->setPosition(1);
-        $postsList->setStatus('published');
-//         $postsList->setParent($this->getReference('homepage'));
+        $postsList->setStatus('draft');
+        $postsList->setParent($this->getReference('homepage'));
         $manager->persist($postsList);
         $this->addReference('posts_list', $postsList);
         $manager->flush();

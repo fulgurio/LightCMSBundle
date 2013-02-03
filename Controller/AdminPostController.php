@@ -81,7 +81,7 @@ class AdminPostController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
-        return $this->render('FulgurioLightCMSBundle:AdminPost:add.html.twig', $options);
+        return $this->render('FulgurioLightCMSBundle:models:postAdminAddForm.html.twig', $options);
     }
 
     /**
