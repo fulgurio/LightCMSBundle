@@ -17,7 +17,7 @@
 #vakata-dragged.treeview .jstree-ok,
 #vakata-dragged.treeview .jstree-invalid,
 .treeview span .jstree-icon,
-.treeview a .jstree-icon { background:url("../img/page_white.png") 0 0 no-repeat !important;}
+.treeview a .jstree-icon { background:url("../img/page_white.png") 0 0 no-repeat}
 .treeview a.jstree-loading .jstree-icon { background:url("../img/ajaxLoader.gif") center center no-repeat !important; }
 
 .treeview .jstree-no-dots li,
