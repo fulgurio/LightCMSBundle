@@ -111,7 +111,7 @@ class AdminPageController extends Controller
         }
         $options['form'] = $form->createView();
         $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
-        if ($page->getParent()->getMetaValue('is_home') && $this->container->hasParameter('fulgurio_light_cms.languages'))
+        if ($page->getParent()&& $page->getParent()->getMetaValue('is_home') && $this->container->hasParameter('fulgurio_light_cms.languages'))
         {
             $options['useMultiLang'] = TRUE;
         }
@@ -159,6 +159,14 @@ class AdminPageController extends Controller
         ));
     }
 
+    /**
+     * Page copy, use for multilang site
+     *
+     * @param unknown $sourceId
+     * @param unknown $targetId
+     * @param unknown $lang
+     * @return Ambigous <\Symfony\Component\HttpFoundation\RedirectResponse, \Symfony\Component\HttpFoundation\Response>
+     */
     public function copyAction($sourceId, $targetId, $lang)
     {
         $em = $this->getDoctrine()->getEntityManager();
