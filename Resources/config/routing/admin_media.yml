@@ -1,3 +1,7 @@
+AdminMediasWysiwyg:
+    pattern:  /wysiwyg
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:wysiwyg }
+
 AdminMediasAdd:
     pattern:  /add
     defaults: { _controller: FulgurioLightCMSBundle:AdminMedia:add }

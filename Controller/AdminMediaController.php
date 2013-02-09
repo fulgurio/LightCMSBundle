@@ -20,12 +20,27 @@ class AdminMediaController extends Controller
      */
     public function listAction()
     {
-        $paginator = $this->get('knp_paginator');
-        $pageNb = $this->get('request')->query->get('page', 1);
-        $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllMedias($paginator, $pageNb);
-        return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
-            'medias' => $medias
-        ));
+        $nbPerPage = 10;
+        $request = $this->container->get('request');
+        $page = $this->get('request')->get('page') > 1 ? $request->get('page') - 1 : 0;
+        $mediasNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->count();
+        if ($request->isXmlHttpRequest())
+        {
+            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($nbPerPage, $page * $nbPerPage);
+            return $this->jsonResponse((object) array(
+                'medias' => $medias,
+                'nbMedias' => $mediasNb
+            ));
+        }
+        else
+        {
+        	//@todo : pagination
+            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findBy(array(), NULL, $nbPerPage, $page * $nbPerPage);
+            return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
+                'medias' => $medias,
+                'nbMedias' => $mediasNb
+            ));
+        }
     }
 
     /**
@@ -121,6 +136,17 @@ class AdminMediaController extends Controller
             'action' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $mediaId)),
             'confirmationMessage' => $this->get('translator')->trans('fulgurio.lightcms.medias.delete_confirm_message', array('%FILENAME%' => $media->getOriginalName()), 'admin'),
         ));
+    }
+
+    /**
+     * Wysiwyg media popup
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function wysiwygAction()
+    {
+        $form = $this->createForm(new AdminMediaType($this->container), new Media());
+        return $this->render('FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig', array('form' => $form->createView()));
     }
 
     /**

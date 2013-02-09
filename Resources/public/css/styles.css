@@ -2,3 +2,9 @@
 body {
 	padding-top: 60px;
 }
+img.alignleft {
+	float: left;
+}
+img.alignright {
+	float: right;
+}

@@ -16,3 +16,52 @@
 .treeview li.draft a .jstree-icon {
 	background-image: url("../img/page_white_error.png");
 }
+.mediaPopup .nav a {
+	cursor: pointer;
+}
+#fromAdress,
+#mediasLibrary {
+	display: none;
+}
+#mediasLibrary ul {
+	position: relative;
+	list-style: none;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+#mediasLibrary ul li { 
+	display: block; 
+	float: left; 
+	width: 110px; 
+	height: 110px;
+	position: relative;
+	margin: 5px;
+	overflow: hidden;
+}
+
+#mediasLibrary ul li.active img,
+#mediasLibrary ul li:hover img {
+	background: #08c;
+}
+#mediasLibrary ul li a {
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	display: block;
+}
+#mediasLibrary ul img {
+	height: 100px;
+}
+.mediaPopup .form-actions {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+.mediaPopup .form-actions button {
+	margin-right: 20px;
+}
+.mediaPopup .media_infos img {
+	height: 100px;
+}

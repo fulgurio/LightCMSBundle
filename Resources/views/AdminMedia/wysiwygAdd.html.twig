@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/admin.css') }}" />
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/tiny_mce/tiny_mce_popup.js') }}"></script>
+	<title>{% block title %}{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.title{% endtrans %}{% endblock %}</title>
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+<!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui.css') }}">
+	<noscript><link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui-noscript.css') }}"></noscript>
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+	<div class="mediaPopup">
+		<form id="fileupload" action="{{ path('AdminMediasAdd') }}" method="POST" enctype="multipart/form-data">
+			<div class="container-fluid">
+				<header>
+					<h1>{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.title{% endtrans %}</h1>
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-link="uploadFile">{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.send_file{% endtrans %}</a></li>
+{#}						<li><a data-link="fromAddress">Insérer à partir d'une adresse web</a></li>#}
+						<li><a data-link="mediasLibrary">{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.medias_library{% endtrans %}</a></li>
+					</ul>
+				</header>
+				<div class="row-fluid" id="uploadFile">
+					<div class="span10">
+						<noscript><input type="hidden" name="redirect" value="{{ path('AdminMedias') }}"></noscript>
+						<div class="fileupload-buttonbar">
+							<div class="span4">
+								<span class="btn btn-success fileinput-button">
+									<i class="icon-plus icon-white"></i>
+									<span>{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.add_file{% endtrans %}</span>
+									<input type="file" name="{{ form.media.get('full_name') }}" multiple>
+								</span>
+							</div>
+							<div class="span5 fileupload-progress fade">
+								<div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+									<div class="bar" style="width:0%;"></div>
+								</div>
+								<div class="progress-extended">&nbsp;</div>
+							</div>
+						</div>
+						<div class="fileupload-loading"></div>
+						<br>
+						<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+					</div>
+				</div>
+{#}				<div class="row-fluid">
+					<div class="control-group"id=" fromAddress">
+						<label class="control-label" for="p_url">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.url{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" name="" />
+						</div>
+					</div>
+				</div>#}
+				<div class="row-fluid" id="mediasLibrary">
+					<div class="span8">
+						<ul id="mediasLibraryList"></ul>
+					</div>
+					<div class="span4">
+						<div class="control-group well media_infos">
+							<span>{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.file_details{% endtrans %}</span>
+							<div>
+								<img src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" id="select_picture_src" class="img-polaroid" alt="" />
+							</div>
+							<strong id="select_picture_name">&nbsp;</strong>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="p_alt_text">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alt_text{% endtrans %}</label>
+							<div class="controls">
+								<input type="text" id="p_alt_text" name="" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="p_alignment">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alignment.alignment{% endtrans %}</label>
+							<div class="controls">
+								<select id="p_alignment">
+									<option value="">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alignment.none{% endtrans %}</option>
+									<option value="alignleft">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alignment.left{% endtrans %}</option>
+									<option value="aligncenter">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alignment.center{% endtrans %}</option>
+									<option value="alignright">{% trans from "admin" %}fulgurio.lightcms.medias.wysiwyg.alignment.right{% endtrans %}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer>
+				<div class="form-actions">
+					<input type="hidden" name="{{ form._token.get('full_name') }}" value="{{ form._token.get('value') }}" />
+					<button disabled="disabled" class="btn btn-primary pull-right" id="mediaSubmit">{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.insert_into_post{% endtrans %}</button>
+				</div>
+			</footer>
+		</form>
+		<script id="media-elt" type="text/x-tmpl"></script>
+	</div>
+<script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.widget.js') }}"></script>
+<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+<script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/jquery.iframe-transport.js') }}"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload.js') }}"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload-fp.js') }}"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload-ui.js') }}"></script>
+<script>
+$(window).load(function() {
+	//@todo : do better
+	$('#mediasLibraryList').height($(document).height() - 40 - 10 - 10 - 37 - 20 - 30-20-20 -22)
+});
+$(function () {
+	var ed = tinyMCEPopup.editor;
+	var selectedPicture;
+	var nbPictures = 0;
+	var currentPage = 0;
+	var nbLoadedPictures = 0;
+	$('#fileupload').fileupload({
+		autoUpload: true,
+		// Uncomment the following to send cross-domain cookies:
+		//xhrFields: {withCredentials: true},
+		url: '{{ path('AdminMediasAdd') }}',
+		added: function(e, o) {
+			$("a[data-link='mediasLibrary']").click();
+		},
+		uploadTemplateId: null,
+		downloadTemplateId: null,
+		uploadTemplate: null,
+		downloadTemplate: null,
+	});
+	var activeToggle = $('ul.nav li.active a');
+	$('ul.nav a').click(function() {
+		activeToggle.parent().removeClass('active');
+		$(this).parent().addClass('active');
+		$('#' + activeToggle.attr('data-link')).hide();
+		$('#' + $(this).attr('data-link')).show();
+		activeToggle = $(this);
+		if ($(this).attr('data-link') == 'mediasLibrary' && $('#mediasLibraryList li').length == 0) {
+			loadPictures(1);
+		}
+	});
+	function loadPictures(p) {
+		if (currentPage != p) {
+			currentPage = p;
+			$.ajax('{{ path('AdminMedias') }}?page=' + p, {
+				success: function(d) {
+					for (var i = 0; d.medias[i]; i++) {
+						var li = $('<li data-id="' + d.medias[i].id + '"><a><img src="' + d.medias[i].full_path + '" alt="' + d.medias[i].original_name + '" class="img-polaroid" /></a></li>');
+						$('#mediasLibraryList').append(li);
+						li.click(selectPicture);
+					}
+					nbPictures = d.nbMedias;
+					nbLoadedPictures += d.medias.length;
+					if (nbLoadedPictures < d.nbMedias && $('#mediasLibraryList')[0].clientHeight == $('#mediasLibraryList')[0].scrollHeight) {
+						loadPictures(p+1);
+					}
+				}
+			});
+		}
+	}
+	$('#mediasLibraryList').scroll(function(e) {
+		if ($(this)[0].offsetHeight + $(this)[0].scrollTop ==  $(this)[0].scrollHeight && nbLoadedPictures < nbPictures) {
+			loadPictures(currentPage+1);
+		}
+	});
+	function selectPicture() {
+		if (selectedPicture) {
+			selectedPicture.removeClass('active');
+		}
+		if (selectedPicture && selectedPicture.attr('data-id') == $(this).attr('data-id')) {
+			$("#select_picture_src").attr('src', 'http://www.placehold.it/100x100/EFEFEF/AAAAAA');
+			$("#select_picture_name").html('&nbsp;');
+			$('#mediaSubmit').attr('disabled', 'disabled');
+			selectedPicture = undefined;
+		}
+		else {
+			$('#mediaSubmit').removeAttr('disabled');
+			$(this).addClass('active');
+			selectedPicture = $(this);
+			$("#select_picture_src").attr('src', selectedPicture.find('img').attr('src'));
+			$("#select_picture_name").html(selectedPicture.find('img').attr('alt'));
+		}
+	}
+	$('#mediaSubmit').click(function() {
+		event.stopPropagation();
+		tinyMCEPopup.restoreSelection();
+		// Fixes crash in Safari
+		if (tinymce.isWebKit) {
+			ed.getWin().focus();
+		}
+		var args = {
+			src : $("#select_picture_src").attr('src'),
+			alt : $("#p_alt_text").attr('value'),
+			'class' : $("#p_alignment").val()
+		};
+		el = ed.selection.getNode();
+		if (el && el.nodeName == 'IMG') {
+			ed.dom.setAttribs(el, args);
+		}
+		else {
+			tinymce.each(args, function(value, name) {
+				if (value === "") {
+					delete args[name];
+				}
+			});
+			ed.execCommand('mceInsertContent', false, tinyMCEPopup.editor.dom.createHTML('img', args), {skip_undo : 1});
+			ed.undoManager.add();
+		}
+		tinyMCEPopup.editor.execCommand('mceRepaint');
+		tinyMCEPopup.editor.focus();
+		tinyMCEPopup.close();
+	});
+	if ($(ed.selection.getNode()).attr("src")) {
+		$("a[data-link=mediasLibrary]").click();
+		$("#select_picture_src").attr("src", $(ed.selection.getNode()).attr('src'));
+		$("#p_alt_text").attr("value", $(ed.selection.getNode()).attr('alt'));
+		$("#p_alignment option").each(function() {
+			if ($(ed.selection.getNode()).hasClass($(this).val())) {
+				$(this).attr('selected', true);
+			}
+		});
+		$("#mediasLibrary li img").each(function(e, o) {
+			if ($(o).attr('src') == $(ed.selection.getNode()).attr('src'))
+			{
+				selectedPicture = $(o).parent().parent();
+				selectedPicture.addClass('active');
+			}
+		});
+		$('#mediaSubmit').removeAttr('disabled');
+	}
+});
+</script>
+<!--[if gte IE 8]><script src="{{ asset('bundles/fulguriolightcms/js/jquery.xdr-transport.js') }}"></script><![endif]-->
+</body>
+</html>

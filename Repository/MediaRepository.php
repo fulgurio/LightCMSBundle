@@ -13,17 +13,15 @@ use Knp\Component\Pager\Paginator;
  */
 class MediaRepository extends EntityRepository
 {
-    /**
-     * Find all medias
-     *
-     * @param $paginator
-     * @param integer $nbPostPerPage
-     * @return ArrayCollection
-     */
-    public function findAllMedias(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m ORDER BY m.created_at DESC');
-        return $query->getResult();
-//         return $paginator->paginate($query, $pageNb, $nbPostPerPage);
-    }
+	public function findAllWithPagination($limit, $offset)
+	{
+		$query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m')->setMaxResults($limit)->setFirstResult($offset);
+		return $query->getArrayResult();
+	}
+
+	public function count()
+	{
+		$query = $this->getEntityManager()->createQuery('SELECT COUNT(m) FROM FulgurioLightCMSBundle:Media m');
+		return $query->getSingleScalarResult();
+	}
 }

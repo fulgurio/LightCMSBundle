@@ -101,7 +101,22 @@ fulgurio:
         legend:                     Edit medias 
         success_msg:                Media has been modified !
       delete_confirm_message:       Are you sure to delete "%FILENAME%" ?
-    upload_file:
-      send_button:                  Send
-      picture_label:                Picture file
-      file_must_be_picture_error:   The file must be a picture
+      wysiwyg:
+        title:                      Insert a media
+        send_file:                  Send a file
+        medias_library:             Medias library
+        file_details:               File details
+        alt_text:                   Alternative text
+        alignment:
+          alignment:                Alignment
+          none:                     None
+          left:                     Left
+          center:                   Center
+          right:                    Right
+        add_file:                   Add file
+        url:                        Url
+        insert_into_post:           Insert into post
+#    upload_file:
+#      send_button:                  Send
+#      picture_label:                Picture file
+#      file_must_be_picture_error:   The file must be a picture
