@@ -161,7 +161,13 @@ class AdminMediaController extends Controller
     public function wysiwygAction()
     {
         $form = $this->createForm(new AdminMediaType($this->container), new Media());
-        return $this->render('FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig', array('form' => $form->createView()));
+        return $this->render(
+            'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
+            array(
+                'form' => $form->createView(),
+                'wysiwyg' => $this->container->get('request')->get('wyziwyg')
+            )
+        );
     }
 
     /**

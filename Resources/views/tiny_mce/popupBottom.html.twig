@@ -1,0 +1,53 @@
+<script>
+$(function() {
+	var ed = tinyMCEPopup.editor;
+	$('#mediaSubmit').click(function() {
+		event.stopPropagation();
+		tinyMCEPopup.restoreSelection();
+		// Fixes crash in Safari
+		if (tinymce.isWebKit) {
+			ed.getWin().focus();
+		}
+		var args = {
+			src : $("#select_picture_src").attr('src'),
+			alt : $("#p_alt_text").attr('value'),
+			'class' : $("#p_alignment").val()
+		};
+		el = ed.selection.getNode();
+		if (el && el.nodeName == 'IMG') {
+			ed.dom.setAttribs(el, args);
+		}
+		else {
+			tinymce.each(args, function(value, name) {
+				if (value === "") {
+					delete args[name];
+				}
+			});
+			ed.execCommand('mceInsertContent', false, tinyMCEPopup.editor.dom.createHTML('img', args), {skip_undo : 1});
+			ed.undoManager.add();
+		}
+		tinyMCEPopup.editor.execCommand('mceRepaint');
+		tinyMCEPopup.editor.focus();
+		tinyMCEPopup.close();
+		return false;
+	});
+	if ($(ed.selection.getNode()).attr("src")) {
+		$("a[data-link=mediasLibrary]").click();
+		$("#select_picture_src").attr("src", $(ed.selection.getNode()).attr('src'));
+		$("#p_alt_text").attr("value", $(ed.selection.getNode()).attr('alt'));
+		$("#p_alignment option").each(function() {
+			if ($(ed.selection.getNode()).hasClass($(this).val())) {
+				$(this).attr('selected', true);
+			}
+		});
+		$("#mediasLibrary li img").each(function(e, o) {
+			if ($(o).attr('src') == $(ed.selection.getNode()).attr('src'))
+			{
+				selectedPicture = $(o).parent().parent();
+				selectedPicture.addClass('active');
+			}
+		});
+		$('#mediaSubmit').removeAttr('disabled');
+	}
+});
+</script>
