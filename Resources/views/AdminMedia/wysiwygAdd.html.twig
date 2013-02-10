@@ -99,7 +99,6 @@
 		<script id="media-elt" type="text/x-tmpl"></script>
 	</div>
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.widget.js') }}"></script>
-<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
 <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
 <script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.iframe-transport.js') }}"></script>
@@ -122,7 +121,14 @@ $(function () {
 		// Uncomment the following to send cross-domain cookies:
 		//xhrFields: {withCredentials: true},
 		url: '{{ path('AdminMediasAdd') }}',
-		added: function(e, o) {
+		done: function(e, d) {
+			if ($('#mediasLibraryList li').length > 0) {
+				eval('var f = ' + d.jqXHR.responseText + ';');
+				var li = $('<li data-id="' + f.files[0].id + '"><a><img src="' + f.files[0].thumbnail_url + '" alt="' + f.files[0].name + '" class="img-polaroid" /></a></li>');
+				$('#mediasLibraryList').append(li);
+				li.click(selectPicture);
+				li.click();
+			}
 			$("a[data-link='mediasLibrary']").click();
 		},
 		uploadTemplateId: null,
