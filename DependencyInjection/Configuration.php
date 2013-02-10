@@ -71,6 +71,18 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->children()
+                ->arrayNode('thumbs')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->end()
+                            ->scalarNode('width')->end()
+                            ->scalarNode('height')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->children()
                 ->arrayNode('models')
                     ->useAttributeAsKey('name')
                     ->addDefaultsIfNotSet()
@@ -97,6 +109,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-        return $treeBuilder;
+                    return $treeBuilder;
     }
 }

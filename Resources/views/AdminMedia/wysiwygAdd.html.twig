@@ -147,7 +147,7 @@ $(function () {
 			$.ajax('{{ path('AdminMedias') }}?page=' + p, {
 				success: function(d) {
 					for (var i = 0; d.medias[i]; i++) {
-						var li = $('<li data-id="' + d.medias[i].id + '"><a><img src="' + d.medias[i].full_path + '" alt="' + d.medias[i].original_name + '" class="img-polaroid" /></a></li>');
+						var li = $('<li data-id="' + d.medias[i].id + '"><a><img src="' + d.medias[i].thumb + '" alt="' + d.medias[i].original_name + '" class="img-polaroid" /></a></li>');
 						$('#mediasLibraryList').append(li);
 						li.click(selectPicture);
 					}

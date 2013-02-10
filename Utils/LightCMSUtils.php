@@ -69,6 +69,18 @@ class LightCMSUtils
     }
 
     /**
+     * Get thumb filename for a specified size
+     * @param string $filename
+     * @param array $size Contains width and height
+     * @return string
+     */
+    static public function getThumbFilename($filename, $size)
+    {
+        $pos = strrpos($filename, '.');
+        return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
+    }
+
+    /**
      * Image cropper
      *
      * @param string $sourcefile
@@ -76,6 +88,7 @@ class LightCMSUtils
      * @param integer $fw
      * @param integer $fh
      * @param integer $jpegquality
+     * @todo : use Exception
      */
     static function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 100)
     {

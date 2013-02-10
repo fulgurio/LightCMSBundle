@@ -21,18 +21,16 @@
 <br />
 <ul class="thumbnails">
 {% for media in medias %}
-	<li class="span4">
+	<li class="span2">
 		<div class="thumbnail">
 {%    if media.fullPath is null %}
 			<img src="http://www.placehold.it/50x50/EFEFEF/AAAAAA" data-src="holder.js/300x200" alt=""></a>
 {%    else %}
-			<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ media.fullPath }}" alt="" /></a>
+			<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ thumb(media.fullPath, 'medium') }}" alt="" /></a>
 {%    endif %}
-			<h3>{{ media.originalName }}</h3>
-			<p>
-{#}								<a href="{{ path('AdminMediasEdit', {mediaId: media.id}) }}" class="icon-edit"></a>#}
-								<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
-			</p>
+			<h6>{{ media.originalName }}
+			<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="pull-right icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+			</h6>
 		</div>
 	</li>
 {% endfor %}

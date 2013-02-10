@@ -7,6 +7,8 @@ use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminMediaHandler extends AbstractAdminHandler
 {
+    private $thumbSizes;
+
     /**
      * Processing form values
      *
@@ -37,7 +39,20 @@ class AdminMediaHandler extends AbstractAdminHandler
                     $mediaType = preg_split('/\//', $mimeType);
                     $media->setMediaType($mediaType[0]);
                     $file->move(LightCMSUtils::getUploadDir(), $filename);
-//                     $file->getClientSize();
+                    if (isset($this->thumbSizes))
+                    {
+                        foreach ($this->thumbSizes as $size)
+                        {
+                            //@todo: choose crop or resize
+                            LightCMSUtils::cropPicture(
+                                LightCMSUtils::getUploadDir() . $filename,
+                                LightCMSUtils::getUploadDir() . LightCMSUtils::getThumbFilename($filename, $size),
+                                $size['width'],
+                                $size['height']
+                            );
+                        }
+                    }
+//                  $file->getClientSize();
                 }
                 // New media
                 if ($media->getId() == 0)
@@ -52,5 +67,10 @@ class AdminMediaHandler extends AbstractAdminHandler
             }
         }
         return (FALSE);
+    }
+
+    public function setThumbSizes($sizes)
+    {
+        $this->thumbSizes = $sizes;
     }
 }

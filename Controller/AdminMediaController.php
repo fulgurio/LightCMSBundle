@@ -27,6 +27,11 @@ class AdminMediaController extends Controller
         if ($request->isXmlHttpRequest())
         {
             $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($nbPerPage, $page * $nbPerPage);
+            $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
+            foreach ($medias as &$media)
+            {
+                $media['thumb'] = LightCMSUtils::getThumbFilename($media['full_path'], $thumbSizes['medium']);
+            }
             return $this->jsonResponse((object) array(
                 'medias' => $medias,
                 'nbMedias' => $mediasNb
@@ -34,7 +39,7 @@ class AdminMediaController extends Controller
         }
         else
         {
-        	//@todo : pagination
+            //@todo : pagination
             $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findBy(array(), NULL, $nbPerPage, $page * $nbPerPage);
             return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
                 'medias' => $medias,
@@ -77,16 +82,18 @@ class AdminMediaController extends Controller
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));
         $formHandler->setDoctrine($this->getDoctrine());
+        $formHandler->setThumbSizes($this->container->getParameter('fulgurio_light_cms.thumbs'));
         if ($formHandler->process($media))
         {
             if ($request->isXmlHttpRequest())
             {
+                $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
                 return $this->jsonResponse((object) array('files' => array(
                     (object) array(
                         'id' => $media->getId(),
                         'name' => $media->getOriginalName(),
                         'url' => $media->getFullPath(),
-                        'thumbnail_url' => $media->getFullPath(),
+                        'thumbnail_url' => LightCMSUtils::getThumbFilename($media->getFullPath(), $thumbSizes['medium']),
                         'delete_url' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $media->getId(), 'confirm' => 'yes')),
                         'delete_type' => 'GET'
                     )
@@ -121,6 +128,14 @@ class AdminMediaController extends Controller
             if (is_file($filename))
             {
                 unlink($filename);
+            }
+            foreach ($this->container->getParameter('fulgurio_light_cms.thumbs') as $size)
+            {
+                $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $size);
+                if (is_file($filename))
+                {
+                    unlink($filename);
+                }
             }
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($media);

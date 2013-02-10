@@ -78,6 +78,19 @@ class FulgurioLightCMSExtension extends Extension
             );
         }
         $container->setParameter('fulgurio_light_cms.models', $config['models']);
+        if (!isset($config['thumbs']))
+        {
+            $config['thumbs'] = array();
+        }
+            if (!isset($config['thumbs']['small']))
+        {
+            $config['thumbs']['small'] = array('width' => 100, 'height' => 100);
+        }
+        if (!isset($config['thumbs']['medium']))
+        {
+            $config['thumbs']['medium'] = array('width' => 200, 'height' => 200);
+        }
+        $container->setParameter('fulgurio_light_cms.thumbs', $config['thumbs']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

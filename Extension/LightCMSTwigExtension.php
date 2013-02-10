@@ -2,6 +2,7 @@
 namespace Fulgurio\LightCMSBundle\Extension;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
+use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LightCMSTwigExtension extends \Twig_Extension
@@ -47,10 +48,11 @@ class LightCMSTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'dataForBreadcrumb' => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
-            'pagePath'          => new \Twig_Function_Method($this, 'getPagePath'),
-            'allowChildrens'    => new \Twig_Function_Method($this, 'allowChildrens'),
-            'needTranslatedPages'    => new \Twig_Function_Method($this, 'needTranslatedPages'),
+            'dataForBreadcrumb'   => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
+            'pagePath'            => new \Twig_Function_Method($this, 'getPagePath'),
+            'allowChildrens'      => new \Twig_Function_Method($this, 'allowChildrens'),
+            'needTranslatedPages' => new \Twig_Function_Method($this, 'needTranslatedPages'),
+            'thumb'               => new \Twig_Function_Method($this, 'thumb'),
         );
     }
 
@@ -165,6 +167,17 @@ class LightCMSTwigExtension extends \Twig_Extension
             }
         }
         return FALSE;
+    }
+
+    /**
+     * Get thumb of a picture
+     *
+     * @param Page $page
+     */
+    public function thumb($filename, $size = 'small')
+    {
+        $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
+        return LightCMSUtils::getThumbFilename($filename, $thumbSizes[$size]);
     }
 
     /**
