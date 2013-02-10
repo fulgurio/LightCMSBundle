@@ -1,0 +1,22 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.menus.title{% endtrans %}{% endblock %}
+{% block content %}
+<h1>{% trans from 'admin' %}fulgurio.lightcms.menus.legend{% endtrans %}</h1>
+<div>
+{% for menuName, pages in menuPages %}
+	<h2>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ menuName)|trans({}, 'admin') }}</h2>
+{%   if pages|length > 0 %}
+	<ul class="menus">
+{%     for position, page in pages %}
+		<li>
+			{% if position > 0 %}<a href="{{ path('AdminMenusUp', { pageId: page.id, menuName: menuName}) }}" class=" icon-arrow-up"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
+			{% if position != (pages|length - 1) %}<a href="{{ path('AdminMenusDown', { pageId: page.id, menuName: menuName }) }}" class=" icon-arrow-down"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
+			<span{% if page.status == 'draft' %} class="draft{% endif %}">{{ page.title }}</span></li>
+{%     endfor %}
+	</ul>
+{%   else %}
+	<p>{% trans from 'admin' %}fulgurio.lightcms.menus.no_page{% endtrans %}</p>
+{%   endif %}
+{% endfor %}
+</div>
+{% endblock %}

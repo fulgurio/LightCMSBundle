@@ -58,6 +58,10 @@ Fulgurio\LightCMSBundle\Entity\Page:
       targetEntity: PageMeta
       mappedBy: page
       cascade: [ remove ]
+    menu:
+      targetEntity: PageMenu
+      mappedBy: page
+      cascade: [ remove ]
   manyToOne:
     parent:
       targetEntity: Page

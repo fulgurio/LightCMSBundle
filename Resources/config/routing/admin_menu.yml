@@ -1,0 +1,11 @@
+AdminMenusUp:
+    pattern:  /{pageId}/{menuName}/up
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:up }
+
+AdminMenusDown:
+    pattern:  /{pageId}/{menuName}/down
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:down }
+
+AdminMenus:
+    pattern:  /
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:list }

@@ -3,6 +3,7 @@ namespace Fulgurio\LightCMSBundle\Form;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Fulgurio\LightCMSBundle\Entity\PageMeta;
+use Fulgurio\LightCMSBundle\Entity\PageMenu;
 use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
 
 class AdminPageHandler extends AbstractAdminHandler
@@ -39,6 +40,7 @@ class AdminPageHandler extends AbstractAdminHandler
             {
                 $data = $this->request->get('page');
                 $this->updatePageMetas($page, $data);
+                $this->updatePageMenuPosition($page);
                 $em = $this->doctrine->getEntityManager();
                 // New page
                 if ($page->getId() == 0)
@@ -134,6 +136,59 @@ class AdminPageHandler extends AbstractAdminHandler
         if (isset($data['meta_description']) && trim($data['meta_description']) != '')
         {
             $em->persist($this->initMetaEntity($page, 'meta_description', $data['meta_description']));
+        }
+    }
+
+    /**
+     * Update page menu position
+     *
+     * @param Page $page
+     */
+    private function updatePageMenuPosition(Page $page)
+    {
+        $pageMenuRepository = $this->doctrine->getRepository('FulgurioLightCMSBundle:PageMenu');
+        $em = $this->doctrine->getEntityManager();
+        $data = $this->request->get('page');
+        if (isset($data['availableMenu']))
+        {
+            if (!is_null($page->getId()))
+            {
+                $menus = $page->getMenu();
+                $alreadyInMenu = array();
+                foreach ($menus as $menu)
+                {
+                    if (!in_array($menu->getLabel(), $data['availableMenu']))
+                    {
+                        $pageMenuRepository->upMenuPagesPosition($menu->getLabel(), $menu->getPosition() + 1);
+                        $em->remove($menu);
+                    }
+                    else
+                    {
+                        $alreadyInMenu[] = $menu->getLabel();
+                    }
+                }
+            }
+            foreach ($data['availableMenu'] as $menuLabel)
+            {
+                // If it s a new page, or if it a page which we had a new menu
+                if (!isset($alreadyInMenu) || !in_array($menuLabel, $alreadyInMenu))
+                {
+                    $menu = new PageMenu();
+                    $menu->setPosition($pageMenuRepository->getNextMenuPosition($menuLabel));
+                    $menu->setLabel($menuLabel);
+                    $menu->setPage($page);
+                    $em->persist($menu);
+                }
+            }
+        }
+        else if (!is_null($page->getId()))
+        {
+            $menus = $page->getMenu();
+            foreach ($menus as $menu)
+            {
+                $pageMenuRepository->upMenuPagesPosition($menu->getLabel(), $menu->getPosition() + 1);
+                $em->remove($menu);
+            }
         }
     }
 

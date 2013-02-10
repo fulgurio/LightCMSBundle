@@ -92,6 +92,11 @@ class FulgurioLightCMSExtension extends Extension
         }
         $container->setParameter('fulgurio_light_cms.thumbs', $config['thumbs']);
 
+        if (isset($config['menus']))
+        {
+            $container->setParameter('fulgurio_light_cms.menus', $config['menus']);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

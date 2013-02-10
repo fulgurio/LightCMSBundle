@@ -53,6 +53,7 @@ class LightCMSTwigExtension extends \Twig_Extension
             'allowChildrens'      => new \Twig_Function_Method($this, 'allowChildrens'),
             'needTranslatedPages' => new \Twig_Function_Method($this, 'needTranslatedPages'),
             'thumb'               => new \Twig_Function_Method($this, 'thumb'),
+            'getPagesMenu'        => new \Twig_Function_Method($this, 'getPagesMenu', array('is_safe' => array('html'))),
         );
     }
 
@@ -178,6 +179,53 @@ class LightCMSTwigExtension extends \Twig_Extension
     {
         $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
         return LightCMSUtils::getThumbFilename($filename, $thumbSizes[$size]);
+    }
+
+    /**
+     * Get page menu to display
+     *
+     * @param string $menuName
+     * @return array
+     */
+    public function getPagesMenu($menuName)
+    {
+//         $currentUser = $this->securityContext->getToken()->getUser();
+//         if ($currentUser != 'anon.')
+//         {
+//             $roles = $currentUser->getRoles();
+//         }
+//         else
+//         {
+//             $roles = array();
+//         }
+        $pages = $this->doctrine->getRepository('FulgurioLightCMSBundle:PageMenu')->findPagesOfMenu($menuName);
+        $availablePages = array();
+        foreach ($pages as &$page)
+        {
+            if ($page->getStatus() != 'published')
+            {
+                continue;
+            }
+//             $pageAccesses = $page->getAccess();
+//             if (empty($pageAccesses))
+//             {
+                $page->setAllowedChildren($this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getAllowedChildren($roles, $page));
+                $availablePages[] = $page;
+//             }
+//             else if (is_object($currentUser))
+//             {
+//                 foreach ($pageAccesses as $pageAccess)
+//                 {
+//                     if ($currentUser->hasRole($pageAccess))
+//                     {
+//                         $page->setAllowedChildren($this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getAllowedChildren($roles, $page));
+//                         $availablePages[] = $page;
+//                         break;
+//                     }
+//                 }
+//             }
+        }
+        return ($availablePages);
     }
 
     /**

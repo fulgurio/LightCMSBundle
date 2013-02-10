@@ -13,6 +13,7 @@ fulgurio:
       pages_link:                   Pages
       posts_link:                   Posts
       medias_link:                  Medias
+      menus_link:                   Menus
     page_not_found:                 Page not found
     pages:
       title:                        Pages admin
@@ -116,7 +117,10 @@ fulgurio:
         add_file:                   Add file
         url:                        Url
         insert_into_post:           Insert into post
-#    upload_file:
-#      send_button:                  Send
-#      picture_label:                Picture file
-#      file_must_be_picture_error:   The file must be a picture
+    menus:
+      title:                        Menus manager
+      legend:                       Menus manager
+      no_page:                      No page associated to menu
+      moving_success_msg:           Menu changed is successfull !
+      add_form:
+        menu_label:                 Menu

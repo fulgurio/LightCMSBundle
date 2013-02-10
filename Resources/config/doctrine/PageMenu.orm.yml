@@ -1,0 +1,19 @@
+Fulgurio\LightCMSBundle\Entity\PageMenu:
+  type: entity
+  repositoryClass: Fulgurio\LightCMSBundle\Repository\PageMenuRepository
+  table: page_menu
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    label:
+      type: string
+      length: 255
+    position:
+      type: integer
+  manyToOne:
+    page:
+      targetEntity: Page
+      inversedBy: menu

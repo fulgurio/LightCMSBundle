@@ -108,7 +108,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+            ->children()
+                ->arrayNode('menus')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+        ;
                     return $treeBuilder;
     }
 }

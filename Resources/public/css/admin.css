@@ -65,3 +65,8 @@
 .mediaPopup .media_infos img {
 	height: 100px;
 }
+
+ul.menus {
+	list-style: none;
+}
+}

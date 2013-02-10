@@ -1,3 +1,7 @@
+LightCMS_Admin_Menus:
+    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_menu.yml"
+    prefix:   /admin/menus
+
 LightCMS_Admin_Medias:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_media.yml"
     prefix:   /admin/medias

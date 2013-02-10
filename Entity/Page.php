@@ -49,6 +49,29 @@ class Page
     	return (count($this->getChildren()) > 0);
     }
 
+    /**
+     * Get available menu
+     *
+     * @return NULL|multitype:string
+     */
+    public function getAvailableMenu()
+    {
+    	$availableMenus = array();
+    	$menus = $this->getMenu();
+    	if (!$menus)
+    	{
+    		return (NULL);
+    	}
+    	foreach ($menus as $menu)
+    	{
+    		$availableMenus[] = $menu->getLabel();
+    	}
+    	return ($availableMenus);
+    }
+
+
+    public function setAvailableMenu($selectedMenus) {}
+
 
     /**
      * @var integer $id
@@ -116,6 +139,11 @@ class Page
     private $meta;
 
     /**
+     * @var Fulgurio\LightCMSBundle\Entity\PageMenu
+     */
+    private $menu;
+
+    /**
      * @var Fulgurio\LightCMSBundle\Entity\Page
      */
     private $parent;
@@ -124,6 +152,7 @@ class Page
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->menu = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -414,6 +443,26 @@ class Page
     public function getMeta()
     {
         return $this->meta;
+    }
+
+    /**
+     * Add menu
+     *
+     * @param Fulgurio\LightCMSBundle\Entity\PageMenu $menu
+     */
+    public function addPageMenu(\Fulgurio\LightCMSBundle\Entity\PageMenu $menu)
+    {
+        $this->menu[] = $menu;
+    }
+
+    /**
+     * Get menu
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMenu()
+    {
+        return $this->menu;
     }
 
     /**
