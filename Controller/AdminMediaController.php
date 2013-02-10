@@ -40,7 +40,7 @@ class AdminMediaController extends Controller
         else
         {
             //@todo : pagination
-            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findBy(array(), NULL, $nbPerPage, $page * $nbPerPage);
+            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findBy(array(), array('created_at' => 'DESC'), $nbPerPage, $page * $nbPerPage);
             return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
                 'medias' => $medias,
                 'nbMedias' => $mediasNb

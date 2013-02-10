@@ -15,7 +15,7 @@ class MediaRepository extends EntityRepository
 {
 	public function findAllWithPagination($limit, $offset)
 	{
-		$query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m')->setMaxResults($limit)->setFirstResult($offset);
+		$query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m ORDER BY m.created_at DESC')->setMaxResults($limit)->setFirstResult($offset);
 		return $query->getArrayResult();
 	}
 
