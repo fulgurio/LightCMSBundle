@@ -209,7 +209,7 @@ class LightCMSTwigExtension extends \Twig_Extension
 //             $pageAccesses = $page->getAccess();
 //             if (empty($pageAccesses))
 //             {
-                $page->setAllowedChildren($this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getAllowedChildren($roles, $page));
+//                 $page->setAllowedChildren($this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getAllowedChildren($roles, $page));
                 $availablePages[] = $page;
 //             }
 //             else if (is_object($currentUser))
