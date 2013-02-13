@@ -26,10 +26,11 @@
 {%    if media.fullPath is null %}
 			<img src="http://www.placehold.it/50x50/EFEFEF/AAAAAA" data-src="holder.js/300x200" alt=""></a>
 {%    else %}
-			<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ thumb(media.fullPath, 'medium') }}" alt="" /></a>
+			<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ thumb(media, 'medium') }}" alt="" /></a>
 {%    endif %}
-			<h6>{{ media.originalName }}
-			<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="pull-right icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+			<h6 title="{{ media.originalName }}"><span>{{ media.originalName }}</span>
+				<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="pull-right icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+				<br class="clearfix" />
 			</h6>
 		</div>
 	</li>
@@ -37,7 +38,6 @@
 </ul>
 {#{{ medias.render('FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}#}
 			</form>
-{% include 'FulgurioLightCMSBundle::adminPopup.html.twig' %}
 {% include 'FulgurioLightCMSBundle::adminLightbox.html.twig' %}
 {% endif %}
 {% endblock %}

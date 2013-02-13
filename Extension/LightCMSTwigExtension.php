@@ -175,10 +175,10 @@ class LightCMSTwigExtension extends \Twig_Extension
      *
      * @param Page $page
      */
-    public function thumb($filename, $size = 'small')
+    public function thumb($media, $size = 'small')
     {
         $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
-        return LightCMSUtils::getThumbFilename($filename, $thumbSizes[$size]);
+        return LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $thumbSizes[$size]);
     }
 
     /**

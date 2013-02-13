@@ -1,6 +1,7 @@
 <?php
 namespace Fulgurio\LightCMSBundle\Utils;
 
+use Fulgurio\LightCMSBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -70,14 +71,27 @@ class LightCMSUtils
 
     /**
      * Get thumb filename for a specified size
+     *
      * @param string $filename
+     * @param string $mimeType
      * @param array $size Contains width and height
      * @return string
      */
-    static public function getThumbFilename($filename, $size)
+    static public function getThumbFilename($filename, $mimeType, $size)
     {
-        $pos = strrpos($filename, '.');
-        return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
+    	if (substr($mimeType, 0, 5) == 'image')
+    	{
+        	$pos = strrpos($filename, '.');
+        	return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
+    	}
+    	else if ($mimeType == 'application/pdf')
+    	{
+    		return ($GLOBALS['kernel']->getContainer()->get('templating.helper.assets')->getUrl('bundles/fulguriolightcms/img/thumb_pdf.png'));
+    	}
+    	else
+    	{
+    		return ('http://www.placehold.it/' . $size['width'] . 'x' . $size['height'] . '/EFEFEF/AAAAAA');
+    	}
     }
 
     /**

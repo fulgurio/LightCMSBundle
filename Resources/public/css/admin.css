@@ -11,7 +11,7 @@
 	font-style: italic;
 }
 .treeview li.page_redirect a .jstree-icon {
-    background-image: url("../img/page_white_world.png");
+	background-image: url("../img/page_white_world.png");
 }
 .treeview li.draft a .jstree-icon {
 	background-image: url("../img/page_white_error.png");
@@ -38,7 +38,6 @@
 	margin: 5px;
 	overflow: hidden;
 }
-
 #mediasLibrary ul li.active img,
 #mediasLibrary ul li:hover img {
 	background: #08c;
@@ -65,8 +64,13 @@
 .mediaPopup .media_infos img {
 	height: 100px;
 }
-
 ul.menus {
 	list-style: none;
 }
+.thumbnails .thumbnail h6 span {
+	overflow: hidden;
+	width: 110px;
+	display:block;
+	float: left;
+	cursor: default;
 }

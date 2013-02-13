@@ -36,17 +36,17 @@ class AdminMediaHandler extends AbstractAdminHandler
                     $media->setFullPath(LightCMSUtils::getUploadUrl() . $filename);
                     $media->setOriginalName($file->getClientOriginalName());
                     $mimeType = $file->getMimeType();
-                    $mediaType = preg_split('/\//', $mimeType);
-                    $media->setMediaType($mediaType[0]);
+                    $media->setMediaType($mimeType);
                     $file->move(LightCMSUtils::getUploadDir(), $filename);
-                    if (isset($this->thumbSizes))
+                    $mediaType = preg_split('/\//', $mimeType);
+                    if (isset($this->thumbSizes) && $mediaType[0] == 'image')
                     {
                         foreach ($this->thumbSizes as $size)
                         {
                             //@todo: choose crop or resize
                             LightCMSUtils::cropPicture(
                                 LightCMSUtils::getUploadDir() . $filename,
-                                LightCMSUtils::getUploadDir() . LightCMSUtils::getThumbFilename($filename, $size),
+                                LightCMSUtils::getUploadDir() . LightCMSUtils::getThumbFilename($filename, $mimeType, $size),
                                 $size['width'],
                                 $size['height']
                             );

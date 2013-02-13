@@ -30,7 +30,7 @@ class AdminMediaController extends Controller
             $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
             foreach ($medias as &$media)
             {
-                $media['thumb'] = LightCMSUtils::getThumbFilename($media['full_path'], $thumbSizes['medium']);
+                $media['thumb'] = LightCMSUtils::getThumbFilename($media['full_path'], $media['media_type'], $thumbSizes['medium']);
             }
             return $this->jsonResponse((object) array(
                 'medias' => $medias,
@@ -93,7 +93,7 @@ class AdminMediaController extends Controller
                         'id' => $media->getId(),
                         'name' => $media->getOriginalName(),
                         'url' => $media->getFullPath(),
-                        'thumbnail_url' => LightCMSUtils::getThumbFilename($media->getFullPath(), $thumbSizes['medium']),
+                        'thumbnail_url' => LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $thumbSizes['medium']),
                         'delete_url' => $this->generateUrl('AdminMediasRemove', array('mediaId' => $media->getId(), 'confirm' => 'yes')),
                         'delete_type' => 'GET'
                     )
@@ -131,10 +131,13 @@ class AdminMediaController extends Controller
             }
             foreach ($this->container->getParameter('fulgurio_light_cms.thumbs') as $size)
             {
-                $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $size);
-                if (is_file($filename))
+                if (substr($media->getMediaType(), 0, 5) == 'image')
                 {
-                    unlink($filename);
+	                $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $size);
+	                if (is_file($filename))
+	                {
+	                    unlink($filename);
+	                }
                 }
             }
             $em = $this->getDoctrine()->getEntityManager();
