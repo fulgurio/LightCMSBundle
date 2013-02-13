@@ -2,6 +2,15 @@
 
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.pages.title{% endtrans %}{% endblock %}
 
+{% if selectedPage.getMetaValue('target_link')|slice(0,4) == 'http' %}
+{%   set redirectUrl = selectedPage.getMetaValue('target_link') %}
+{% else %}
+{%   if app.environment == 'prod' %}
+{%     set redirectUrl = 'http://' ~ app.request.server.get('SERVER_NAME') ~ selectedPage.getMetaValue('target_link') %}
+{%   else %}
+{%     set redirectUrl = 'http://' ~ app.request.server.get('SERVER_NAME') ~ app.request.server.get('SCRIPT_NAME') ~ selectedPage.getMetaValue('target_link') %}
+{%   endif %}
+{% endif %}
 {% block pageContent%}
 		<section>
 			<a href="{{ path('LightCMS_Page', { fullpath: selectedPage.fullpath }) }}" target="_blank" title="{% trans from 'admin' %}fulgurio.lightcms.pages.show{% endtrans %}" class="btn"><i class="icon-search"></i></a>
@@ -13,6 +22,6 @@
 		</section>
 		<article>
 			<h2>{{ selectedPage.title }}</h2>
-			<p>{% trans from 'admin' %}fulgurio.lightcms.redirect.redirection_link{% endtrans %} : <a href="{{ selectedPage.getMetaValue('target_link') }}" target="_blank">{{ selectedPage.getMetaValue('target_link') }}</a></p>
+			<p>{% trans from 'admin' %}fulgurio.lightcms.redirect.redirection_link{% endtrans %} : <a href="{{ redirectUrl }}" target="_blank">{{ redirectUrl }}</a></p>
 		</article>
 {% endblock %}

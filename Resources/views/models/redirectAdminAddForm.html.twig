@@ -1,7 +1,4 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
-
-{% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
-
 {% block content %}
 {% if pageId is defined %}
 {%   set legend = 'fulgurio.lightcms.pages.edit_form.legend' %}
@@ -17,31 +14,32 @@
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
 {% if form.getChild('model').get('errors')
     or form.getChild('title').get('errors')
-    or form.getChild('status').get('errors') %}
+    or form.getChild('status').get('errors')
+    or form.getChild('target_link').get('errors') %}
 			<div class="alert alert-error">
 {%   for error in form.getChild('model').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 {%   for error in form.getChild('title').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 {%   for error in form.getChild('status').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.getChild('target_link').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 			</div>
 {% endif %}
-{%   for error in form.getChild('target_link').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 		<div class="row">
-{% if pageId is not defined and form.getChild('model').get('choices')|length > 1 %}
+{% if form.getChild('model').get('choices')|length > 1 %}
 			<div class="span7">
 				<div class="control-group">
 					<label class="control-label" for="p_model">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
 					<div class="controls form-inline">
 						<select name="{{ form.getChild('model').get('full_name') }}" class="input-xlarge span2" id="p_model" >
-{%     for choiceName, choice in form.getChild('model').get('choices') %}
-							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'standard' and pageId is not defined) %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
-{%     endfor %}
+{%   for choiceName, choice in form.getChild('model').get('choices') %}
+							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'redirect' and pageId is not defined) %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
+{%   endfor %}
 						</select>
 						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
 					</div>
 				</div>
 			</div>
-{%   else %}
-			<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="{{ form.getChild('model').get('value') }}" />
+{% else %}
+			<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="redirect" />
 {% endif %}
 			<div class="span7">
 				<div class="control-group">
@@ -91,4 +89,16 @@
 		</div>
 	</fieldset>
 </form>
+{% endblock %}
+
+{% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
+
+{% block javascriptBottom %}
+<script>
+$(function() {
+	$('#p_model').change(function() {
+		$('#p_form').submit();
+	});
+});
+</script>
 {% endblock %}

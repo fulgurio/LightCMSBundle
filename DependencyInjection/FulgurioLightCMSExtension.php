@@ -74,7 +74,7 @@ class FulgurioLightCMSExtension extends Extension
                 'front' => array(
                     'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontRedirectPageController::redirect',
                 ),
-                'allow_childrens' => FALSE,
+                'allow_childrens' => TRUE,
             );
         }
         $container->setParameter('fulgurio_light_cms.models', $config['models']);

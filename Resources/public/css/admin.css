@@ -10,7 +10,7 @@
 .treeview li.draft {
 	font-style: italic;
 }
-.treeview li.page_redirect .jstree-icon {
+.treeview li.page_redirect a .jstree-icon {
     background-image: url("../img/page_white_world.png");
 }
 .treeview li.draft a .jstree-icon {

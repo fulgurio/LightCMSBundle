@@ -23,7 +23,7 @@
 {% endif %}
 		<article>
 			<h2>{{ selectedPage.title }}</h2>
-			{{ selectedPage.content|striptags }}
+			{{ selectedPage.content|striptags('<br><ul><li>')|raw}}
 		</article>
 {% endblock %}
 
