@@ -13,15 +13,62 @@ use Knp\Component\Pager\Paginator;
  */
 class MediaRepository extends EntityRepository
 {
-	public function findAllWithPagination($limit, $offset)
-	{
-		$query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m ORDER BY m.created_at DESC')->setMaxResults($limit)->setFirstResult($offset);
-		return $query->getArrayResult();
-	}
+    /**
+     * Find media with pagination
+     *
+     * @param array $filters
+     * @param integer $limit
+     * @param integer $offset
+     * @param boolean $resultInArray
+     *
+     * @return array
+     */
+    public function findAllWithPagination($filters, $limit, $offset, $resultInArray = FALSE)
+    {
+        $where = '';
+        if (!empty($filters))
+        {
+            foreach ($filters as $filterKey => $filterValue)
+            {
+                $where .= ' OR m.' . $filterKey . ' LIKE :' . $filterKey;
+            }
+            $where = ' WHERE ' . substr($where, 4);
+        }
+        $query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m ' . $where . ' ORDER BY m.created_at DESC')->setMaxResults($limit)->setFirstResult($offset);
+        if (!empty($filters))
+        {
+            foreach ($filters as $filterKey => $filterValue)
+            {
+                $query->setParameter($filterKey, $filterValue);
+            }
+        }
+        if ($resultInArray)
+        {
+            return $query->getArrayResult();
+        }
+        return $query->getResult();
+    }
 
-	public function count()
-	{
-		$query = $this->getEntityManager()->createQuery('SELECT COUNT(m) FROM FulgurioLightCMSBundle:Media m');
-		return $query->getSingleScalarResult();
-	}
+
+    public function count($filters)
+    {
+        $where = '';
+        if (!empty($filters))
+        {
+            foreach ($filters as $filterKey => $filterValue)
+            {
+                $where .= ' OR m.' . $filterKey . ' LIKE :' . $filterKey;
+            }
+            $where = ' WHERE ' . substr($where, 4);
+        }
+        $query = $this->getEntityManager()->createQuery('SELECT COUNT(m) FROM FulgurioLightCMSBundle:Media m' . $where);
+        if (!empty($filters))
+        {
+            foreach ($filters as $filterKey => $filterValue)
+            {
+                $query->setParameter($filterKey, $filterValue);
+            }
+        }
+        return $query->getSingleScalarResult();
+    }
 }

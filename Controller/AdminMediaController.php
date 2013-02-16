@@ -20,13 +20,18 @@ class AdminMediaController extends Controller
      */
     public function listAction()
     {
+    	$filters = array();
         $nbPerPage = 10;
         $request = $this->container->get('request');
+        if ($request->get('filter'))
+        {
+            $filters['media_type'] = $request->get('filter') . '%';
+        }
         $page = $this->get('request')->get('page') > 1 ? $request->get('page') - 1 : 0;
-        $mediasNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->count();
+        $mediasNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->count($filters);
         if ($request->isXmlHttpRequest())
         {
-            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($nbPerPage, $page * $nbPerPage);
+            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($filters, $nbPerPage, $page * $nbPerPage, TRUE);
             $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
             foreach ($medias as &$media)
             {
@@ -40,10 +45,13 @@ class AdminMediaController extends Controller
         else
         {
             //@todo : pagination
-            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findBy(array(), array('created_at' => 'DESC'), $nbPerPage, $page * $nbPerPage);
+            $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($filters, $nbPerPage, $page * $nbPerPage);
             return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
                 'medias' => $medias,
-                'nbMedias' => $mediasNb
+                'nbMedias' => $mediasNb,
+//                 'pageCount' => ceil($mediasNb / $nbPerPage),
+//                 'current' => $page + 1,
+//                 'route' => ''
             ));
         }
     }

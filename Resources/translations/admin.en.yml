@@ -85,6 +85,7 @@ fulgurio:
       no_media:                     No media
       add_new_media:                Add new media
       select_file:                  Select a file
+      filter:                       Filter
       add_form:
         add_files:                  Add files ...
         start_upload:               Start upload
@@ -102,6 +103,10 @@ fulgurio:
         legend:                     Edit medias 
         success_msg:                Media has been modified !
       delete_confirm_message:       Are you sure to delete "%FILENAME%" ?
+      media_types:
+        pictures:                   Pictures
+        videos:                     Videos
+        others:                     Others
       wysiwyg:
         title:                      Insert a media
         send_file:                  Send a file
