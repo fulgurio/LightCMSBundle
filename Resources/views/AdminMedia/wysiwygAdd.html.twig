@@ -133,16 +133,9 @@ $(function () {
 		url: '{{ path('AdminMediasAdd') }}',
 		done: function(e, d) {
 			if ($('#mediasLibraryList li').length > 0) {
-				eval('var f = ' + d.jqXHR.responseText + ';');
-				var li = $('<li data-id="' + f.files[0].id + '"><a><img src="' + f.files[0].thumbnail_url + '" alt="' + f.files[0].name + '" class="img-polaroid" /></a></li>');
-				$('#mediasLibraryList').prepend(li);
-				li.click(selectPicture);
-				li.click();
-				selectFirst = 0;
+				$("#mediasLibraryList").html('');
 			}
-			else {
-				selectFirst = 1;
-			}
+			selectFirst = 1;
 			$("a[data-link='mediasLibrary']").click();
 		},
 		uploadTemplateId: null,
@@ -171,8 +164,8 @@ $(function () {
 						li.data(d.medias[i]);
 						$('#mediasLibraryList').append(li);
 						li.click(selectPicture);
-						console.log($("#select_picture_src").attr("src") + " <> " + d.medias[i].thumb);
-						if ((selectFirst && currentPage == 1 && i == 0) || $("#select_picture_src").attr("src") == d.medias[i].thumb) {
+						if ((selectFirst && currentPage == 1 && i == 0) || $("#select_picture_src").attr("src") == d.medias[i].full_path) {
+							selectFirst = 0;
 							li.click();
 						}
 					}
