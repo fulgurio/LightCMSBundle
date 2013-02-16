@@ -80,3 +80,6 @@ ul.menus {
 	float: left;
 	cursor: default;
 }
+.wysiwyg {
+	width: 540px;
+}
