@@ -1,8 +1,98 @@
+{% if app.request.attributes.get('_route') == 'AdminLinkWysiwyg' %}
+<script src="{{ asset('bundles/fulguriolightcms/js/tiny_mce/utils/validate.js') }}"></script>
+{% endif %}
 <script>
 $(function() {
 	var ed = tinyMCEPopup.editor;
+{% if app.request.attributes.get('_route') == 'AdminLinkWysiwyg' %}
+	function checkPrefix(value) {
+		if (value && Validator.isEmail(value) && !/^\s*mailto:/i.test(value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_email'))) {
+			value = 'mailto:' + n.value;
+		}
+		if (/^\s*www\./i.test(value)) {
+			value = 'http://' + value;
+		}
+	}
+	function setAllAttribs(elm, data) {
+		var href = data.href.replace(/ /g, '%20');
+
+		setAttrib(elm, 'href', href);
+		setAttrib(elm, 'title', data.title);
+		setAttrib(elm, 'target', data.target);
+		setAttrib(elm, 'id');
+
+		// Refresh in old MSIE
+		if (tinyMCE.isMSIE5)
+			elm.outerHTML = elm.outerHTML;
+	}
+	function setAttrib(elm, attrib, value) {
+		var formObj = document.forms[0];
+		var valueElm = formObj.elements[attrib.toLowerCase()];
+		var dom = tinyMCEPopup.editor.dom;
+
+		if (typeof(value) == "undefined" || value == null) {
+			value = "";
+			if (valueElm) {
+				value = valueElm.value;
+			}
+		}
+		dom.setAttrib(elm, attrib, value);
+	}
+	if ($(ed.dom.getParent(ed.selection.getNode(), "A")).length) {
+		$("a[data-link=fromAddress]").click();
+		$("#p_url").val($(ed.dom.getParent(ed.selection.getNode(), "A")).attr('href'));
+		if ($(ed.dom.getParent(ed.selection.getNode(), "A")).attr('target') == '_blank') {
+			$("#p_url_target_blank").attr('checked', true);
+		}
+		$('#mediaSubmit').removeAttr('disabled');
+	}
+{% endif %}
 	$('#mediaSubmit').click(function() {
 		event.stopPropagation();
+{% if app.request.attributes.get('_route') == 'AdminLinkWysiwyg' %}
+		var elm, elementArray, i, d;
+		elm = ed.selection.getNode();
+
+		if ($(activeToggle).attr('data-link') == 'mediasLibrary') {
+			d = { href: selectedPicture.data().full_path, title: $("#p_alt_text").attr('value'), target: "" };
+		}
+		else if ($(activeToggle).attr('data-link') == 'fromAddress') {
+			d = { href: $("#p_url").attr('value'), title: "", target: $("#p_url_target_blank").attr('checked') == "checked" ? "_blank" : "" }
+		}
+		if (d) {
+			checkPrefix(d.href);
+			elm = ed.dom.getParent(elm, "A");
+		// Remove element if there is no href
+/*			if (!document.forms[0].href.value) {
+				i = ed.selection.getBookmark();
+				ed.dom.remove(elm, 1);
+				ed.selection.moveToBookmark(i);
+				tinyMCEPopup.execCommand("mceEndUndoLevel");
+				tinyMCEPopup.close();
+				return;
+			}*/
+
+			// Create new anchor elements
+			if (elm == null) {
+				ed.getDoc().execCommand("unlink", false, null);
+				tinyMCEPopup.execCommand("mceInsertLink", false, "#mce_temp_url#", {skip_undo : 1});
+				elementArray = tinymce.grep(ed.dom.select("a"), function(n) {return ed.dom.getAttrib(n, 'href') == '#mce_temp_url#';});
+				for (i=0; i<elementArray.length; i++)
+					setAllAttribs(elm = elementArray[i], d);
+			}
+			else {
+				setAllAttribs(elm, d);
+			}
+			// Don't move caret if selection was image
+			if (elm.childNodes.length != 1 || elm.firstChild.nodeName != 'IMG') {
+				ed.focus();
+				ed.selection.select(elm);
+				ed.selection.collapse(0);
+				tinyMCEPopup.storeSelection();
+			}
+			tinyMCEPopup.execCommand("mceEndUndoLevel");
+		}
+{% else %}
 		tinyMCEPopup.restoreSelection();
 		// Fixes crash in Safari
 		if (tinymce.isWebKit) {
@@ -28,6 +118,7 @@ $(function() {
 		}
 		tinyMCEPopup.editor.execCommand('mceRepaint');
 		tinyMCEPopup.editor.focus();
+{% endif %}
 		tinyMCEPopup.close();
 		return false;
 	});
@@ -41,8 +132,7 @@ $(function() {
 			}
 		});
 		$("#mediasLibrary li img").each(function(e, o) {
-			if ($(o).attr('src') == $(ed.selection.getNode()).attr('src'))
-			{
+			if ($(o).attr('src') == $(ed.selection.getNode()).attr('src')) {
 				selectedPicture = $(o).parent().parent();
 				selectedPicture.addClass('active');
 			}

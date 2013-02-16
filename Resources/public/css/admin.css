@@ -19,7 +19,7 @@
 .mediaPopup .nav a {
 	cursor: pointer;
 }
-#fromAdress,
+#fromAddress,
 #mediasLibrary {
 	display: none;
 }
@@ -50,6 +50,12 @@
 }
 #mediasLibrary ul img {
 	height: 100px;
+}
+.mediaPopup header {
+    height: 88px;
+}
+.mediaPopup footer {
+    height: 70px;
 }
 .mediaPopup .form-actions {
 	position: fixed;

@@ -161,7 +161,7 @@ class AdminMediaController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function wysiwygAction()
+    public function wysiwygMediaAction()
     {
         $form = $this->createForm(new AdminMediaType($this->container), new Media());
         return $this->render(
@@ -171,6 +171,24 @@ class AdminMediaController extends Controller
                 'wysiwyg' => $this->container->get('request')->get('wyziwyg')
             )
         );
+    }
+
+    /**
+     * Wysiwyg link popup
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function wysiwygLinkAction()
+    {
+    	$form = $this->createForm(new AdminMediaType($this->container), new Media());
+    	return $this->render(
+    			'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
+    			array(
+    					'form' => $form->createView(),
+    					'wysiwyg' => $this->container->get('request')->get('wyziwyg'),
+    					'isLink' => true
+    			)
+    	);
     }
 
     /**
