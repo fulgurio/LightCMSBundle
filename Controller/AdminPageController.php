@@ -162,10 +162,10 @@ class AdminPageController extends Controller
     /**
      * Page copy, use for multilang site
      *
-     * @param unknown $sourceId
-     * @param unknown $targetId
-     * @param unknown $lang
-     * @return Ambigous <\Symfony\Component\HttpFoundation\RedirectResponse, \Symfony\Component\HttpFoundation\Response>
+     * @param integer $sourceId
+     * @param integer $targetId
+     * @param string $lang
+     * @return \Symfony\Component\HttpFoundation\Response>
      */
     public function copyAction($sourceId, $targetId, $lang)
     {
@@ -186,7 +186,7 @@ class AdminPageController extends Controller
         }
         $newPage->setStatus('draft');
         $newPage->setSourceId($sourceId);
-        return $this->createPage($newPage, array('pageMetas' => $this->getPageMetas($sourceId), 'parent' => $target));
+        return $this->createPage($newPage, array('pageMetas' => $this->getPageMetas($sourceId), 'parent' => $target, 'sourceId' => $sourceId));
     }
 
     /**
