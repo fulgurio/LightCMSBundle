@@ -125,7 +125,8 @@
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload-ui.js') }}"></script>
 <script>
 $(window).load(function() {
-	$("#mediasLibraryList").height($(window).height() - $(".mediaPopup header").height() - $(".mediaPopup footer").height() - $("#filters").height() - 40);
+	var h = $(window).height() - $(".mediaPopup header").height() - $(".mediaPopup footer").height() - $("#filters").height() - 40;
+	$("#mediasLibraryList").height(h > 100 ? h : 100);
 });
 var selectedPicture;
 var activeToggle;
