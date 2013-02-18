@@ -30,7 +30,7 @@
 					<div class="controls form-inline">
 						<select name="{{ form.getChild('model').get('full_name') }}" class="input-xlarge span2" id="p_model" >
 {%   for choiceName, choice in form.getChild('model').get('choices') %}
-							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'standard' and pageId is not defined) %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
+							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'standard' and pageId is not defined and form.getChild('model').get('value') == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
 {%   endfor %}
 						</select>
 						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
