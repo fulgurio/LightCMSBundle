@@ -1,0 +1,133 @@
+fulgurio:
+  lightcms:
+    lightcms_title:                 LightCMS
+    save:                           Enregistrer
+    search:                         Rechercher
+    cancel:                         Annuler
+    back:                           Retour
+    yes:                            Oui
+    no:                             Non
+    popup_confirmation:             Popup
+    datetime_format:                d/m/Y
+    header_link:
+      pages_link:                   Pages
+      posts_link:                   Articles
+      medias_link:                  Medias
+      menus_link:                   Menus
+    page_not_found:                 Page non trouvée
+    pages:
+      title:                        Pages admin
+      legend:                       Pages
+      add_child_page_button:        Ajouter une nouvelle page
+      copy_language_page:           Copier la page dans les langues suivantes
+      text_info:                    Sélectionner une page dans l'arborescence de gauche pour la modifier
+      show:                         Voir
+      edit:                         Editer
+      remove:                       Supprimer
+      recursive_remove_not_allowed: La page a des pages filles. Veuillez les supprimer d'abord, puis réessayer
+      add_form:
+        title:                      Ajouter une page fille
+        legend:                     Ajouter une page fille
+        status:
+          draft:                    Brouillon
+          published:                Publiée
+        model_label:                Modèle de page
+        model_is_required:          Le modèle est requis
+        model:
+          standard:                 Standard
+          postsList:                Liste d'article
+          redirect:                 Redirection
+        lang_label:                 Langage
+        title_label:                Titre
+        title_is_required:          Le titre est requis
+        content_label:              Contenu
+        status_label:               Statut
+        status_is_required:         Le statut est obligatoire
+        published_at_label:         Publié à
+        redirection_target_label:   Cible de la redirection
+        meta_keywords_label:        Meta mots clés
+        meta_description_label:     Meta description
+        success_msg:                La page a été créée !
+      edit_form:
+        title:                      Page d'édition
+        legend:                     Page d'édition
+        success_msg:                La page a été modifiée !
+      delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%title%" ?
+    post_not_found:                 Article non trouvé
+    posts:
+      go_to_posts_manager:          Aller à la gestion des articles
+      posts_list_page_not_found:    La page de listing des articles n'a pas été trouvé, merci de charger les "fixtures", ou de créer la page manuellement.
+      title:                        Administration des articles
+      legend:                       Articles
+      add_post_button:              Ajouter un nouvel article
+      no_post:                      Aucun article
+      edit_button:                  Editer
+      remove_button:                Supprimer
+      view_button:                  Voir
+      add_form:
+        title:                      Ajouter un nouvel article
+        legend:                     Ajouter un nouvel article
+        nb_posts_per_page:          Nombre d'articles par page
+        invalid_nb_posts_per_page:  Le nombre d'articles par page n'est pas un chiffre
+        success_msg:                L'article a été créé !
+        published_at_label:         Publié à
+      edit_form:
+        title:                      Edition d'un article
+        legend:                     Edition d'un article
+        success_msg:                L'article a été modifié !
+      delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%title%" ?
+    redirect:
+      redirection_link:             Lien de redirection
+      add_form:
+        target_link:                Lien cible
+    medias:
+      title:                        Médias
+      no_media:                     Aucun média
+      add_new_media:                Ajouter un média
+      select_file:                  Sélectionner un fichier
+      filter:                       Filtre
+      add_form:
+        add_files:                  Ajouter des fichiers  ...
+        start_upload:               Démarrer l'upload
+        cancel_upload:              Annuler l'upload
+        start:                      Démarrer
+        cancel:                     Annuler
+        error:                      Erreur
+        delete:                     Supprimer
+        title:                      Ajouter un nouveau média
+        file_is_not_a_picture:      Le fichier "%FILE%" n'est pas une image
+        legend:                     Ajouter un nouvea média
+        success_msg:                Le média a été ajouté !
+      edit_form:
+        title:                      Edition du média
+        legend:                     Edition du média 
+        success_msg:                Le média a été modifié !
+      delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%FILENAME%" ?
+      media_types:
+        pictures:                   Images
+        videos:                     Vidéos
+        others:                     Autres
+      wysiwyg:
+        title:                      Insérer un média
+        send_file:                  Envoyer un fichier
+        external_address:           Insérer à partir d'une adresse web
+        medias_library:             Bibliothèque de médias
+        file_details:               Détails du fichier
+        alt_text:                   Texte alternatif
+        open_in_new_window:         Ouvrir dans une nouvelle fenêtre
+        alignment:
+          alignment:                Alignement
+          none:                     Aucun
+          left:                     Gauche
+          center:                   Centre
+          right:                    Droite
+        add_file:                   Ajouter un fichier
+        url:                        Url
+        insert_into_post:           Insérer dans l'article
+    menus:
+      title:                        Gestion des menus
+      legend:                       Gestion des menus
+      no_page:                      Aucune page associé au menu
+      moving_success_msg:           Le changement du menu a été réalisé !
+      add_form:
+        menu_label:                 Menu

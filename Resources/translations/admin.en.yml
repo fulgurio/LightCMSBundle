@@ -110,7 +110,7 @@ fulgurio:
       wysiwyg:
         title:                      Insert a media
         send_file:                  Send a file
-        external_address:           Insérer à partir d'une adresse web
+        external_address:           Insert from an exteral URL
         medias_library:             Medias library
         file_details:               File details
         alt_text:                   Alternative text

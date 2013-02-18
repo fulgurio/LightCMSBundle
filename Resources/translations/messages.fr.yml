@@ -1,0 +1,5 @@
+fulgurio:
+  lightcms:
+    datetime_format:                d/m/Y
+    posts_list:
+        posted_at:                  Posté le %DATE%
