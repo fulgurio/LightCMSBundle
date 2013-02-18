@@ -3,6 +3,7 @@
 namespace Fulgurio\LightCMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * PageMenuRepository
@@ -12,84 +13,112 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageMenuRepository extends EntityRepository
 {
-	/**
-	 * Get page from a given menu name
-	 *
-	 * @param string $menuName
-	 * @return array
-	 */
-	public function findPagesOfMenu($menuName)
-	{
-		$query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p JOIN p.menu m WHERE m.label=:menuName ORDER BY m.position');
-		$query->setParameter('menuName', $menuName);
-		return ($query->getResult());
-	}
+    /**
+     * Get page from a given menu name
+     *
+     * @param string $menuName
+     * @param string $lang
+     * @return array
+     * @todo : may be if we use a well join for source_id
+     */
+    public function findPagesOfMenu($menuName, $lang = NULL)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p JOIN p.menu m WHERE m.label=:menuName ORDER BY m.position');
+        $query->setParameter('menuName', $menuName);
+        $results = $query->getResult();
+        if ($results[0]->getLang() != $lang)
+        {
+            $tmp = array();
+            foreach ($results as $result)
+            {
+               $tmp[] = $result->getId();
+            }
+            $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.lang=:lang AND p.source_id IN (:source_ids)');
+            $query->setParameter('lang', $lang);
+            $query->setParameter('source_ids', $tmp);
+            $results2 = $query->getResult();
+            $tmp2 = array();
+            foreach ($results as $result)
+            {
+                foreach ($results2 as $result2)
+                {
+                    if ($result->getId() == $result2->getSourceId())
+                    {
+                        $tmp2[] = $result2;
+                        break;
+                    }
+                }
+            }
+            return ($tmp2);
+        }
+        return ($results);
+    }
 
-	/**
-	 * Up pages menu position
-	 *
-	 * @param string $menuName
-	 * @param integer $position
-	 */
-	public function upMenuPagesPosition($menuName, $position, $positionLimit = NULL)
-	{
-		if (is_null($positionLimit))
-		{
-			$query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position-1 WHERE m.position>=:position AND m.label=:menuName');
-		}
-		else
-		{
-			$query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position-1 WHERE m.position>=:position AND m.position<=:positionLimit AND m.label=:menuName');
-			$query->setParameter('positionLimit', $positionLimit);
-		}
-		$query->setParameter('menuName', $menuName);
-		$query->setParameter('position', $position);
-		$query->getResult();
-	}
+    /**
+     * Up pages menu position
+     *
+     * @param string $menuName
+     * @param integer $position
+     */
+    public function upMenuPagesPosition($menuName, $position, $positionLimit = NULL)
+    {
+        if (is_null($positionLimit))
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position-1 WHERE m.position>=:position AND m.label=:menuName');
+        }
+        else
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position-1 WHERE m.position>=:position AND m.position<=:positionLimit AND m.label=:menuName');
+            $query->setParameter('positionLimit', $positionLimit);
+        }
+        $query->setParameter('menuName', $menuName);
+        $query->setParameter('position', $position);
+        $query->getResult();
+    }
 
-	/**
-	 * Down pages menu position
-	 *
-	 * @param string $menuName
-	 * @param integer $position
-	 */
-	public function downMenuPagesPosition($menuName, $position, $positionLimit = NULL)
-	{
-		if (is_null($positionLimit))
-		{
-			$query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position+1 WHERE m.position>=:position AND m.label=:menuName');
-		}
-		else
-		{
-			$query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position+1 WHERE m.position>=:position AND m.position<=:positionLimit AND m.label=:menuName');
-			$query->setParameter('positionLimit', $positionLimit);
-		}
-		$query->setParameter('menuName', $menuName);
-		$query->setParameter('position', $position);
-		$query->getResult();
-	}
+    /**
+     * Down pages menu position
+     *
+     * @param string $menuName
+     * @param integer $position
+     */
+    public function downMenuPagesPosition($menuName, $position, $positionLimit = NULL)
+    {
+        if (is_null($positionLimit))
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position+1 WHERE m.position>=:position AND m.label=:menuName');
+        }
+        else
+        {
+            $query = $this->getEntityManager()->createQuery('UPDATE FulgurioLightCMSBundle:PageMenu m SET m.position=m.position+1 WHERE m.position>=:position AND m.position<=:positionLimit AND m.label=:menuName');
+            $query->setParameter('positionLimit', $positionLimit);
+        }
+        $query->setParameter('menuName', $menuName);
+        $query->setParameter('position', $position);
+        $query->getResult();
+    }
 
-	/**
-	 * Get last position in menu
-	 *
-	 * @param string $menuName
-	 * @return integer
-	 */
-	public function getLastMenuPosition($menuName)
-	{
-		$query = $this->getEntityManager()->createQuery('SELECT MAX(m.position) FROM FulgurioLightCMSBundle:PageMenu m WHERE m.label=:menuName');
-		$query->setParameter('menuName', $menuName);
-		return ($query->getSingleScalarResult());
-	}
+    /**
+     * Get last position in menu
+     *
+     * @param string $menuName
+     * @return integer
+     */
+    public function getLastMenuPosition($menuName)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT MAX(m.position) FROM FulgurioLightCMSBundle:PageMenu m WHERE m.label=:menuName');
+        $query->setParameter('menuName', $menuName);
+        return ($query->getSingleScalarResult());
+    }
 
-	/**
-	 * Get next position in menu
-	 *
-	 * @param string $menuName
-	 * @return integer
-	 */
-	public function getNextMenuPosition($menuName)
-	{
-		return ($this->getLastMenuPosition($menuName) + 1);
-	}
+    /**
+     * Get next position in menu
+     *
+     * @param string $menuName
+     * @return integer
+     */
+    public function getNextMenuPosition($menuName)
+    {
+        return ($this->getLastMenuPosition($menuName) + 1);
+    }
 }

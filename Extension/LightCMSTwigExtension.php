@@ -185,9 +185,10 @@ class LightCMSTwigExtension extends \Twig_Extension
      * Get page menu to display
      *
      * @param string $menuName
+     * @param string $lang
      * @return array
      */
-    public function getPagesMenu($menuName)
+    public function getPagesMenu($menuName, $lang = NULL)
     {
 //         $currentUser = $this->securityContext->getToken()->getUser();
 //         if ($currentUser != 'anon.')
@@ -198,7 +199,7 @@ class LightCMSTwigExtension extends \Twig_Extension
 //         {
 //             $roles = array();
 //         }
-        $pages = $this->doctrine->getRepository('FulgurioLightCMSBundle:PageMenu')->findPagesOfMenu($menuName);
+        $pages = $this->doctrine->getRepository('FulgurioLightCMSBundle:PageMenu')->findPagesOfMenu($menuName, $lang);
         $availablePages = array();
         foreach ($pages as &$page)
         {
