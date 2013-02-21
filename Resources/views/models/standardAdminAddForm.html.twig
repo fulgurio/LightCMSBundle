@@ -23,8 +23,8 @@
 			</div>
 {% endif %}
 		<div class="row">
-{% if form.getChild('model').get('choices')|length > 1 %}
 			<div class="span7">
+{% if form.getChild('model').get('choices')|length > 1 %}
 				<div class="control-group">
 					<label class="control-label" for="p_model">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
 					<div class="controls form-inline">
@@ -36,11 +36,9 @@
 						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
 					</div>
 				</div>
-			</div>
 {% else %}
-			<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="standard" />
+				<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="standard" />
 {% endif %}
-			<div class="span7">
 				<div class="control-group">
 					<label class="control-label" for="p_title">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</label>
 					<div class="controls">
