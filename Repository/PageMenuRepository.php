@@ -26,7 +26,7 @@ class PageMenuRepository extends EntityRepository
         $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p JOIN p.menu m WHERE m.label=:menuName ORDER BY m.position');
         $query->setParameter('menuName', $menuName);
         $results = $query->getResult();
-        if ($results[0]->getLang() != $lang)
+        if (!is_null($lang) && $results[0]->getLang() != $lang)
         {
             $tmp = array();
             foreach ($results as $result)
