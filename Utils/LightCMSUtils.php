@@ -104,7 +104,7 @@ class LightCMSUtils
      * @param integer $jpegquality
      * @todo : use Exception
      */
-    static function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 100)
+    static function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 80)
     {
     	list($ow, $oh, $from_type) = getimagesize($sourcefile);
     	switch($from_type) {
