@@ -25,15 +25,7 @@ class MediaRepository extends EntityRepository
      */
     public function findAllWithPagination($filters, $limit, $offset, $resultInArray = FALSE)
     {
-        $where = '';
-        if (!empty($filters))
-        {
-            foreach ($filters as $filterKey => $filterValue)
-            {
-                $where .= ' OR m.' . $filterKey . ' LIKE :' . $filterKey;
-            }
-            $where = ' WHERE ' . substr($where, 4);
-        }
+        $where = $this->getQueryFilter($filters);
         $query = $this->getEntityManager()->createQuery('SELECT m FROM FulgurioLightCMSBundle:Media m ' . $where . ' ORDER BY m.created_at DESC')->setMaxResults($limit)->setFirstResult($offset);
         if (!empty($filters))
         {
@@ -49,18 +41,15 @@ class MediaRepository extends EntityRepository
         return $query->getResult();
     }
 
-
+    /**
+     * Count number of result
+     *
+     * @param unknown $filters
+     * @return Ambigous <\Doctrine\ORM\mixed, mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement>
+     */
     public function count($filters)
     {
-        $where = '';
-        if (!empty($filters))
-        {
-            foreach ($filters as $filterKey => $filterValue)
-            {
-                $where .= ' OR m.' . $filterKey . ' LIKE :' . $filterKey;
-            }
-            $where = ' WHERE ' . substr($where, 4);
-        }
+        $where = $this->getQueryFilter($filters);
         $query = $this->getEntityManager()->createQuery('SELECT COUNT(m) FROM FulgurioLightCMSBundle:Media m' . $where);
         if (!empty($filters))
         {
@@ -70,5 +59,25 @@ class MediaRepository extends EntityRepository
             }
         }
         return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Make query filter string, from given filters
+     *
+     * @param array $filters
+     * @return string
+     */
+    private function getQueryFilter($filters)
+    {
+        $where = '';
+        if (!empty($filters))
+        {
+            foreach ($filters as $filterKey => $filterValue)
+            {
+                $where .= ' AND m.' . $filterKey . ' LIKE :' . $filterKey;
+            }
+            $where = ' WHERE ' . substr($where, 4);
+        }
+        return ($where);
     }
 }

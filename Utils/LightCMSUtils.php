@@ -79,19 +79,19 @@ class LightCMSUtils
      */
     static public function getThumbFilename($filename, $mimeType, $size)
     {
-    	if (substr($mimeType, 0, 5) == 'image')
-    	{
-        	$pos = strrpos($filename, '.');
-        	return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
-    	}
-    	else if ($mimeType == 'application/pdf')
-    	{
-    		return ($GLOBALS['kernel']->getContainer()->get('templating.helper.assets')->getUrl('bundles/fulguriolightcms/img/thumb_pdf.png'));
-    	}
-    	else
-    	{
-    		return ('http://www.placehold.it/' . $size['width'] . 'x' . $size['height'] . '/EFEFEF/AAAAAA');
-    	}
+        if (substr($mimeType, 0, 5) == 'image')
+        {
+            $pos = strrpos($filename, '.');
+            return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
+        }
+        else if ($mimeType == 'application/pdf')
+        {
+            return ($GLOBALS['kernel']->getContainer()->get('templating.helper.assets')->getUrl('bundles/fulguriolightcms/img/thumb_pdf.png'));
+        }
+        else
+        {
+            return ('http://www.placehold.it/' . $size['width'] . 'x' . $size['height'] . '/EFEFEF/AAAAAA');
+        }
     }
 
     /**
@@ -106,32 +106,32 @@ class LightCMSUtils
      */
     static function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 80)
     {
-    	list($ow, $oh, $from_type) = getimagesize($sourcefile);
-    	switch($from_type) {
-    		case 1: // GIF
-    			$srcImage = imageCreateFromGif($sourcefile) or die('Impossible de convertir cette image');
-    			break;
-    		case 2: // JPG
-    			$srcImage = imageCreateFromJpeg($sourcefile) or die('Impossible de convertir cette image');
-    			break;
-    		case 3: // PNG
-    			$srcImage = imageCreateFromPng($sourcefile) or die('Impossible de convertir cette image');
-    			break;
-    		default:
-    			return;
-    	}
-    	if (($fw / $ow) > ($fh / $oh)) {
-    		$tempw = $fw;
-    		$temph = ($fw / $ow) * $oh;
-    	}
-    	else {
-    		$tempw = ($fh / $oh) * $ow;
-    		$temph = $fh;
-    	}
-    	$tempImage = imageCreateTrueColor($fw, $fh);
-    	//	imageAntiAlias($tempImage, true);
-    	imagecopyresampled($tempImage, $srcImage, ($fw - $tempw) / 2, ($fh - $temph) / 2, 0, 0, $tempw, $temph, $ow, $oh);
-    	imageJpeg($tempImage, $destfile, $jpegquality);
-    	return (getimagesize($destfile));
+        list($ow, $oh, $from_type) = getimagesize($sourcefile);
+        switch($from_type) {
+            case 1: // GIF
+                $srcImage = imageCreateFromGif($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            case 2: // JPG
+                $srcImage = imageCreateFromJpeg($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            case 3: // PNG
+                $srcImage = imageCreateFromPng($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            default:
+                return;
+        }
+        if (($fw / $ow) > ($fh / $oh)) {
+            $tempw = $fw;
+            $temph = ($fw / $ow) * $oh;
+        }
+        else {
+            $tempw = ($fh / $oh) * $ow;
+            $temph = $fh;
+        }
+        $tempImage = imageCreateTrueColor($fw, $fh);
+        //    imageAntiAlias($tempImage, true);
+        imagecopyresampled($tempImage, $srcImage, ($fw - $tempw) / 2, ($fh - $temph) / 2, 0, 0, $tempw, $temph, $ow, $oh);
+        imageJpeg($tempImage, $destfile, $jpegquality);
+        return (getimagesize($destfile));
     }
 }

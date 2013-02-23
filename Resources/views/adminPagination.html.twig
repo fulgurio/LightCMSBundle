@@ -1,17 +1,17 @@
 {% if pageCount > 1 %}
-									<div class="pagination pull-right">
-										<ul>
+									<div class="pagination">
+										<ul class="pull-right">
 {#	{% if first is defined and current != first %}
 											<li><a href="{{ path(route, query|merge({'page': first})) }}" class="page_first" title="{% trans %}First page{% endtrans %}">&laquo;</a></li>
 	{% endif %}#}
-{%   if previous is defined %}
-											<li><a href="{{ path(route, query|merge({'page': previous})) }}" title="{% trans %}Previous page{% endtrans %}">&laquo;</a></li>
+{%   if current > 1 %}
+											<li><a href="{{ path(route, query|merge({'page': current - 1})) }}" title="{% trans %}Previous page{% endtrans %}">&laquo;</a></li>
 {%   else %}
 											<li class="disabled"><a>&laquo;</a></li>
 {%   endif %}
-											<li class="active"><a>Page <strong>{{ current }}</strong> / {{ last }}</a></li>
-{%   if next is defined %}
-											<li><a href="{{ path(route, query|merge({'page': next})) }}" title="{% trans %}Next page{% endtrans %}">&raquo;</a></li>
+											<li class="active"><a>Page <strong>{{ current }}</strong> / {{ pageCount }}</a></li>
+{%   if current < pageCount %}
+											<li><a href="{{ path(route, query|merge({'page': current + 1})) }}" title="{% trans %}Next page{% endtrans %}">&raquo;</a></li>
 {%   else %}
 											<li class="disabled"><a>&raquo;</a></li>
 {%   endif %}
@@ -20,5 +20,6 @@
 											<li><a href="{{ path(route, query|merge({'page': last})) }}" class="page_last" title="{% trans %}Last page{% endtrans %}"><i class="icon-fast-forward"></i></a></li>
 	{% endif %}#}
 										</ul>
+										<br class="clearfix" />
 									</div>
 {% endif %}

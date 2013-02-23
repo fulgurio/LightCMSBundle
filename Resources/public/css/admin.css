@@ -1,5 +1,8 @@
 @CHARSET "UTF-8";
 /* Tree */
+.treeview {
+	overflow-x: auto;
+}
 .treeview .jstree-open ins,
 .treeview .jstree-closed ins {
 	cursor: pointer;
@@ -76,6 +79,7 @@ ul.menus {
 .thumbnails .thumbnail h6 span {
 	overflow: hidden;
 	width: 110px;
+	height: 20px;
 	display:block;
 	float: left;
 	cursor: default;

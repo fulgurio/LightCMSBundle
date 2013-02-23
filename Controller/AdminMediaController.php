@@ -20,12 +20,16 @@ class AdminMediaController extends Controller
      */
     public function listAction()
     {
-    	$filters = array();
+        $filters = array();
         $nbPerPage = 10;
         $request = $this->container->get('request');
         if ($request->get('filter'))
         {
             $filters['media_type'] = $request->get('filter') . '%';
+        }
+        if ($request->get('filename'))
+        {
+            $filters['original_name'] = $request->get('filename') . '%';
         }
         $page = $this->get('request')->get('page') > 1 ? $request->get('page') - 1 : 0;
         $mediasNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->count($filters);
@@ -44,14 +48,17 @@ class AdminMediaController extends Controller
         }
         else
         {
-            //@todo : pagination
             $medias = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findAllWithPagination($filters, $nbPerPage, $page * $nbPerPage);
             return $this->render('FulgurioLightCMSBundle:AdminMedia:list.html.twig', array(
                 'medias' => $medias,
                 'nbMedias' => $mediasNb,
-//                 'pageCount' => ceil($mediasNb / $nbPerPage),
-//                 'current' => $page + 1,
-//                 'route' => ''
+                'pageCount' => ceil($mediasNb / $nbPerPage),
+                'current' => $page + 1,
+                'route' => 'AdminMedias',
+                'query' => array(
+                        'filter' => $request->get('filter') ? $request->get('filter') : '',
+                        'filename' => $request->get('filename') ? $request->get('filename') : ''
+                        )
             ));
         }
     }

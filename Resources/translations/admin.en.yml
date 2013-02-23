@@ -98,6 +98,7 @@ fulgurio:
         file_is_not_a_picture:      File "%FILE%" is not a picture
         legend:                     Add a new media
         success_msg:                Media has been created !
+        filename:                   File name
       edit_form:
         title:                      Edit media admin
         legend:                     Edit medias 

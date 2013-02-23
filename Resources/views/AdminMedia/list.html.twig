@@ -6,14 +6,18 @@
 {% if app.session.hasFlash('notice') %}			<div class="alert alert-notice">{{ app.session.flash('notice')|trans }}</div>{% endif %}
 {% if app.session.hasFlash('success') %}			<div class="alert alert-success">{{ app.session.flash('success')|trans }}</div>{% endif %}
 			<form method="post" action="{{ path('AdminMedias') }}">
-				<div class="input-append pull-left">
-					<select class="span2" name="filter">
-						<option></option>
-						<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
-						<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>
-						<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
-					</select>
-					<button type="submit" class="btn">{% trans from 'admin' %}fulgurio.lightcms.medias.filter{% endtrans %}</button>
+				<div class="pull-left">
+					<div class="input-prepend input-append">
+						<span class="add-on">{% trans from 'admin' %}fulgurio.lightcms.medias.filter{% endtrans %} :</span>
+						<select class="span2" name="filter">
+							<option></option>
+							<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
+							<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>
+							<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
+						</select>
+						<input type="text" class="span2" name="filename" placeholder="{% trans from 'admin' %}fulgurio.lightcms.medias.add_form.filename{% endtrans %}" value="{{ app.request.get('filename') }}">
+						<button type="submit" class="btn">{% trans from 'admin' %}fulgurio.lightcms.search{% endtrans %}</button>
+					</div>
 				</div>
 				<div class="clearfix">
 					<a class="btn pull-right" href="{{ path('AdminMediasAdd') }}">{% trans from 'admin' %}fulgurio.lightcms.medias.add_new_media{% endtrans %}</a>
@@ -39,7 +43,7 @@
 					</li>
 {% endfor %}
 				</ul>
-{#{% include 'FulgurioLightCMSBundle::adminPagination.html.twig' %}#}
+{% include 'FulgurioLightCMSBundle::adminPagination.html.twig' %}
 			</form>
 {% include 'FulgurioLightCMSBundle::adminLightbox.html.twig' %}
 {% endif %}
