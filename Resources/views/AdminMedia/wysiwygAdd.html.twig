@@ -21,9 +21,6 @@
 		<form id="fileupload" action="{{ path('AdminMediasAdd') }}" method="POST" enctype="multipart/form-data">
 			<div class="container-fluid">
 				<header>
-{# {% if wysiwyg is not null %}#}
-{# 					<h1>{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.title{% endtrans %}</h1>#}
-{# {% endif %}#}
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-link="uploadFile">{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.send_file{% endtrans %}</a></li>
 {% if app.request.attributes.get('_route') == 'AdminLinkWysiwyg' %}
@@ -70,13 +67,19 @@
 {% endif %}
 				<div class="row-fluid" id="mediasLibrary">
 					<div class="span8">
-						<div>
-							<select name="filter" id="filters">
-								<option></option>
-								<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
-								<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>
-								<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
-							</select>
+						<div class="row-fluid">
+							<div class="pull-left">
+								<select name="filter" id="filters">
+									<option></option>
+									<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
+									<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>
+									<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
+								</select>
+							</div>
+							<div class="input-append pull-right">
+								<input type="text" name="filename" id="searchFilename" class="input-medium" id="appendedInputButtons">
+								<button class="btn" type="button" id="search">{% trans from 'admin' %}fulgurio.lightcms.search{% endtrans %}</button>
+							</div>
 						</div>
 						<ul id="mediasLibraryList"></ul>
 					</div>
@@ -124,14 +127,14 @@
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload-fp.js') }}"></script>
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.fileupload-ui.js') }}"></script>
 <script>
-$(window).load(function() {
-	var h = $(window).height() - $(".mediaPopup header").height() - $(".mediaPopup footer").height() - $("#filters").height() - 40;
+$(document).ready(function() {
+	var h = $(document).height() - $(".mediaPopup header").height() - $(".mediaPopup footer").height() - $("#filters").height() - 40;
 	$("#mediasLibraryList").height(h > 100 ? h : 100);
 });
 var selectedPicture;
 var activeToggle;
 $(function () {
-	var filter = '';
+	var filter = searchFilename = '';
 	var nbPictures = 0;
 	var currentPage = 0;
 	var nbLoadedPictures = 0;
@@ -167,8 +170,12 @@ $(function () {
 	function loadPictures(p) {
 		if (currentPage != p) {
 			currentPage = p;
+			var data = { "page": p, "filter": filter };
+			if (searchFilename != '') {
+				data.filename = searchFilename;
+			}
 			$.ajax("{{ path('AdminMedias') }}", {
-				data: { "page": p, "filter": filter },
+				data: data,
 				success: function(d) {
 					for (var i = 0; d.medias[i]; i++) {
 						var li = $('<li data-id="' + d.medias[i].id + '"><a><img src="' + d.medias[i].thumb + '" alt="' + d.medias[i].original_name + '" class="img-polaroid" /></a></li>');
@@ -219,6 +226,14 @@ $(function () {
 	});
 	$("#filters").change(function() {
 		filter = $(this).val();
+		nbPictures = 0;
+		currentPage = 0;
+		nbLoadedPictures = 0;
+		$("#mediasLibraryList").html('');
+		loadPictures(1);
+	});
+	$("#search").click(function() {
+		searchFilename = $("#searchFilename").val();
 		nbPictures = 0;
 		currentPage = 0;
 		nbLoadedPictures = 0;

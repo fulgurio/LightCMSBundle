@@ -31,6 +31,7 @@
 	list-style: none;
 	overflow: scroll;
 	overflow-x: hidden;
+	margin-left: 0;
 }
 #mediasLibrary ul li { 
 	display: block; 
