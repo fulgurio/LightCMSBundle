@@ -44,7 +44,7 @@ class FulgurioLightCMSExtension extends Extension
                 'allow_childrens' => TRUE,
             );
         }
-        if (!isset($config['models']['postsList']))
+        if ($config['allow_posts_list'] && !isset($config['models']['postsList']))
         {
             $config['models']['postsList'] = array(
                 'name' => 'posts_list',
