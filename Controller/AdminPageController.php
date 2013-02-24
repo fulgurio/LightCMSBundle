@@ -146,6 +146,10 @@ class AdminPageController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($page);
             $em->flush();
+            $this->get('session')->setFlash(
+                    'success',
+                    $this->get('translator')->trans('fulgurio.lightcms.pages.delete_success_message', array(), 'admin')
+            );
             return new RedirectResponse($this->generateUrl('AdminPages'));
         }
         else if ($request->request->get('confirm') === 'no')

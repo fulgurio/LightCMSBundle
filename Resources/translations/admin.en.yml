@@ -53,6 +53,7 @@ fulgurio:
         legend:                     Edit page
         success_msg:                Page has been modified !
       delete_confirm_message:       Are you sure to delete "%title%" ?
+      delete_success_message:       Page has been removed !
     post_not_found:                 Post not found
     posts:
       go_to_posts_manager:          Go to posts manager
