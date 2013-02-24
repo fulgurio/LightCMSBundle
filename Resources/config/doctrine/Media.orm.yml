@@ -10,7 +10,7 @@ Fulgurio\LightCMSBundle\Entity\Media:
         strategy: AUTO
     original_name:
       type: string
-      length: 32
+      length: 64
     full_path:
       type: string
       length: 255
