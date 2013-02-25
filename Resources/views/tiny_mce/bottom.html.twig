@@ -4,6 +4,7 @@ $(function() {
 	$('textarea.wysiwyg').tinymce({
 		script_url : '{{ asset('bundles/fulguriolightcms/js/tiny_mce/tiny_mce.js') }}',
 {% if tiny_mce.content_css is defined %}		content_css: '{{ asset(tiny_mce.content_css) }}',{% endif %}
+		height : "400",
 		theme : "{{ tiny_mce.theme }}",
 		skin : "{{ tiny_mce.skin }}",
 		plugins : "{{ tiny_mce.plugins }}",
