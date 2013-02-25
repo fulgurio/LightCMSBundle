@@ -21,7 +21,7 @@ class AdminMediaController extends Controller
     public function listAction()
     {
         $filters = array();
-        $nbPerPage = 10;
+        $nbPerPage = 24;
         $request = $this->container->get('request');
         if ($request->get('filter'))
         {
