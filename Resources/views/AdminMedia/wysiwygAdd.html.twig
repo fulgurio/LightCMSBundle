@@ -72,7 +72,7 @@
 								<select name="filter" id="filters">
 									<option></option>
 									<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
-									<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>
+{#}									<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>#}
 									<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
 								</select>
 							</div>
