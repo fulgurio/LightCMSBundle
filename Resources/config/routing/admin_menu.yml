@@ -1,10 +1,20 @@
 AdminMenusUp:
     pattern:  /{pageId}/{menuName}/up
     defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:up }
+    options:
+        expose: true
 
 AdminMenusDown:
     pattern:  /{pageId}/{menuName}/down
     defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:down }
+    options:
+        expose: true
+
+AdminMenusChangePosition:
+    pattern:  /{pageId}/{menuName}/change-position/{newPosition}
+    defaults: { _controller: FulgurioLightCMSBundle:AdminMenu:changePosition }
+    options:
+        expose: true
 
 AdminMenus:
     pattern:  /

@@ -59,7 +59,7 @@
     height: 48px;
 }
 .mediaPopup footer {
-    height: 70px;
+	height: 70px;
 }
 .mediaPopup .form-actions {
 	position: fixed;
@@ -76,6 +76,9 @@
 }
 ul.menus {
 	list-style: none;
+}
+ul.menus li {
+	cursor: pointer;
 }
 .thumbnails .thumbnail h6 span {
 	overflow: hidden;

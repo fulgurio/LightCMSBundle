@@ -28,8 +28,10 @@ That's easy !
 
 ### Step 1: Download FulgurioLightCMSBundle and dependent bundles
 
-First, you need to install [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization
-and [KnpPaginator bundle.](https://github.com/KnpLabs/KnpPaginatorBundle)
+First, you need to install :
+* [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization
+* [KnpPaginator bundle](https://github.com/KnpLabs/KnpPaginatorBundle)
+* [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle)
 
 **Using the vendors script**
 

@@ -1,17 +1,20 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.menus.title{% endtrans %}{% endblock %}
+
 {% block content %}
 <h1>{% trans from 'admin' %}fulgurio.lightcms.menus.legend{% endtrans %}</h1>
+{% include 'FulgurioLightCMSBundle::adminMessage.html.twig' %}
 <div>
 {% for menuName, pages in menuPages %}
 	<h2>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ menuName)|trans({}, 'admin') }}</h2>
 {%   if pages|length > 0 %}
-	<ul class="menus">
+	<ul class="menus" data-menu="{{ menuName }}">
 {%     for position, page in pages %}
-		<li>
-			{% if position > 0 %}<a href="{{ path('AdminMenusUp', { pageId: page.id, menuName: menuName}) }}" class=" icon-arrow-up"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
-			{% if position != (pages|length - 1) %}<a href="{{ path('AdminMenusDown', { pageId: page.id, menuName: menuName }) }}" class=" icon-arrow-down"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
-			<span{% if page.status == 'draft' %} class="draft{% endif %}">{{ page.title }}</span></li>
+		<li id="{{ page.id }}">
+			{% if position > 0 %}<a href="{{ path('AdminMenusUp', { pageId: page.id, menuName: menuName}) }}" class="icon-arrow-up"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
+			{% if position != (pages|length - 1) %}<a href="{{ path('AdminMenusDown', { pageId: page.id, menuName: menuName }) }}" class="icon-arrow-down"></a>{% else %}<span class="icon-"></span>{% endif %}&nbsp;
+			<span{% if page.status == 'draft' %} class="draft"{% endif %}>{{ page.title }}</span></li>
 {%     endfor %}
 	</ul>
 {%   else %}
@@ -19,4 +22,57 @@
 {%   endif %}
 {% endfor %}
 </div>
+{% endblock %}
+
+{% block javascriptBottom %}
+	<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.core.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.widget.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.mouse.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.sortable.js') }}"></script>
+	<script>
+	$(function() {
+		$(".menus").sortable({
+			stop: function(event, ui) {
+				$(this).find('li').each(function(index) {
+					index ++;
+					if (this.id == ui.item.attr('id')) {
+						$.ajax({
+							url: Routing.generate('AdminMenusChangePosition', { "pageId": ui.item.attr('id'), "menuName": ui.item.parent().attr("data-menu"), "newPosition" : index })
+						});
+						var nbLi = (ui.item.parent().find("li").length);
+						ui.item.parent().find('li').each(function (i) {
+							var span = $(this).find('.icon-');
+							if (span.length) {
+								var aUp = $(this).find('.icon-arrow-up');
+								if (aUp.length == 0) {
+									span.replaceWith('<a href="' + Routing.generate('AdminMenusUp', { "pageId": ui.item.attr('id'), "menuName": ui.item.parent().attr("data-menu") }) + '" class="icon-arrow-up"></a>');
+								}
+								else {
+									var aDown = $(this).find('.icon-arrow-down');
+									if (aDown.length == 0) {
+										span.replaceWith('<a href="' + Routing.generate('AdminMenusDown', { "pageId": ui.item.attr('id'), "menuName": ui.item.parent().attr("data-menu") }) + '" class="icon-arrow-down"></a>');
+									}
+								}
+							}
+							if (i == 0) {
+								var aUp = $(this).find('.icon-arrow-up');
+								if (aUp.length) {
+									aUp.replaceWith('<span class="icon-"></span>');
+								}
+							}
+							else if (i == (nbLi - 1)) {
+								var aDown = $(this).find('.icon-arrow-down');
+								if (aDown.length) {
+									aDown.replaceWith('<span class="icon-"></span>');
+								}
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	</script>
 {% endblock %}

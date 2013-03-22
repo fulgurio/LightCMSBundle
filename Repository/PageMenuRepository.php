@@ -59,6 +59,7 @@ class PageMenuRepository extends EntityRepository
      *
      * @param string $menuName
      * @param integer $position
+     * @param integer $positionLimit
      */
     public function upMenuPagesPosition($menuName, $position, $positionLimit = NULL)
     {
@@ -81,6 +82,7 @@ class PageMenuRepository extends EntityRepository
      *
      * @param string $menuName
      * @param integer $position
+     * @param integer $positionLimit
      */
     public function downMenuPagesPosition($menuName, $position, $positionLimit = NULL)
     {
