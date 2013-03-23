@@ -28,7 +28,7 @@ class AdminPageController extends Controller
                 $pageRoot = $page;
             }
             if (!is_null($pageId) && $page->getId() == $pageId) {
-            	$currentPage = $page;
+                $currentPage = $page;
             }
             if (!isset($childrenPages[$page->getParentId()])) {
                 $childrenPages[$page->getParentId()] = array();
@@ -50,6 +50,24 @@ class AdminPageController extends Controller
             $templateName = 'FulgurioLightCMSBundle:AdminPage:list.html.twig';
         }
         return $this->render($templateName, $data);
+    }
+
+    /**
+     * Add page
+     *
+     * @param integer $parentId if specified, we edit a (new) child page
+     */
+    public function addAction($parentId)
+    {
+        $models = $this->container->getParameter('fulgurio_light_cms.models');
+        $page = new Page();
+        $parent = $this->getPage($parentId);
+        if (!$models[$parent->getModel()]['allow_childrens'])
+        {
+            throw new AccessDeniedException();
+        }
+        $page->setParent($parent);
+        return $this->createPage($page, array('parent' => $parent));
     }
 
     /**
