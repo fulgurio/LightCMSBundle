@@ -50,23 +50,33 @@ class Page
     }
 
     /**
+     * Chech if page is the root page
+     *
+     * @return boolean
+     */
+    public function isRoot()
+    {
+        return ($this->getFullpath() == '');
+    }
+
+    /**
      * Get available menu
      *
      * @return NULL|multitype:string
      */
     public function getAvailableMenu()
     {
-    	$availableMenus = array();
-    	$menus = $this->getMenu();
-    	if (!$menus)
-    	{
-    		return (NULL);
-    	}
-    	foreach ($menus as $menu)
-    	{
-    		$availableMenus[] = $menu->getLabel();
-    	}
-    	return ($availableMenus);
+        $availableMenus = array();
+        $menus = $this->getMenu();
+        if (!$menus)
+        {
+            return (NULL);
+        }
+        foreach ($menus as $menu)
+        {
+            $availableMenus[] = $menu->getLabel();
+        }
+        return ($availableMenus);
     }
 
 
@@ -77,6 +87,11 @@ class Page
      * @var integer $id
      */
     private $id;
+
+    /**
+     * @var integer $parent_id
+     */
+    private $parent_id;
 
     /**
      * @var string $title
@@ -163,6 +178,26 @@ class Page
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set parent_id
+     *
+     * @param integer $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $this->parent_id = $parentId;
+    }
+
+    /**
+     * Get parent_id
+     *
+     * @return integer 
+     */
+    public function getParentId()
+    {
+        return $this->parent_id;
     }
 
     /**

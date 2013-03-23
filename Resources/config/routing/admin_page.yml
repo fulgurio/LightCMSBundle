@@ -8,7 +8,7 @@ AdminPagesAddChild:
 
 AdminPagesSelect:
     pattern:  /{pageId}
-    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:select }
+    defaults: { _controller: FulgurioLightCMSBundle:AdminPage:list }
 
 AdminPagesEdit:
     pattern:  /{pageId}/edit

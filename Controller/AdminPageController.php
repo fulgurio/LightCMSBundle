@@ -16,48 +16,40 @@ class AdminPageController extends Controller
 {
     /**
      * Pages list
-     */
-    public function listAction()
-    {
-        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
-        return $this->render('FulgurioLightCMSBundle:AdminPage:list.html.twig', array(
-            'pageRoot' => array($pageRoot)
-        ));
-    }
-
-    /**
-     * Page manager page
      *
      * @param integer $pageId
      */
-    public function selectAction($pageId)
+    public function listAction($pageId = NULL)
     {
-        $models = $this->container->getParameter('fulgurio_light_cms.models');
-        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
-        $page = $this->getPage($pageId);
-        $templateName = isset($models[$page->getModel()]['back']['view']) ? $models[$page->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
-        return $this->render($templateName, array(
-            'pageRoot' => array($pageRoot),
-            'selectedPage' => $page
-        ));
-    }
-
-    /**
-     * Add page
-     *
-     * @param integer $parentId if specified, we edit a (new) child page
-     */
-    public function addAction($parentId)
-    {
-        $models = $this->container->getParameter('fulgurio_light_cms.models');
-        $page = new Page();
-        $parent = $this->getPage($parentId);
-        if (!$models[$parent->getModel()]['allow_childrens'])
-        {
-            throw new AccessDeniedException();
+        $pages = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('page_type' => 'page'));
+        $childrenPages = array();
+        foreach ($pages as $page) {
+            if ($page->isRoot()) {
+                $pageRoot = $page;
+            }
+            if (!is_null($pageId) && $page->getId() == $pageId) {
+            	$currentPage = $page;
+            }
+            if (!isset($childrenPages[$page->getParentId()])) {
+                $childrenPages[$page->getParentId()] = array();
+            }
+            $childrenPages[$page->getParentId()][] = $page;
         }
-        $page->setParent($parent);
-        return $this->createPage($page, array('parent' => $parent));
+        $data = array(
+            'pageRoot' => array($pageRoot),
+            'childrenPages' => $childrenPages
+        );
+        if (!is_null($pageId))
+        {
+            $models = $this->container->getParameter('fulgurio_light_cms.models');
+            $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
+            $templateName = isset($models[$page->getModel()]['back']['view']) ? $models[$page->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
+            $data['selectedPage'] = $currentPage;
+        }
+        else {
+            $templateName = 'FulgurioLightCMSBundle:AdminPage:list.html.twig';
+        }
+        return $this->render($templateName, $data);
     }
 
     /**

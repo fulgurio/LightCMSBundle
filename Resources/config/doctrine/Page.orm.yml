@@ -8,6 +8,9 @@ Fulgurio\LightCMSBundle\Entity\Page:
       id: true
       generator:
         strategy: AUTO
+    parent_id:
+      type: integer
+      nullable: true
     model:
       type: string
       length: 16
