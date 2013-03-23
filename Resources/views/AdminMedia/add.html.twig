@@ -118,8 +118,6 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 <!-- Bootstrap CSS fixes for IE6 -->
 <!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
-{#}<!-- Bootstrap Image Gallery styles -->
-<link rel="stylesheet" href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">#}
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui.css') }}">
 <!-- CSS adjustments for browsers with JavaScript disabled -->
@@ -136,8 +134,6 @@
 <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
 <script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
-{#}<!-- Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo -->
-<script src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>#}
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.iframe-transport.js') }}"></script>
 <!-- The basic File Upload plugin -->
@@ -157,65 +153,6 @@ $(function () {
 		//xhrFields: {withCredentials: true},
 		url: '{{ path('AdminMediasAdd') }}'
 	});
-/*
-	// Enable iframe cross-domain access via redirect option:
-	$('#fileupload').fileupload(
-		'option',
-		'redirect',
-		window.location.href.replace(
-			/\/[^\/]*$/,
-			'/cors/result.html?%s'
-		)
-	);
-
-	if (window.location.hostname === 'blueimp.github.com') {
-		// Demo settings:
-		$('#fileupload').fileupload('option', {
-			url: '//jquery-file-upload.appspot.com/',
-			maxFileSize: 5000000,
-			acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-			process: [
-				{
-					action: 'load',
-					fileTypes: /^image\/(gif|jpeg|png)$/,
-					maxFileSize: 20000000 // 20MB
-				},
-				{
-					action: 'resize',
-					maxWidth: 1440,
-					maxHeight: 900
-				},
-				{
-					action: 'save'
-				}
-			]
-		});
-		// Upload server status check for browsers with CORS support:
-		if ($.support.cors) {
-			$.ajax({
-				url: '//jquery-file-upload.appspot.com/',
-				type: 'HEAD'
-			}).fail(function () {
-				$('<span class="alert alert-error"/>')
-					.text('Upload server currently unavailable - ' +
-							new Date())
-					.appendTo('#fileupload');
-			});
-		}
-	} else {
-		// Load existing files:
-		$.ajax({
-			// Uncomment the following to send cross-domain cookies:
-			//xhrFields: {withCredentials: true},
-			url: $('#fileupload').fileupload('option', 'url'),
-			dataType: 'json',
-			context: $('#fileupload')[0]
-		}).done(function (result) {
-			$(this).fileupload('option', 'done')
-				.call(this, null, {result: result});
-		});
-	}
-*/
 });
 </script>
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->

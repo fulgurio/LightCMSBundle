@@ -13,7 +13,7 @@
 	<noscript><link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui-noscript.css') }}"></noscript>
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 {% if wysiwyg is not null %}
-{% include 'FulgurioLightCMSBundle:' ~ wysiwyg ~ ':popupTop.html.twig' %}
+{%   include 'FulgurioLightCMSBundle:' ~ wysiwyg ~ ':popupTop.html.twig' %}
 {%  endif %}
 </head>
 <body>
@@ -72,7 +72,6 @@
 								<select name="filter" id="filters">
 									<option></option>
 									<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>
-{#}									<option value="video"{% if app.request.get('filter') == 'video' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.videos{% endtrans %}</option>#}
 									<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>
 								</select>
 							</div>
@@ -145,11 +144,24 @@ $(function () {
 		//xhrFields: {withCredentials: true},
 		url: '{{ path('AdminMediasAdd') }}',
 		done: function(e, d) {
-			if ($('#mediasLibraryList li').length > 0) {
-				$("#mediasLibraryList").html('');
+			$("#uploadFile .alert").remove();
+			var error = false;
+			for (var i = 0; d.result.files[i]; i++) {
+				if (d.result.files[i].error) {
+					error = d.result.files[i].error;
+					break;
+				}
 			}
-			selectFirst = 1;
-			$("a[data-link='mediasLibrary']").click();
+			if (error == false) {
+				if ($('#mediasLibraryList li').length > 0) {
+					$("#mediasLibraryList").html('');
+				}
+				selectFirst = 1;
+				$("a[data-link='mediasLibrary']").click();
+			}
+			else {
+				$("#uploadFile").prepend('<div class="alert alert-error">' + error + '</div>');
+			}
 		},
 		uploadTemplateId: null,
 		downloadTemplateId: null,
@@ -158,6 +170,7 @@ $(function () {
 	});
 	activeToggle = $('ul.nav li.active a');
 	$('ul.nav a').click(function() {
+		$("#uploadFile .alert").remove();
 		activeToggle.parent().removeClass('active');
 		$(this).parent().addClass('active');
 		$('#' + activeToggle.attr('data-link')).hide();

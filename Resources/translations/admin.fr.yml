@@ -99,6 +99,7 @@ fulgurio:
         file_is_not_a_picture:      Le fichier "%FILE%" n'est pas une image
         legend:                     Ajouter un nouvea média
         success_msg:                Le média a été ajouté !
+        error_msg:                  Fichier trop gros ? (max %MAX_FILE_SIZE%)
         filename:                   Nom du fichier
       edit_form:
         title:                      Edition du média

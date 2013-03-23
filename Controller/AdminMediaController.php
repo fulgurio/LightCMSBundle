@@ -124,6 +124,15 @@ class AdminMediaController extends Controller
             );
             return $this->redirect($this->generateUrl('AdminMedias'));
         }
+        else if ($request->isXmlHttpRequest())
+        {
+            //@todo : well, we only manage one error, not the others ...
+            return $this->jsonResponse((object) array('files' => array(
+                    (object) array(
+                            'error' => $this->get('translator')->trans('fulgurio.lightcms.medias.add_form.error_msg', array('%MAX_FILE_SIZE%' => ini_get('upload_max_filesize')), 'admin'),
+                    )
+            )));
+        }
         $options['form'] = $form->createView();
         return $this->render('FulgurioLightCMSBundle:AdminMedia:add.html.twig', $options);
     }
@@ -148,11 +157,11 @@ class AdminMediaController extends Controller
             {
                 if (substr($media->getMediaType(), 0, 5) == 'image')
                 {
-	                $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $size);
-	                if (is_file($filename))
-	                {
-	                    unlink($filename);
-	                }
+                    $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $size);
+                    if (is_file($filename))
+                    {
+                        unlink($filename);
+                    }
                 }
             }
             $em = $this->getDoctrine()->getEntityManager();
@@ -195,15 +204,15 @@ class AdminMediaController extends Controller
      */
     public function wysiwygLinkAction()
     {
-    	$form = $this->createForm(new AdminMediaType($this->container), new Media());
-    	return $this->render(
-    			'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
-    			array(
-    					'form' => $form->createView(),
-    					'wysiwyg' => $this->container->get('request')->get('wyziwyg'),
-    					'isLink' => true
-    			)
-    	);
+        $form = $this->createForm(new AdminMediaType($this->container), new Media());
+        return $this->render(
+                'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
+                array(
+                        'form' => $form->createView(),
+                        'wysiwyg' => $this->container->get('request')->get('wyziwyg'),
+                        'isLink' => true
+                )
+        );
     }
 
     /**
