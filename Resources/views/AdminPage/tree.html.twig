@@ -1,6 +1,6 @@
 <ul>
 {% for page in pages %}
-	<li id="pid-{{ page.id }}" data-id="{{ page.id }}" class="page_{{ page.model }}{% if page.status == 'draft' %} draft{% endif %}">
+	<li id="pid-{{ page.id }}" data-id="{{ page.id }}" class="page_{{ page.model }}{% if page.status == 'draft' %} draft{% endif %}{% if selectedPage is defined and selectedPage.parent == page %} jstree-open{% endif %}">
 {%   if selectedPage is defined and selectedPage == page %}
 		<a class="likeText">{{ page.title }}</a>
 {% else %}
