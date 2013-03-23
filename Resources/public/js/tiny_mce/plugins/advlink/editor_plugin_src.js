@@ -22,7 +22,8 @@
 					return;
 
 				ed.windowManager.open({
-					file : ed.settings.link.url,
+					title : ed.settings.link.title,
+					url : ed.settings.link.url,
 					width : ed.settings.link.width + parseInt(ed.getLang('advlink.delta_width', 0)),
 					height : ed.settings.link.height + parseInt(ed.getLang('advlink.delta_height', 0)),
 					inline : 1

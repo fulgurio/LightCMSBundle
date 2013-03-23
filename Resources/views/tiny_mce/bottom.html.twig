@@ -3,6 +3,8 @@
 $(function() {
 	$('textarea.wysiwyg').tinymce({
 		script_url : '{{ asset('bundles/fulguriolightcms/js/tiny_mce/tiny_mce.js') }}',
+		popup_css: false,
+		language : "fr",
 {% if tiny_mce.content_css is defined %}		content_css: '{{ asset(tiny_mce.content_css) }}',{% endif %}
 		height : "400",
 		theme : "{{ tiny_mce.theme }}",
@@ -18,11 +20,13 @@ $(function() {
 		theme_advanced_resize_horizontal: false,
 		file_browser_callback: 'filesBrowser',
 		uploadFile: {
+			title: "",
 			url: "{{ path('AdminMediasWysiwyg') }}?wyziwyg=tiny_mce",
 			width: $(document).width() * 0.9,
 			height: $(window).height() * 0.9,
 		},
 		link: {
+			title: "",
 			url: "{{ path('AdminLinkWysiwyg') }}?wyziwyg=tiny_mce",
 			width: $(document).width() * 0.9,
 			height: $(window).height() * 0.9,

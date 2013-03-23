@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('default')
                         ->end()
                         ->scalarNode('plugins')
-                            ->defaultValue('autolink,lists,spellchecker,style,layer,table,advhr,advimage,advlink,emotions,iespell,inlinepopups,media,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,xhtmlxtras,template')
+                            ->defaultValue('autolink,lists,spellchecker,style,layer,table,advhr,advimage,advlink,emotions,iespell,twitterbootstrappopup,media,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,xhtmlxtras,template')
                         ->end()
                         ->scalarNode('theme_advanced_buttons1')
                             ->defaultValue('bold,italic,underline,strikethrough,|,bullist,numlist,|,outdent,indent,blockquote,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect')
