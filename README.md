@@ -21,7 +21,7 @@ Installation is not so hard
 2. Configure the Autoloader
 3. Enable the Bundle
 4. Import routing
-5. Configure your security.yml file
+5. Configure your yml files
 6. Try it !
 
 That's easy !
@@ -92,7 +92,7 @@ FulgurioLightCMSBundle:
     prefix:   /
 ```
 
-### Step 5: Configure your security.yml file
+### Step 5: Configure your yml files
 
 You need to set on the anonymous access, and to limit admin access. Edit config/security.yml file and put the following configuration :
 ```yaml
@@ -100,8 +100,18 @@ You need to set on the anonymous access, and to limit admin access. Edit config/
         secured_area:
             pattern:    ^/
             anonymous: ~
+            http_basic:
+                realm: "Secured Demo Area"
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+```
+
+After that, you need to enable the translation (actually, only english and french is available)
+``` yaml
+# app/config/config.yml
+
+framework:
+    translator: ~
 ```
 
 ### Step 6: Try it !
