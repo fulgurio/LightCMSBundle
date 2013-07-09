@@ -85,6 +85,7 @@ fulgurio:
       title:                        Medias
       no_media:                     No media
       add_new_media:                Add new media
+      not_found:                    Media not found
       select_file:                  Select a file
       filter:                       Filter
       add_form:

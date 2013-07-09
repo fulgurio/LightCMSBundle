@@ -10,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 
 class AdminMediaController extends Controller
 {
@@ -21,6 +19,7 @@ class AdminMediaController extends Controller
     public function listAction()
     {
         $filters = array();
+        //@todo : put the number on config
         $nbPerPage = 24;
         $request = $this->container->get('request');
         if ($request->get('filter'))
@@ -77,7 +76,7 @@ class AdminMediaController extends Controller
      *
      * @param integer $mediaId if specified, we are on edit media form
      */
-    function editAction($pageId)
+    function editAction($mediaId)
     {
         $media = $this->getMedia($mediaId);
         return $this->createPage($media);
@@ -226,7 +225,7 @@ class AdminMediaController extends Controller
         if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findOneBy(array('id' => $mediaId)))
         {
             throw new NotFoundHttpException(
-                $this->get('translator')->trans('fulgurio.lightcms.medias.not_found')
+                $this->get('translator')->trans('fulgurio.lightcms.medias.not_found', array(), 'admin')
             );
         }
         return ($page);
