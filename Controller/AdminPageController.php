@@ -1,5 +1,4 @@
 <?php
-
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
@@ -41,9 +40,14 @@ class AdminPageController extends Controller
         );
         if (!is_null($pageId))
         {
+            if (!isset($currentPage)) {
+                throw new NotFoundHttpException(
+                        $this->get('translator')->trans('fulgurio.lightcms.page_not_found', array(), 'admin')
+                );
+            }
             $models = $this->container->getParameter('fulgurio_light_cms.models');
             $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
-            $templateName = isset($models[$page->getModel()]['back']['view']) ? $models[$page->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
+            $templateName = isset($models[$currentPage->getModel()]['back']['view']) ? $models[$currentPage->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
             $data['selectedPage'] = $currentPage;
         }
         else {
@@ -265,7 +269,7 @@ class AdminPageController extends Controller
         if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('id' => $pageId, 'page_type' => 'page')))
         {
             throw new NotFoundHttpException(
-                $this->get('translator')->trans('fulgurio.lightcms.page_not_found')
+                $this->get('translator')->trans('fulgurio.lightcms.page_not_found', array(), 'admin')
             );
         }
         return ($page);

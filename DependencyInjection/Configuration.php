@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('allow_recursive_page_delete')->defaultValue(FALSE)->end()
             ->end()
             ->children()
-                 ->scalarNode('allow_posts_list')->defaultValue(FALSE)->end()
+                 ->scalarNode('allow_posts_list')->defaultValue(TRUE)->end()
             ->end()
             ->children()
                 ->arrayNode('langs')
