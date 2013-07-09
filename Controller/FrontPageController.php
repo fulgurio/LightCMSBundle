@@ -1,13 +1,29 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Controller displaying front page
+ */
 class FrontPageController extends Controller
 {
+    /**
+     * Page
+     * @var Page
+     */
     protected $page;
+
 
     /**
      * Display page

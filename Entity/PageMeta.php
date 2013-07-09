@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Fulgurio\LightCMSBundle\Entity;
 
@@ -33,7 +41,7 @@ class PageMeta
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,7 +61,7 @@ class PageMeta
     /**
      * Get meta_key
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKey()
     {
@@ -73,7 +81,7 @@ class PageMeta
     /**
      * Get meta_value
      *
-     * @return text 
+     * @return text
      */
     public function getMetaValue()
     {
@@ -93,7 +101,7 @@ class PageMeta
     /**
      * Get page
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page 
+     * @return Fulgurio\LightCMSBundle\Entity\Page
      */
     public function getPage()
     {

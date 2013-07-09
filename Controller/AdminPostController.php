@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Fulgurio\LightCMSBundle\Controller;
 
@@ -11,7 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-
+/**
+ * Controller managing posts
+ */
 class AdminPostController extends Controller
 {
     /**

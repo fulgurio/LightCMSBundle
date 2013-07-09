@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+*
+* (c) Fulgurio <http://fulgurio.net>
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+
 namespace Fulgurio\LightCMSBundle\DataFixtures\ORM;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
@@ -8,10 +17,15 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
+/**
+ * Fixtures of posts list
+ *
+ * @author Vincent GUERARD <v.guerard@fulgurio.net>
+ */
 class LoadPostsData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /**
-     * Load fixtures
+     * Load posts list page
      */
     public function load(ObjectManager $manager)
     {

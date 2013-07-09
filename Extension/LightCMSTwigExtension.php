@@ -1,8 +1,18 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Fulgurio\LightCMSBundle\Extension;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LightCMSTwigExtension extends \Twig_Extension
@@ -17,7 +27,7 @@ class LightCMSTwigExtension extends \Twig_Extension
     /**
      * Doctrine object
      *
-     * @var UrlGeneratorInterface
+     * @var RegistryInterface
      */
     private $doctrine;
 
@@ -34,7 +44,7 @@ class LightCMSTwigExtension extends \Twig_Extension
      *
      * @param UrlGeneratorInterface $generator
      */
-    public function __construct(UrlGeneratorInterface $generator, $doctrine, $container)
+    public function __construct(UrlGeneratorInterface $generator, RegistryInterface $doctrine, $container)
     {
         $this->generator = $generator;
         $this->doctrine  = $doctrine;

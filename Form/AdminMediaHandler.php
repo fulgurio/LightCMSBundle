@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Fulgurio\LightCMSBundle\Form;
 
 use Fulgurio\LightCMSBundle\Entity\Media;
@@ -7,7 +16,12 @@ use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminMediaHandler extends AbstractAdminHandler
 {
+    /**
+     * Thumb sizes
+     * @var array
+     */
     private $thumbSizes;
+
 
     /**
      * Processing form values
@@ -53,7 +67,6 @@ class AdminMediaHandler extends AbstractAdminHandler
                                 );
                             }
                         }
-//                      $file->getClientSize();
                     }
                     else {
                         return (FALSE);
@@ -74,6 +87,11 @@ class AdminMediaHandler extends AbstractAdminHandler
         return (FALSE);
     }
 
+    /**
+     * $thumbsizes setter
+     *
+     * @param array $sizes
+     */
     public function setThumbSizes($sizes)
     {
         $this->thumbSizes = $sizes;

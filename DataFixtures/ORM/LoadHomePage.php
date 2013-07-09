@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+*
+* (c) Fulgurio <http://fulgurio.net>
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+
 namespace Fulgurio\LightCMSBundle\DataFixtures\ORM;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
@@ -8,10 +17,15 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
+/**
+ * Fixtures of homepage
+ *
+ * @author Vincent GUERARD <v.guerard@fulgurio.net>
+ */
 class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /**
-     * Load fixtures
+     * Load homepage
      */
     public function load(ObjectManager $manager)
     {

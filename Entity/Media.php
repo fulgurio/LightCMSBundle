@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the LightCMSBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Fulgurio\LightCMSBundle\Entity;
 
@@ -43,7 +51,7 @@ class Media
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,7 +71,7 @@ class Media
     /**
      * Get original_name
      *
-     * @return string 
+     * @return string
      */
     public function getOriginalName()
     {
@@ -83,7 +91,7 @@ class Media
     /**
      * Get full_path
      *
-     * @return string 
+     * @return string
      */
     public function getFullPath()
     {
@@ -103,7 +111,7 @@ class Media
     /**
      * Get media_type
      *
-     * @return string 
+     * @return string
      */
     public function getMediaType()
     {
@@ -123,7 +131,7 @@ class Media
     /**
      * Get created_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -143,7 +151,7 @@ class Media
     /**
      * Get updated_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
