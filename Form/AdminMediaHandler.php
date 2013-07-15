@@ -22,6 +22,12 @@ class AdminMediaHandler extends AbstractAdminHandler
      */
     private $thumbSizes;
 
+    /**
+     * Slug suffix separator, if slug already exist
+     * @var string
+     */
+    const SLUG_SUFFIX_SEPARATOR = '-';
+
 
     /**
      * Processing form values
@@ -47,7 +53,7 @@ class AdminMediaHandler extends AbstractAdminHandler
                         {
                             unlink($oldFile);
                         }
-                        $filename = LightCMSUtils::getUniqName($file, LightCMSUtils::getUploadDir());
+                        $filename = $this->getUniqFilename(LightCMSUtils::getUploadDir(), $this->makeSlug($file->getClientOriginalName()));
                         $media->setFullPath(LightCMSUtils::getUploadUrl() . $filename);
                         $media->setOriginalName($file->getClientOriginalName());
                         $mimeType = $file->getMimeType();
@@ -85,6 +91,38 @@ class AdminMediaHandler extends AbstractAdminHandler
             }
         }
         return (FALSE);
+    }
+
+    /**
+     * Get uniq name for upload
+     *
+     * @param string $path
+     * @param string $filename
+     * @param number $counter
+     * @return string
+     */
+    private function getUniqFilename($path, $filename, $counter = 0) {
+        $pos = mb_strrpos($filename, '.');
+        $file = mb_substr($filename, 0, $pos);
+        $extension = mb_substr($filename, $pos);
+        $postfix = $counter > 0 ? self::SLUG_SUFFIX_SEPARATOR . $counter : '';
+        if (file_exists($path . '/' . $file . $postfix . $extension)) {
+            return ($this->getUniqFilename($path, $filename, $counter + 1));
+        }
+        return ($file . $postfix . $extension);
+    }
+
+    /**
+     * Generate slug
+     *
+     * @param string $title
+     * @return string
+     */
+    final private function makeSlug($title)
+    {
+        $slug = strtr(utf8_decode(mb_strtolower($title, 'UTF-8')), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
+        $slug = preg_replace(array('`[^a-z0-9\._]`i', '`[-]+`'), '-', $slug);
+        return ($slug);
     }
 
     /**

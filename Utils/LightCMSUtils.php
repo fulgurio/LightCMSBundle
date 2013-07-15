@@ -63,22 +63,6 @@ class LightCMSUtils
     }
 
     /**
-     * Get a random filename, and check if file does'nt exist
-     *
-     * @param UploadedFile $file
-     * @param string $path
-     */
-    static function getUniqName(UploadedFile $file, $path)
-    {
-        $filename = sha1(uniqid(mt_rand(), TRUE)) . '.' . $file->guessExtension();
-        if (!file_exists($path . $filename))
-        {
-            return ($filename);
-        }
-        return self::getUniqName($file, $path);
-    }
-
-    /**
      * Get thumb filename for a specified size
      *
      * @param string $filename
