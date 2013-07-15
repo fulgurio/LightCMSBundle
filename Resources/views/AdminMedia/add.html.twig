@@ -117,7 +117,7 @@
 <!-- Force latest IE rendering engine or ChromeFrame if installed -->
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 <!-- Bootstrap CSS fixes for IE6 -->
-<!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
+<!--[if lt IE 7]><link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/bootstrap-ie6.min.css') }}"><![endif]-->
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui.css') }}">
 <!-- CSS adjustments for browsers with JavaScript disabled -->
@@ -129,11 +129,11 @@
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.ui.widget.js') }}"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/tmpl.min.js') }}"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/load-image.min.js') }}"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
+<script src="{{ asset('bundles/fulguriolightcms/js/canvas-to-blob.min.js') }}"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="{{ asset('bundles/fulguriolightcms/js/jquery.iframe-transport.js') }}"></script>
 <!-- The basic File Upload plugin -->
