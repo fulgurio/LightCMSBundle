@@ -61,7 +61,7 @@
 			}
 			$("#myModalLabel").html("&nbsp;");
 			if (!f.type) {
-				$("#myModal .modal-body").html('<iframe src=' + u + ' frameborder="0" style="border: 0px;width:99%;height:80%;"></iframe>');
+				$("#myModal .modal-body").html('<iframe src=' + u + ' frameborder="0" style="border: 0px;width:100%;height:99%;"></iframe>');
 			}
 			else if (f.type == 'alert') {
 				$("#myModal .modal-body").html('<div class="alert alert-error">' + f.content.replace('\n', '<br />') + '</div>');
@@ -69,9 +69,9 @@
 			else if (f.type == 'confirm') {
 				$("#myModal .modal-body").html('<div class="alert alert-notice">' + f.content.replace('\n', '<br />') + '</div>');
 			}
-			$("#myModal .modal-body").css({'padding-left': 0, 'max-height': 'none'});
+			$("#myModal .modal-body").css({'padding': 0,'margin': 0, 'max-height': 'none', 'height': f.height - $("#myModal .modal-header").height() });
 			$("#myModal").width(f.width);
-			$("#myModal").height(f.height);
+			/*$("#myModal").height(f.height);*/
 			$("#myModal").css('margin-left', -f.width / 2);
 			$("#myModal").modal();
 		},
