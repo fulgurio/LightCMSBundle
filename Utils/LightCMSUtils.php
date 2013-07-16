@@ -74,8 +74,8 @@ class LightCMSUtils
     {
         if (substr($mimeType, 0, 5) == 'image')
         {
-            $pos = strrpos($filename, '.');
-            return (substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . substr($filename, $pos));
+            $pos = mb_strrpos($filename, '.');
+            return (mb_substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . mb_substr($filename, $pos));
         }
         else if ($mimeType == 'application/pdf')
         {
