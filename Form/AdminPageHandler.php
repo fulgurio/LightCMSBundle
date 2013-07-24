@@ -253,7 +253,7 @@ class AdminPageHandler extends AbstractAdminHandler
      * @param string $title
      * @return string
      */
-    final public function makeSlug($title)
+    public function makeSlug($title)
     {
         $slug = strtr(utf8_decode(mb_strtolower($title, 'UTF-8')), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
         $slug = preg_replace(array('`[^a-z0-9]`i', '`[-]+`'), '-', $slug);
