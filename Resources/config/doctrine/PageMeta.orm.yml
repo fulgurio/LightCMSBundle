@@ -2,6 +2,9 @@ Fulgurio\LightCMSBundle\Entity\PageMeta:
   type: entity
   repositoryClass: Fulgurio\LightCMSBundle\Repository\PageMetaRepository
   table: page_meta
+  indexes:
+    meta_key_idx:
+      columns: meta_key
   fields:
     id:
       type: integer

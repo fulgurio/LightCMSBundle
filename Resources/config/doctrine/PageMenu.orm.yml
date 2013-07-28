@@ -2,6 +2,9 @@ Fulgurio\LightCMSBundle\Entity\PageMenu:
   type: entity
   repositoryClass: Fulgurio\LightCMSBundle\Repository\PageMenuRepository
   table: page_menu
+  indexes:
+    label_idx:
+      columns: label
   fields:
     id:
       type: integer
@@ -9,6 +12,7 @@ Fulgurio\LightCMSBundle\Entity\PageMenu:
       generator:
         strategy: AUTO
     label:
+      index:
       type: string
       length: 255
     position:
