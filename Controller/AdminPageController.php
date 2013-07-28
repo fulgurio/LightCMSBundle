@@ -31,7 +31,7 @@ class AdminPageController extends Controller
      */
     public function listAction($pageId = NULL)
     {
-        $pages = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('page_type' => 'page'));
+        $pages = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('page_type' => 'page'), array('position' => 'ASC'));
         $childrenPages = array();
         foreach ($pages as $page) {
             if ($page->isRoot()) {
