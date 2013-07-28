@@ -31,9 +31,9 @@ class FrontPageController extends Controller
      */
     public function showAction()
     {
-        $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
         $models = $this->container->getParameter('fulgurio_light_cms.models');
         $templateName = isset($models[$this->page->getModel()]['front']['template']) ? $models[$this->page->getModel()]['front']['template'] : 'FulgurioLightCMSBundle:models:standardFront.html.twig';
+        $pageRoot = $this->page->getSlug() == '' ? $this->page : $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
         return $this->render($templateName, array(
             'pageRoot' => $pageRoot,
             'currentPage' => $this->page
