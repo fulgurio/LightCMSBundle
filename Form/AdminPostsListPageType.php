@@ -16,6 +16,29 @@ use Symfony\Component\Form\FormBuilder;
 class AdminPostsListPageType extends AdminPageType
 {
     /**
+     * Default post number per page
+     *
+     * @var Number
+     */
+    private $defautlNbPost = 10;
+
+
+    /**
+     * Constructor
+     *
+     * @param object $container
+     */
+    public function __construct($container)
+    {
+        parent::__construct($container);
+        if ($container->hasParameter('fulgurio_light_cms.posts'))
+        {
+            $postsModelData = $container->getParameter('fulgurio_light_cms.posts');
+            $this->defautlNbPost = $postsModelData['nb_per_page'];
+        }
+    }
+
+    /**
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
@@ -23,7 +46,13 @@ class AdminPostsListPageType extends AdminPageType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('nb_posts_per_page', 'number', array('required' => FALSE, 'property_path' => FALSE, 'invalid_message' => 'fulgurio.lightcms.posts.add_form.invalid_nb_posts_per_page'))
+            ->add('nb_posts_per_page', 'number', array(
+                    'required' => FALSE,
+                    'property_path' => FALSE,
+                    'invalid_message' => 'fulgurio.lightcms.posts.add_form.invalid_nb_posts_per_page',
+                    'data' => $this->defautlNbPost
+                    )
+        )
         ;
     }
 }
