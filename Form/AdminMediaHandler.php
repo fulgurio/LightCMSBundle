@@ -47,7 +47,7 @@ class AdminMediaHandler extends AbstractAdminHandler
                         {
                             unlink($oldFile);
                         }
-                        $filename = $this->getUniqFilename(LightCMSUtils::getUploadDir(), $this->makeSlug($file->getClientOriginalName()));
+                        $filename = $this->getUniqFilename(LightCMSUtils::getUploadDir(), LightCMSUtils::makeSlug($file->getClientOriginalName(), TRUE));
                         $media->setFullPath(LightCMSUtils::getUploadUrl() . $filename);
                         $media->setOriginalName($file->getClientOriginalName());
                         $mimeType = $file->getMimeType();
@@ -107,19 +107,6 @@ class AdminMediaHandler extends AbstractAdminHandler
             return ($this->getUniqFilename($path, $filename, $counter + 1));
         }
         return ($file . $postfix . $extension);
-    }
-
-    /**
-     * Generate slug
-     *
-     * @param string $title
-     * @return string
-     */
-    final private function makeSlug($title)
-    {
-        $slug = strtr(utf8_decode(mb_strtolower($title, 'UTF-8')), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
-        $slug = preg_replace(array('`[^a-z0-9\._]`i', '`[-]+`'), '-', $slug);
-        return ($slug);
     }
 
     /**

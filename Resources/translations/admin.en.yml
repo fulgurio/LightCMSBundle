@@ -47,6 +47,7 @@ fulgurio:
         redirection_target_label:   Redirection target
         meta_keywords_label:        Meta keywords
         meta_description_label:     Meta description
+        title_is_not_allowed:       This page title is not allowed
         success_msg:                Page has been created !
       edit_form:
         title:                      Edit page admin

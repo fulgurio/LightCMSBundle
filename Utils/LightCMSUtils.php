@@ -127,4 +127,25 @@ class LightCMSUtils
         imageJpeg($tempImage, $destfile, $jpegquality);
         return (getimagesize($destfile));
     }
+
+    /**
+     * Generate slug
+     *
+     * @param string $title
+     * @param boolean $isFile Allow "_" and "." characters if TRUE
+     * @return string
+     */
+    static public function makeSlug($title, $isFile = FALSE)
+    {
+        $slug = strtr(utf8_decode(mb_strtolower($title, 'UTF-8')), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
+        if ($isFile)
+        {
+            $slug = preg_replace(array('`[^a-z0-9\._]`i', '`[-]+`'), '-', $slug);
+        }
+        else
+        {
+            $slug = preg_replace(array('`[^a-z0-9]`i', '`[-]+`'), '-', $slug);
+        }
+        return ($slug);
+    }
 }

@@ -32,6 +32,12 @@ class FulgurioLightCMSExtension extends Extension
 
         $container->setParameter('fulgurio_light_cms.allow_recursive_page_delete', $config['allow_recursive_page_delete']);
         $container->setParameter('fulgurio_light_cms.slug_suffix_separator', $config['slug_suffix_separator']);
+        // Admin slug is not allowed
+        if (!in_array('admin', $config['slug_exclusions']))
+        {
+           $config['slug_exclusions'][] = 'admin';
+        }
+        $container->setParameter('fulgurio_light_cms.slug_exclusions', $config['slug_exclusions']);
         if (count($config['langs']) > 1)
         {
             $container->setParameter('fulgurio_light_cms.languages', $config['langs']);

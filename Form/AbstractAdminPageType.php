@@ -10,8 +10,12 @@
 
 namespace Fulgurio\LightCMSBundle\Form;
 
+use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityRepository;
 
 abstract class AbstractAdminPageType extends AbstractType
@@ -22,6 +26,12 @@ abstract class AbstractAdminPageType extends AbstractType
      * @var array
      */
     private $models;
+
+    /**
+     * Slug exclusions given by bundle configuration
+     * @var array
+     */
+    private $slugExclusions;
 
     /**
      * Languages
@@ -43,6 +53,7 @@ abstract class AbstractAdminPageType extends AbstractType
         {
             $this->langs = $container->getParameter('fulgurio_light_cms.languages');
         }
+        $this->slugExclusions = $container->getParameter('fulgurio_light_cms.slug_exclusions');
     }
 
     /**
@@ -51,6 +62,7 @@ abstract class AbstractAdminPageType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
+        $pageHandler = $this;
         $builder
             ->add('model', 'choice', array(
                 'choices'   => $this->models,
@@ -74,6 +86,13 @@ abstract class AbstractAdminPageType extends AbstractType
                 )
             )
             ->add('sourceId')
+            ->addValidator(new CallbackValidator(function(FormInterface $form) use ($pageHandler) {
+                $title = $form->get('title');
+                if (in_array(LightCMSUtils::makeSlug($title->getData()), $pageHandler->getSlugExclusions()))
+                {
+                    $title->addError(new FormError('fulgurio.lightcms.pages.add_form.title_is_not_allowed'));
+                }
+            }))
         ;
         if (!empty($this->langs) && count($this->langs) > 1)
         {
@@ -92,5 +111,19 @@ abstract class AbstractAdminPageType extends AbstractType
     final public function getName()
     {
         return 'page';
+    }
+
+    /**
+     * $slugExclusions getter
+     *
+     * @return array
+     */
+    final public function getSlugExclusions()
+    {
+    	if (!isset($this->slugExclusions))
+    	{
+    		return array();
+    	}
+        return ($this->slugExclusions);
     }
 }
