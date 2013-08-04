@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Fulgurio\LightCMSBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -35,7 +36,7 @@ class Configuration implements ConfigurationInterface
                  ->scalarNode('allow_posts_list')->defaultValue(TRUE)->end()
             ->end()
             ->children()
-                ->scalarNode('slug_suffix_separator')->defaultValue('AAA')->end()
+                ->scalarNode('slug_suffix_separator')->defaultValue('-')->end()
             ->end()
             ->children()
                 ->arrayNode('langs')
@@ -128,6 +129,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-                    return $treeBuilder;
+        return $treeBuilder;
     }
 }
