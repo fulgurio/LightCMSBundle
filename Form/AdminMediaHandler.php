@@ -22,12 +22,6 @@ class AdminMediaHandler extends AbstractAdminHandler
      */
     private $thumbSizes;
 
-    /**
-     * Slug suffix separator, if slug already exist
-     * @var string
-     */
-    const SLUG_SUFFIX_SEPARATOR = '-';
-
 
     /**
      * Processing form values
@@ -105,7 +99,7 @@ class AdminMediaHandler extends AbstractAdminHandler
         $pos = mb_strrpos($filename, '.');
         $file = mb_substr($filename, 0, $pos);
         $extension = mb_substr($filename, $pos);
-        $postfix = $counter > 0 ? self::SLUG_SUFFIX_SEPARATOR . $counter : '';
+        $postfix = $counter > 0 ? $this->slugSuffixSeparator . $counter : '';
         if (file_exists($path . '/' . $file . $postfix . $extension)) {
             return ($this->getUniqFilename($path, $filename, $counter + 1));
         }

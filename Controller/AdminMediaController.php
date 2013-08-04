@@ -107,6 +107,7 @@ class AdminMediaController extends Controller
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));
         $formHandler->setDoctrine($this->getDoctrine());
+        $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
         $formHandler->setThumbSizes($this->container->getParameter('fulgurio_light_cms.thumbs'));
         if ($formHandler->process($media))
         {

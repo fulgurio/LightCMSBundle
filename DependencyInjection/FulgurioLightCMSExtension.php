@@ -31,6 +31,7 @@ class FulgurioLightCMSExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('fulgurio_light_cms.allow_recursive_page_delete', $config['allow_recursive_page_delete']);
+        $container->setParameter('fulgurio_light_cms.slug_suffix_separator', $config['slug_suffix_separator']);
         if (count($config['langs']) > 1)
         {
             $container->setParameter('fulgurio_light_cms.languages', $config['langs']);

@@ -75,6 +75,7 @@ class AdminPostController extends Controller
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));
         $formHandler->setDoctrine($this->getDoctrine());
+        $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
         $formHandler->setPostConfig($this->container->getParameter('fulgurio_light_cms.posts'));
         if ($formHandler->process($post))
         {

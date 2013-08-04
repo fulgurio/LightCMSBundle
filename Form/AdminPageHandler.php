@@ -18,12 +18,6 @@ use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
 class AdminPageHandler extends AbstractAdminHandler
 {
     /**
-     * Slug suffix separator, if slug already exist
-     * @var string
-     */
-    const SLUG_SUFFIX_SEPARATOR = '-';
-
-    /**
      * Meta data
      * @var array
      */
@@ -88,7 +82,7 @@ class AdminPageHandler extends AbstractAdminHandler
     protected function addSuffixNumber($slug, Page $page, $number = 0)
     {
         $em = $this->doctrine->getEntityManager();
-        $slugTmp = $number > 0 ? $slug . self::SLUG_SUFFIX_SEPARATOR . $number : $slug;
+        $slugTmp = $number > 0 ? $slug . $this->slugSuffixSeparator . $number : $slug;
         $parentFullpath = $page->getParent()->getFullpath();
         $foundedPage = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array(
                 'fullpath' => ($parentFullpath != '' ? ($parentFullpath . '/') : '') . $slugTmp

@@ -35,6 +35,12 @@ abstract class AbstractAdminHandler
      */
     protected $doctrine;
 
+    /**
+     * Slug suffix separator, if slug already exist
+     * @var string
+     */
+    protected $slugSuffixSeparator = '-';
+
 
     /**
      * $form setter
@@ -64,5 +70,15 @@ abstract class AbstractAdminHandler
     public function setDoctrine(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
+    }
+
+    /**
+     * $slugSuffixSeparator setter
+     *
+     * @param string $suffix
+     */
+    public function setSlugSuffixSeparator($suffix)
+    {
+        $this->slugSuffixSeparator = $suffix;
     }
 }
