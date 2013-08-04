@@ -48,7 +48,6 @@ abstract class AbstractAdminPageType extends AbstractType
      */
     public function __construct($container)
     {
-        $this->models = $container->getParameter('fulgurio_light_cms.models');
         if ($container->hasParameter('fulgurio_light_cms.languages'))
         {
             $this->langs = $container->getParameter('fulgurio_light_cms.languages');
@@ -120,10 +119,20 @@ abstract class AbstractAdminPageType extends AbstractType
      */
     final public function getSlugExclusions()
     {
-    	if (!isset($this->slugExclusions))
-    	{
-    		return array();
-    	}
+        if (!isset($this->slugExclusions))
+        {
+            return array();
+        }
         return ($this->slugExclusions);
+    }
+
+    /**
+     * Models setters
+     *
+     * @param array $models
+     */
+    public function setModels($models)
+    {
+        $this->models = $models;
     }
 }

@@ -75,6 +75,18 @@ class AdminPageController extends Controller
     public function addAction($parentId)
     {
         $models = $this->container->getParameter('fulgurio_light_cms.models');
+        // We remove models if it s unique and there's one in database
+        foreach ($models as $modelName => $model)
+        {
+            if ($model['is_unique'])
+            {
+                $em = $this->getDoctrine()->getEntityManager();
+                if ($em->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('model' => $modelName)))
+                {
+                    unset($models[$modelName]);
+                }
+            }
+        }
         $page = new Page();
         $parent = $this->getPage($parentId);
         if (!$models[$parent->getModel()]['allow_childrens'])
@@ -82,7 +94,11 @@ class AdminPageController extends Controller
             throw new AccessDeniedException();
         }
         $page->setParent($parent);
-        return $this->createPage($page, array('parent' => $parent));
+        return $this->createPage(
+                $page,
+                array('parent' => $parent),
+                $models
+        );
     }
 
     /**
@@ -97,7 +113,11 @@ class AdminPageController extends Controller
             'pageMetas' => $this->getPageMetas($pageId)
         );
         $page = $this->getPage($pageId);
-        return $this->createPage($page, $options);
+        return $this->createPage(
+                $page,
+                $options,
+                $models = $this->container->getParameter('fulgurio_light_cms.models')
+        );
     }
 
     /**
@@ -105,11 +125,11 @@ class AdminPageController extends Controller
      *
      * @param Page $page
      * @param array $options
+     * @param array $models
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    private function createPage($page, $options)
+    private function createPage($page, $options, $models)
     {
-        $models = $this->container->getParameter('fulgurio_light_cms.models');
         if ($this->get('request')->getMethod() == 'POST')
         {
             $data = $this->get('request')->get('page');
@@ -117,7 +137,9 @@ class AdminPageController extends Controller
         }
         $formClassName = isset($models[$page->getModel()]['back']['form']) ? $models[$page->getModel()]['back']['form'] : '\Fulgurio\LightCMSBundle\Form\AdminPageType';
         $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\AdminPageHandler';
-        $form = $this->createForm(new $formClassName($this->container), $page);
+        $formType = new $formClassName($this->container);
+        $formType->setModels($models);
+        $form = $this->createForm($formType, $page);
         $formHandler = new $formHandlerClassName();
         $formHandler->setForm($form);
         $formHandler->setRequest($this->get('request'));

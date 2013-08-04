@@ -57,6 +57,7 @@ class FulgurioLightCMSExtension extends Extension
                     'template' => 'FulgurioLightCMSBundle:models:standardFront.html.twig'
                 ),
                 'allow_childrens' => TRUE,
+                'is_unique' => FALSE
             );
         }
         if ($config['allow_posts_list'] && !isset($config['models']['postsList']))
@@ -74,6 +75,7 @@ class FulgurioLightCMSExtension extends Extension
                     'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontPostPageController::list',
                 ),
                 'allow_childrens' => FALSE,
+                'is_unique' => TRUE
             );
         }
         if (!isset($config['models']['redirect']))
@@ -90,6 +92,7 @@ class FulgurioLightCMSExtension extends Extension
                     'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontRedirectPageController::redirect',
                 ),
                 'allow_childrens' => TRUE,
+                'is_unique' => FALSE
             );
         }
         $container->setParameter('fulgurio_light_cms.models', $config['models']);
