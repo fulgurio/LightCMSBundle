@@ -63,32 +63,34 @@
 					</div>
 				</div>
 			</div>
+{% if useMultiLang is defined or form.getChild('availableMenu').get('choices')|length > 0 %}
 			<div class="well span4 pull-right">
-{% if useMultiLang is defined %}
+{%   if useMultiLang is defined %}
 				<div class="control-group">
 					<label class="control-label" for="p_lang">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
 					<div class="controls">
 						<select name="{{ form.getChild('lang').get('full_name') }}" class="input-small" id="p_lang" >
-{% for choice in form.getChild('lang').get('choices') %}
+{%     for choice in form.getChild('lang').get('choices') %}
 							<option value="{{ choice }}"{% if choice in form.getChild('lang').get('value') %} selected="selected"{% endif %}>{{ choice }}</option>
-{% endfor %}
+{%     endfor %}
 						</select>
 					</div>
 				</div>
-{% endif %}
-{% if form.getChild('availableMenu').get('choices')|length > 0 %}
+{%   endif %}
+{%   if form.getChild('availableMenu').get('choices')|length > 0 %}
 				<div class="control-group">
 					<label class="control-label" for="p_availableMenu">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
 					<div class="controls">
 						<select name="{{ form.getChild('availableMenu').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_availableMenu" >
-{%   for choice in form.getChild('availableMenu').get('choices') %}
+{%     for choice in form.getChild('availableMenu').get('choices') %}
 							<option value="{{ choice }}"{% if choice in form.getChild('availableMenu').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice)|trans({}, 'admin') }}</option>
-{%   endfor %}
+{%     endfor %}
 						 </select>
 					</div>
 				</div>
-{% endif %}
+{%   endif %}
 			</div>
+{% endif %}
 		</div>
 		<div class="form-actions">
 			<input type="hidden" name="{{ form.getChild('content').get('full_name') }}" value="" />
