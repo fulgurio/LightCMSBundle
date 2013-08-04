@@ -176,6 +176,10 @@ class AdminPageController extends Controller
                     'success',
                     $this->get('translator')->trans('fulgurio.lightcms.pages.delete_success_message', array(), 'admin')
             );
+            if ($page->getParentId())
+            {
+                return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $page->getParentId())));
+            }
             return new RedirectResponse($this->generateUrl('AdminPages'));
         }
         else if ($request->request->get('confirm') === 'no')

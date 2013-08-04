@@ -2,7 +2,7 @@
 {% block title %}{% trans from 'admin' %}fulgurio.lightcms.posts.title{% endtrans %}{% endblock %}
 {% block content %}
 <h1 class="pull-left">{% trans from 'admin' %}fulgurio.lightcms.posts.legend{% endtrans %}</h1>
-{% if hasNoPostRoot == false %}ddd{{ hasNoPostRoot }}
+{% if hasNoPostRoot == false %}
 <a href="{{ path('AdminPostsAdd') }}" class="btn pull-right clearfix">{% trans from 'admin' %}fulgurio.lightcms.posts.add_post_button{% endtrans %}</a>
 {% else %}
 <br class="clearfix" style="clear: both"/>
