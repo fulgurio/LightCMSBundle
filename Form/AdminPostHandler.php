@@ -47,7 +47,10 @@ class AdminPostHandler extends AdminPageHandler
                 {
                     $page->setCreatedAt(new \DateTime());
                 }
-                $page->setUpdatedAt(new \DateTime());
+                else
+                {
+                    $page->setUpdatedAt(new \DateTime());
+                }
                 $em->persist($page);
                 $em->flush();
                 return (TRUE);
