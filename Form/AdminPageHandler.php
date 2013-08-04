@@ -137,13 +137,13 @@ class AdminPageHandler extends AbstractAdminHandler
     protected function updatePageMetas(Page $page, $data)
     {
         $em = $this->doctrine->getEntityManager();
-        if (isset($data['meta_keywords']) && trim($data['meta_keywords']) != '')
+        if (isset($data['meta_keywords']))
         {
-            $em->persist($this->initMetaEntity($page, 'meta_keywords', $data['meta_keywords']));
+            $em->persist($this->initMetaEntity($page, 'meta_keywords', trim($data['meta_keywords'])));
         }
-        if (isset($data['meta_description']) && trim($data['meta_description']) != '')
+        if (isset($data['meta_description']))
         {
-            $em->persist($this->initMetaEntity($page, 'meta_description', $data['meta_description']));
+            $em->persist($this->initMetaEntity($page, 'meta_description', trim($data['meta_description'])));
         }
     }
 
