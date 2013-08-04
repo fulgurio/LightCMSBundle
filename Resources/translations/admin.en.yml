@@ -63,6 +63,7 @@ fulgurio:
       legend:                       Posts
       add_post_button:              Add new post
       no_post:                      No post
+      no_root_post:                 No posts listing page exists. Please create a "post list" page
       edit_button:                  Edit
       remove_button:                Remove
       view_button:                  View

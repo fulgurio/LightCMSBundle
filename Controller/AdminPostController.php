@@ -29,10 +29,21 @@ class AdminPostController extends Controller
      */
     public function listAction()
     {
+        //@todo: pagination
         $pageNb = $this->get('request')->query->get('page', 1);
+        try
+        {
+            $parent = $this->getPostsListPage();
+        }
+        catch (\Exception $e)
+        {
+             $parent = NULL;
+        }
         $posts = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findAllPosts($this->get('knp_paginator'), $pageNb);
-        return $this->render('FulgurioLightCMSBundle:AdminPost:list.html.twig', array(
-            'posts' => $posts
+        return $this->render('FulgurioLightCMSBundle:AdminPost:list.html.twig',
+        array(
+            'posts' => $posts,
+            'hasNoPostRoot' => is_null($parent)
         ));
     }
 

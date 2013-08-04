@@ -63,6 +63,7 @@ fulgurio:
       legend:                       Articles
       add_post_button:              Ajouter un nouvel article
       no_post:                      Aucun article
+      no_root_post:                 Aucune page listant les articles n'existe. Veuillez créer une page "Liste d'article".
       edit_button:                  Editer
       remove_button:                Supprimer
       view_button:                  Voir
