@@ -52,6 +52,10 @@ class AdminPageHandler extends AbstractAdminHandler
                     $page->setCreatedAt(new \DateTime());
                     $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
                 }
+                else
+                {
+                    $page->setUpdatedAt(new \DateTime());
+                }
                 // Well, slug has been already made, but it s not easy to get the value, so we did it again
                 $page->setSlug(LightCMSUtils::makeSlug(isset($data['lang']) ? $data['lang'] : $page->getTitle()));
                 if (isset($data['lang']))
@@ -63,7 +67,6 @@ class AdminPageHandler extends AbstractAdminHandler
                     $page->setLang($page->getParent()->getLang());
                 }
                 $this->makeFullpath($page);
-                $page->setUpdatedAt(new \DateTime());
                 $this->beforePersist($page);
                 $em->persist($page);
                 $em->flush();
