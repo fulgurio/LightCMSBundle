@@ -21,30 +21,24 @@
 </div>
 <script>
 $(".treeview").jstree({
+	"types" : {
+		"valid_children" : [ "root" ],
+		"types" : {
+			"no-children":{
+				"valid_children" : [ "none" ]
+			}
+		}
+	},
 		"plugins" : [
 			"html_data",
 			"dnd",
 			"cookies",
-		],
+			"types",
+		]
 	})
 	.bind("move_node.jstree", function (e, data) {
 		var parentId = data.rslt.o.parent().parent().attr('data-id');
 		var pageId = data.rslt.o.attr('data-id');
-{#		switch (data.rslt.p) {
-			case 'inside':
-				console.log('on change de parent #' + data.rslt.o.parent().parent().attr('data-id') + ' avec un position = 1');
-				// en gros, cela revient à :
-				// - deplacer vers le haut les pages suivantes du même parent
-				// - changer de parent
-				// - mettre la position à 1
-				break;
-			case 'after':
-			case 'before':
-				console.log('Parent #' + data.rslt.o.parent().parent().attr('data-id') + ' avec un position = ' + (data.rslt.cp + 1));
-				break;
-			default:
-				console.log('cas non géré : ' + data.rslt.p);
-		}#}
 		$.ajax({
 			async : false,
 			type: 'POST',
