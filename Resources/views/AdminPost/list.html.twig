@@ -15,21 +15,17 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-{#}			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.title_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
-			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.published_at_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
-			<th>{{ posts.sortable('fulgurio.lightcms.posts.add_form.status_label'|trans({}, 'admin'), 'p.title')|raw }}</th>
-#}
-			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</th>
-			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.published_at_label{% endtrans %}</th>
-			<th>{% trans from 'admin' %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</th>
+			<th>{{ knp_pagination_sortable(posts, 'fulgurio.lightcms.posts.add_form.title_label'|trans({}, 'admin'), 'p.title') }}</th>
+			<th>{{ knp_pagination_sortable(posts, 'fulgurio.lightcms.posts.add_form.published_at_label'|trans({}, 'admin'), 'p.created_at') }}</th>
+			<th>{{ knp_pagination_sortable(posts, 'fulgurio.lightcms.posts.add_form.status_label'|trans({}, 'admin'), 'p.status') }}</th>
 			<th></th>
 		</tr>
 	</thead>
-{#}	<tfoot>
+	<tfoot>
 		<tr>
-			<td colspan="4">{{ posts.render('FulgurioSocialNetworkBundle::adminPagination.html.twig')|raw }}</td>
+			<td colspan="4">{{ knp_pagination_render(posts, 'FulgurioLightCMSBundle::adminPagination.html.twig') }}</td>
 		</tr>
-	</tfoot>#}
+	</tfoot>
 	<tbody>
 {%   for post in posts %}
 		<tr>

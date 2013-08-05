@@ -24,9 +24,9 @@ class PageRepository extends EntityRepository
     /**
      * Up pages position
      *
-     * @param integer $parentId
-     * @param integer $position
-     * @param integer $positionLimit
+     * @param number $parentId
+     * @param number $position
+     * @param number $positionLimit
      */
     public function upPagesPosition($parentId, $position, $positionLimit = NULL)
     {
@@ -48,9 +48,9 @@ class PageRepository extends EntityRepository
     /**
      * Down pages position
      *
-     * @param integer $parentId
-     * @param integer $position
-     * @param integer $positionLimit
+     * @param number $parentId
+     * @param number $position
+     * @param number $positionLimit
      */
     public function downPagesPosition($parentId, $position, $positionLimit = NULL)
     {
@@ -72,8 +72,8 @@ class PageRepository extends EntityRepository
     /**
      * Get next position in tree
      *
-     * @param integer $parentId
-     * @return integer
+     * @param number $parentId
+     * @return number
      */
     public function getNextPosition($parentId)
     {
@@ -86,15 +86,31 @@ class PageRepository extends EntityRepository
     /**
      * Find all posts
      *
-     * @param $paginator
-     * @param integer $nbPostPerPage
+     * @param Paginator $paginator
+     * @param number $pageNb
+     * @param number $nbPostPerPage
      * @return ArrayCollection
      */
     public function findAllPosts(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
     {
         $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.page_type=:pageType ORDER BY p.created_at DESC');
         $query->setParameter('pageType', 'post');
-        return ($query->getResult());
-//         return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
+        return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
+    }
+
+    /**
+     * Find all published posts
+     *
+     * @param Paginator $paginator
+     * @param number $pageNb
+     * @param number $nbPostPerPage
+     * @return ArrayCollection
+     */
+    public function findAllPublishedPosts(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.page_type=:pageType AND p.status = :status ORDER BY p.created_at DESC');
+        $query->setParameter('pageType', 'post');
+        $query->setParameter('status', 'published');
+        return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
     }
 }

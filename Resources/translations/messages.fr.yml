@@ -1,5 +1,7 @@
 fulgurio:
   lightcms:
-    datetime_format:                d/m/Y
+    datetime_format:              d/m/Y
     posts_list:
-        posted_at:                  Posté le %DATE%
+      previous_posts:             Articles précédentes
+      next_posts:                 Articles suivants
+      posted_at:                  Posté le %DATE%

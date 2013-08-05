@@ -9,6 +9,10 @@ fulgurio:
     no:                             No
     popup_confirmation:             Popup
     datetime_format:                Y-m-d
+    first_page:                     First page
+    previous_page:                  Previous page
+    next_page:                      Next page
+    last_page:                      Last page
     header_link:
       pages_link:                   Pages
       posts_link:                   Posts
@@ -69,6 +73,8 @@ fulgurio:
       view_button:                  View
       add_form:
         title:                      Add a new post admin
+        title_label:                Title
+        status_label:               Status
         legend:                     Add a new post
         nb_posts_per_page:          Number of posts per page
         invalid_nb_posts_per_page:  Number of posts per page is not a valid number

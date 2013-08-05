@@ -12,6 +12,7 @@ namespace Fulgurio\LightCMSBundle\Form;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Fulgurio\LightCMSBundle\Form\AdminPageHandler;
+use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminPostHandler extends AdminPageHandler
 {
@@ -38,7 +39,7 @@ class AdminPostHandler extends AdminPageHandler
                 $data = $this->request->get('post');
                 $this->updatePageMetas($page, $data);
                 $em = $this->doctrine->getEntityManager();
-                $page->setSlug($this->makeSlug($page->getTitle()));
+                $page->setSlug(LightCMSUtils::makeSlug($page->getTitle()));
                 $this->makeFullpath($page);
                 $page->setPageType('post');
                 $page->setModel('post');

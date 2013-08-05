@@ -9,6 +9,10 @@ fulgurio:
     no:                             Non
     popup_confirmation:             Popup
     datetime_format:                d/m/Y
+    first_page:                     Première page
+    previous_page:                  Page précédente
+    next_page:                      Page suivante
+    last_page:                      Dernière page
     header_link:
       pages_link:                   Pages
       posts_link:                   Articles
@@ -69,6 +73,8 @@ fulgurio:
       view_button:                  Voir
       add_form:
         title:                      Ajouter un nouvel article
+        title_label:                Titre
+        status_label:               Statut
         legend:                     Ajouter un nouvel article
         nb_posts_per_page:          Nombre d'articles par page
         invalid_nb_posts_per_page:  Le nombre d'articles par page n'est pas un chiffre

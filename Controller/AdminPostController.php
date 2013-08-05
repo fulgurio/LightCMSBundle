@@ -25,12 +25,19 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class AdminPostController extends Controller
 {
     /**
+     * Nb of posts per page
+     *
+     * @var Number
+     */
+    const DEFAULT_POST_PER_PAGE = 10;
+
+
+    /**
      * Posts list
      */
     public function listAction()
     {
-        //@todo: pagination
-        $pageNb = $this->get('request')->query->get('page', 1);
+        $currentPage = $this->get('request')->query->get('page', 1);
         try
         {
             $parent = $this->getPostsListPage();
@@ -39,12 +46,17 @@ class AdminPostController extends Controller
         {
              $parent = NULL;
         }
-        $posts = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findAllPosts($this->get('knp_paginator'), $pageNb);
+        $posts = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findAllPosts(
+                $this->get('knp_paginator'),
+                $currentPage,
+                self::DEFAULT_POST_PER_PAGE
+        );
         return $this->render('FulgurioLightCMSBundle:AdminPost:list.html.twig',
-        array(
-            'posts' => $posts,
-            'hasNoPostRoot' => is_null($parent)
-        ));
+            array(
+                'posts' => $posts,
+                'hasNoPostRoot' => is_null($parent)
+            )
+        );
     }
 
     /**
