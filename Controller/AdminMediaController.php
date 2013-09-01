@@ -203,7 +203,7 @@ class AdminMediaController extends Controller
             'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
             array(
                 'form' => $form->createView(),
-                'wysiwyg' => $this->container->get('request')->get('wyziwyg')
+                'wysiwyg' => $this->getWysiwyg()
             )
         );
     }
@@ -220,10 +220,27 @@ class AdminMediaController extends Controller
                 'FulgurioLightCMSBundle:AdminMedia:wysiwygAdd.html.twig',
                 array(
                         'form' => $form->createView(),
-                        'wysiwyg' => $this->container->get('request')->get('wyziwyg'),
-                        'isLink' => true
+                        'wysiwyg' => $this->getWysiwyg(),
+                        'isLink' => TRUE
                 )
         );
+    }
+
+    /**
+     * Get specified wysiwig with configuration if set
+     *
+     * @return \Symfony\Component\DependencyInjection\mixed|NULL
+     */
+    private function getWysiwyg()
+    {
+        if ($this->container->getParameter('fulgurio_light_cms.wysiwyg') && $this->container->hasParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg')))
+        {
+            return $this->container->getParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg'));
+        }
+        else
+        {
+            return NULL;
+        }
     }
 
     /**

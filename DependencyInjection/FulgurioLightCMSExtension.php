@@ -42,9 +42,8 @@ class FulgurioLightCMSExtension extends Extension
         {
             $container->setParameter('fulgurio_light_cms.languages', $config['langs']);
         }
-        $container->setParameter('fulgurio_light_cms.tiny_mce', $config['tiny_mce']);
         $container->setParameter('fulgurio_light_cms.posts', $config['posts']);
-
+        $container->setParameter('fulgurio_light_cms.wysiwyg', isset($config['wysiwyg']) ? $config['wysiwyg']: null);
         if (!isset($config['models']))
         {
             $config['models'] = array();

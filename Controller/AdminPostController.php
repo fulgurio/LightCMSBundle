@@ -113,7 +113,10 @@ class AdminPostController extends Controller
             return $this->redirect($this->generateUrl('AdminPosts'));
         }
         $options['form'] = $form->createView();
-        $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
+        if ($this->container->getParameter('fulgurio_light_cms.wysiwyg') && $this->container->hasParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg')))
+        {
+            $options['wysiwyg'] = $this->container->getParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg'));
+        }
         return $this->render('FulgurioLightCMSBundle:models:postAdminAddForm.html.twig', $options);
     }
 

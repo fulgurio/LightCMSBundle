@@ -158,7 +158,10 @@ class AdminPageController extends Controller
             return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $page->getId())));
         }
         $options['form'] = $form->createView();
-        $options['tiny_mce'] = $this->container->getParameter('fulgurio_light_cms.tiny_mce');
+        if ($this->container->getParameter('fulgurio_light_cms.wysiwyg') && $this->container->hasParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg')))
+        {
+            $options['wysiwyg'] = $this->container->getParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg'));
+        }
         if ($page->getParent()&& $page->getParent()->getMetaValue('is_home') && $this->container->hasParameter('fulgurio_light_cms.languages'))
         {
             $options['useMultiLang'] = TRUE;

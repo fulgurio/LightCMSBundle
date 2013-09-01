@@ -48,7 +48,7 @@
 				<div class="control-group">
 					<label class="control-label" for="p_content">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.content_label{% endtrans %}</label>
 					<div class="controls">
-						<textarea class="input-xlarge wysiwyg" id="p_content" name="{{ form.getChild('content').get('full_name') }}">{{ form.getChild('content').get('value') }}</textarea>
+						<textarea class="input-xlarge wysiwyg" id="p_content" cols="" rows="8" name="{{ form.getChild('content').get('full_name') }}">{{ form.getChild('content').get('value') }}</textarea>
 					</div>
 				</div>
 				<div class="control-group">
@@ -84,18 +84,18 @@
 				<div class="control-group">
 					<label class="control-label" for="p_meta_description">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.meta_description_label{% endtrans %}</label>
 					<div class="controls">
-						<textarea class="input-xlarge" id="p_meta_description" name="{{ form.getChild('meta_description').get('full_name') }}">{% if form.getChild('meta_description').get('value') %}{{ form.getChild('meta_description').get('value') }}{% else %}{% if pageMetas['meta_description'] is defined %}{{ pageMetas['meta_description'].metaValue }}{% endif %}{% endif %}</textarea>
+						<textarea class="input-xlarge" id="p_meta_description" cols="" rows="5" name="{{ form.getChild('meta_description').get('full_name') }}">{% if form.getChild('meta_description').get('value') %}{{ form.getChild('meta_description').get('value') }}{% else %}{% if pageMetas['meta_description'] is defined %}{{ pageMetas['meta_description'].metaValue }}{% endif %}{% endif %}</textarea>
 					</div>
 				</div>
 {% if form.getChild('availableMenu').get('choices')|length > 0 %}
 				<div class="control-group">
 					<label class="control-label" for="p_availableMenu">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.getChild('availableMenu').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_availableMenu" >
+						<select name="{{ form.getChild('availableMenu').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_availableMenu">
 {%   for choice in form.getChild('availableMenu').get('choices') %}
 							<option value="{{ choice }}"{% if choice in form.getChild('availableMenu').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice)|trans({}, 'admin') }}</option>
 {%   endfor %}
-						 </select>
+						</select>
 					</div>
 				</div>
 {% endif %}
@@ -115,7 +115,9 @@
 {% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
 
 {% block javascriptBottom %}
-{% include 'FulgurioLightCMSBundle:tiny_mce:bottom.html.twig' %}
+{% if wysiwyg is defined %}
+{%   include wysiwyg.admin_footer with { 'config': wysiwyg.config, 'idElt': 'textarea.wysiwyg' } %}
+{% endif %}
 <script>
 $(function() {
 	$('#p_model').change(function() {

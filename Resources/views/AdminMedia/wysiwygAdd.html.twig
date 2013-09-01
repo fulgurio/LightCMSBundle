@@ -13,7 +13,7 @@
 	<noscript><link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/jquery.fileupload-ui-noscript.css') }}"></noscript>
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 {% if wysiwyg is not null %}
-{%   include 'FulgurioLightCMSBundle:' ~ wysiwyg ~ ':popupTop.html.twig' %}
+{%   include wysiwyg.admin_top_media with { 'config': wysiwyg.config } %}
 {%  endif %}
 </head>
 <body>
@@ -266,7 +266,7 @@ $(function () {
 </script>
 <!--[if gte IE 8]><script src="{{ asset('bundles/fulguriolightcms/js/jquery.xdr-transport.js') }}"></script><![endif]-->
 {% if wysiwyg is not null %}
-{% include 'FulgurioLightCMSBundle:' ~ wysiwyg ~ ':popupBottom.html.twig' %}
+{%   include wysiwyg.admin_bottom_media with { 'config': wysiwyg.config } %}
 {%  endif %}
 </body>
 </html>

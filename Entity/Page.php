@@ -54,7 +54,7 @@ class Page
      */
     public function hasChildren()
     {
-    	return (count($this->getChildren()) > 0);
+        return (count($this->getChildren()) > 0);
     }
 
     /**
