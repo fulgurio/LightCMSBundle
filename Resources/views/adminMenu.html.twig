@@ -1,7 +1,6 @@
 				<nav class="nav-collapse collapse">
 					<ul class="nav">
 						<li{% if app.request.attributes.get('_route')|slice(0, 10) == 'AdminPages' %} class="active"{% endif %}><a href="{{ path('AdminPages') }}">{% trans from "admin" %}fulgurio.lightcms.header_link.pages_link{% endtrans %}</a></li>
-						<li{% if app.request.attributes.get('_route')|slice(0, 10) == 'AdminPosts' %} class="active"{% endif %}><a href="{{ path('AdminPosts') }}">{% trans from "admin" %}fulgurio.lightcms.header_link.posts_link{% endtrans %}</a></li>
 						<li{% if app.request.attributes.get('_route')|slice(0, 11) == 'AdminMedias' %} class="active"{% endif %}><a href="{{ path('AdminMedias') }}">{% trans from "admin" %}fulgurio.lightcms.header_link.medias_link{% endtrans %}</a></li>
 						<li{% if app.request.attributes.get('_route')|slice(0, 11) == 'AdminMenus' %} class="active"{% endif %}><a href="{{ path('AdminMenus') }}">{% trans from "admin" %}fulgurio.lightcms.header_link.menus_link{% endtrans %}</a></li>
 					</ul>

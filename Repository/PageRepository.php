@@ -82,35 +82,4 @@ class PageRepository extends EntityRepository
         $query->setParameter('parentId', $parentId);
         return ($query->getSingleScalarResult() + 1);
     }
-
-    /**
-     * Find all posts
-     *
-     * @param Paginator $paginator
-     * @param number $pageNb
-     * @param number $nbPostPerPage
-     * @return ArrayCollection
-     */
-    public function findAllPosts(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.page_type=:pageType ORDER BY p.created_at DESC');
-        $query->setParameter('pageType', 'post');
-        return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
-    }
-
-    /**
-     * Find all published posts
-     *
-     * @param Paginator $paginator
-     * @param number $pageNb
-     * @param number $nbPostPerPage
-     * @return ArrayCollection
-     */
-    public function findAllPublishedPosts(Paginator $paginator, $pageNb, $nbPostPerPage = 10)
-    {
-        $query = $this->getEntityManager()->createQuery('SELECT p FROM FulgurioLightCMSBundle:Page p WHERE p.page_type=:pageType AND p.status = :status ORDER BY p.created_at DESC');
-        $query->setParameter('pageType', 'post');
-        $query->setParameter('status', 'published');
-        return ($paginator->paginate($query, $pageNb, $nbPostPerPage));
-    }
 }

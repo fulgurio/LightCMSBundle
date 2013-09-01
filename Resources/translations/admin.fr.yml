@@ -15,7 +15,6 @@ fulgurio:
     last_page:                      Dernière page
     header_link:
       pages_link:                   Pages
-      posts_link:                   Articles
       medias_link:                  Medias
       menus_link:                   Menus
     page_not_found:                 Page non trouvée
@@ -39,7 +38,6 @@ fulgurio:
         model_is_required:          Le modèle est requis
         model:
           standard:                 Standard
-          postsList:                Liste d'article
           redirect:                 Redirection
         lang_label:                 Langage
         title_label:                Titre
@@ -59,32 +57,6 @@ fulgurio:
         success_msg:                La page a été modifiée !
       delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%title%" ?
       delete_success_message:       La page a été supprimée !
-    post_not_found:                 Article non trouvé
-    posts:
-      go_to_posts_manager:          Aller à la gestion des articles
-      posts_list_page_not_found:    La page de listing des articles n'a pas été trouvé, merci de charger les "fixtures", ou de créer la page manuellement.
-      title:                        Administration des articles
-      legend:                       Articles
-      add_post_button:              Ajouter un nouvel article
-      no_post:                      Aucun article
-      no_root_post:                 Aucune page listant les articles n'existe. Veuillez créer une page "Liste d'article".
-      edit_button:                  Editer
-      remove_button:                Supprimer
-      view_button:                  Voir
-      add_form:
-        title:                      Ajouter un nouvel article
-        title_label:                Titre
-        status_label:               Statut
-        legend:                     Ajouter un nouvel article
-        nb_posts_per_page:          Nombre d'articles par page
-        invalid_nb_posts_per_page:  Le nombre d'articles par page n'est pas un chiffre
-        success_msg:                L'article a été créé !
-        published_at_label:         Publié à
-      edit_form:
-        title:                      Edition d'un article
-        legend:                     Edition d'un article
-        success_msg:                L'article a été modifié !
-      delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%title%" ?
     redirect:
       redirection_link:             Lien de redirection
       add_form:
@@ -135,7 +107,6 @@ fulgurio:
           right:                    Droite
         add_file:                   Ajouter un fichier
         url:                        Url
-        insert_into_post:           Insérer dans l'article
     menus:
       title:                        Gestion des menus
       legend:                       Gestion des menus

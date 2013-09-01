@@ -133,6 +133,13 @@ abstract class AbstractAdminPageType extends AbstractType
      */
     public function setModels($models)
     {
-        $this->models = $models;
+        $this->models = array();
+        foreach ($models as $modelName => $model)
+        {
+            if (!isset($model['hidden']) || $model['hidden'] == FALSE)
+            {
+                $this->models[$modelName] = $model;
+            }
+        }
     }
 }

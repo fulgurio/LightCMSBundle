@@ -42,7 +42,6 @@ class FulgurioLightCMSExtension extends Extension
         {
             $container->setParameter('fulgurio_light_cms.languages', $config['langs']);
         }
-        $container->setParameter('fulgurio_light_cms.posts', $config['posts']);
         $container->setParameter('fulgurio_light_cms.wysiwyg', isset($config['wysiwyg']) ? $config['wysiwyg']: null);
         if (!isset($config['models']))
         {
@@ -57,24 +56,6 @@ class FulgurioLightCMSExtension extends Extension
                 ),
                 'allow_childrens' => TRUE,
                 'is_unique' => FALSE
-            );
-        }
-        if ($config['allow_posts_list'] && !isset($config['models']['postsList']))
-        {
-            $config['models']['postsList'] = array(
-                'name' => 'posts_list',
-                'back' => array(
-                    'form' =>     'Fulgurio\LightCMSBundle\Form\AdminPostsListPageType',
-                    'handler' =>  'Fulgurio\LightCMSBundle\Form\AdminPostsListPageHandler',
-                    'template' => 'FulgurioLightCMSBundle:models:postsListAdminAddForm.html.twig',
-                    'view' =>     'FulgurioLightCMSBundle:models:postsListAdminView.html.twig',
-                ),
-                'front' => array(
-                    'template' =>   'FulgurioLightCMSBundle:models:standardFront.html.twig',
-                    'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontPostPageController::list',
-                ),
-                'allow_childrens' => FALSE,
-                'is_unique' => TRUE
             );
         }
         if (!isset($config['models']['redirect']))
@@ -94,7 +75,12 @@ class FulgurioLightCMSExtension extends Extension
                 'is_unique' => FALSE
             );
         }
-        $container->setParameter('fulgurio_light_cms.models', $config['models']);
+        if ($container->hasParameter('fulgurio_light_cms.models'))
+        {
+        	$models = $container->getParameter('fulgurio_light_cms.models');
+        	$config['models'] = array_merge($config['models'], $models);
+        }
+       	$container->setParameter('fulgurio_light_cms.models', $config['models']);
         if (!isset($config['thumbs']))
         {
             $config['thumbs'] = array();

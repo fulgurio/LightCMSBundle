@@ -10,10 +10,6 @@ LightCMS_Admin_Pages:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_page.yml"
     prefix:   /admin/pages
 
-LightCMS_Admin_Posts:
-    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_post.yml"
-    prefix:   /admin/posts
-
 LightCMS_Admin_Homepage:
     pattern:   /admin/
     defaults: { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
