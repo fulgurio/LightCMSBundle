@@ -90,7 +90,7 @@ class AdminMediaController extends Controller
     function editAction($mediaId)
     {
         $media = $this->getMedia($mediaId);
-        return $this->createPage($media);
+        return $this->createMedia($media);
     }
 
     /**

@@ -27,20 +27,24 @@ class AdminPageController extends Controller
     /**
      * Pages list
      *
-     * @param integer $pageId
+     * @param number $pageId
      */
     public function listAction($pageId = NULL)
     {
         $pages = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findBy(array('page_type' => 'page'), array('position' => 'ASC'));
         $childrenPages = array();
-        foreach ($pages as $page) {
-            if ($page->isRoot()) {
+        foreach ($pages as $page)
+        {
+            if ($page->isRoot())
+            {
                 $pageRoot = $page;
             }
-            if (!is_null($pageId) && $page->getId() == $pageId) {
+            if (!is_null($pageId) && $page->getId() == $pageId)
+            {
                 $currentPage = $page;
             }
-            if (!isset($childrenPages[$page->getParentId()])) {
+            if (!isset($childrenPages[$page->getParentId()]))
+            {
                 $childrenPages[$page->getParentId()] = array();
             }
             $childrenPages[$page->getParentId()][] = $page;
@@ -51,17 +55,16 @@ class AdminPageController extends Controller
         );
         if (!is_null($pageId))
         {
-            if (!isset($currentPage)) {
-                throw new NotFoundHttpException(
-                        $this->get('translator')->trans('fulgurio.lightcms.page_not_found', array(), 'admin')
-                );
+            if (!isset($currentPage))
+            {
+                throw new NotFoundHttpException($this->get('translator')->trans('fulgurio.lightcms.page_not_found', array(), 'admin'));
             }
             $models = $this->container->getParameter('fulgurio_light_cms.models');
-            $pageRoot = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('fullpath' => '', 'page_type' => 'page'));
             $templateName = isset($models[$currentPage->getModel()]['back']['view']) ? $models[$currentPage->getModel()]['back']['view'] : 'FulgurioLightCMSBundle:models:standardAdminView.html.twig';
             $data['selectedPage'] = $currentPage;
         }
-        else {
+        else
+        {
             $templateName = 'FulgurioLightCMSBundle:AdminPage:list.html.twig';
         }
         return $this->render($templateName, $data);
@@ -70,7 +73,7 @@ class AdminPageController extends Controller
     /**
      * Add page
      *
-     * @param integer $parentId if specified, we edit a (new) child page
+     * @param number $parentId if specified, we edit a (new) child page
      */
     public function addAction($parentId)
     {
@@ -104,7 +107,7 @@ class AdminPageController extends Controller
     /**
      * Edit page
      *
-     * @param integer $pageId if specified, we are on edit page form
+     * @param number $pageId if specified, we are on edit page form
      */
     function editAction($pageId)
     {
@@ -173,7 +176,7 @@ class AdminPageController extends Controller
     /**
      * Remove page, with confirm form
      *
-     * @param integer $pageId
+     * @param number $pageId
      */
     public function removeAction($pageId)
     {
@@ -221,8 +224,8 @@ class AdminPageController extends Controller
     /**
      * Page copy, use for multilang site
      *
-     * @param integer $sourceId
-     * @param integer $targetId
+     * @param number $sourceId
+     * @param number $targetId
      * @param string $lang
      * @return \Symfony\Component\HttpFoundation\Response>
      */
@@ -302,7 +305,7 @@ class AdminPageController extends Controller
     /**
      * Get page from given ID, and ckeck if it exists
      *
-     * @param integer $pageId
+     * @param number $pageId
      * @throws NotFoundHttpException
      */
     private function getPage($pageId)
@@ -319,7 +322,7 @@ class AdminPageController extends Controller
     /**
      * Get meta data from given ID page
      *
-     * @param integer $pageId
+     * @param number $pageId
      * @return array
      */
     private function getPageMetas($pageId)
