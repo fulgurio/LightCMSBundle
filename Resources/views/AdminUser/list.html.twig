@@ -1,0 +1,54 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+
+{% block title %}{% trans from 'admin' %}fulgurio.lightcms.users.title{% endtrans %}{% endblock %}
+
+{% block content %}
+{% if app.session.hasFlash('notice') %}			<div class="alert alert-notice">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% if app.session.hasFlash('success') %}			<div class="alert alert-success">{{ app.session.flash('success')|trans }}</div>{% endif %}
+			<form method="post" action="{{ path('AdminUsers') }}">
+{# 				<div class="pull-left">#}
+{# 					<div class="input-prepend input-append">#}
+{# 						<span class="add-on">{% trans from 'admin' %}fulgurio.lightcms.users.filter{% endtrans %} :</span>#}
+{# 						<select class="span2" name="filter">#}
+{# 							<option></option>#}
+{# 							<option value="image"{% if app.request.get('filter') == 'image' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.pictures{% endtrans %}</option>#}
+{# 							<option value="application"{% if app.request.get('filter') == 'application' %} selected="selected"{% endif %}>{% trans from 'admin' %}fulgurio.lightcms.medias.media_types.others{% endtrans %}</option>#}
+{# 						</select>#}
+{# 						<input type="text" class="span2" name="filename" placeholder="{% trans from 'admin' %}fulgurio.lightcms.medias.add_form.filename{% endtrans %}" value="{{ app.request.get('filename') }}">#}
+{# 						<button type="submit" class="btn">{% trans from 'admin' %}fulgurio.lightcms.search{% endtrans %}</button>#}
+{# 					</div>#}
+{# 				</div>#}
+				<div class="clearfix">
+					<a class="btn pull-right" href="{{ path('AdminUsersAdd') }}">{% trans from 'admin' %}fulgurio.lightcms.users.add_new_user{% endtrans %}</a>
+				</div>
+{% if users is empty %}
+				<p>{% trans from 'admin' %}fulgurio.lightcms.users.no_user{% endtrans %}</p>
+{% else %}
+				<br />
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{#Cover#}</th>
+							<th>{#{{ knp_pagination_sortable(users, 'fulgurio.lightcms.user.username'|trans, 'u.username')|raw }}#}</th>
+							<th>{#}{{ knp_pagination_sortable(users, 'fulgurio.lightcms.users.email'|trans, 'u.email')|raw }}#}</th>
+							<th>{#Options#}</th>
+						</tr>
+					</thead>
+					<tbody>
+{% for user in users %}
+						<tr>
+							<td>
+							<td>{{ user.username}}</td>
+							<td>{{ user.email }}</td>
+							<td>
+								<a href="{{ path('AdminUsersEdit', {userId: user.id}) }}" class="icon-edit"></a>
+								<a href="{{ path('AdminUsersRemove', {userId: user.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+							</td>
+						</tr>
+{% endfor %}
+					</tbody>
+				</table>
+{% include 'FulgurioLightCMSBundle::adminPagination.html.twig' %}
+			</form>
+{% endif %}
+{% endblock %}

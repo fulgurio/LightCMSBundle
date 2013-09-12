@@ -11,7 +11,6 @@
 namespace Fulgurio\LightCMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Knp\Component\Pager\Paginator;
 
 /**
  * PageRepository

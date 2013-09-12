@@ -1,0 +1,35 @@
+Fulgurio\LightCMSBundle\Entity\User:
+  type: entity
+  repositoryClass: Fulgurio\LightCMSBundle\Repository\UserRepository
+  table: account
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    username:
+      type: string
+      length: 25
+      unique: true
+    salt:
+      type: string
+      length: 32
+    password:
+      type: string
+      length: 40
+    email:
+      type: string
+      length: 60
+      unique: true
+    roles:
+      type: string
+      length: 16
+    is_active:
+      type: boolean
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true

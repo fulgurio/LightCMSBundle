@@ -13,10 +13,18 @@ fulgurio:
     previous_page:                  Previous page
     next_page:                      Next page
     last_page:                      Last page
+    login:
+      login:                        Login
+      username:                     Username
+      password:                     Password
+      remember_me:                  Remember me
+      sign_in:                      Sign in
+      logout:                       Logout
     header_link:
       pages_link:                   Pages
       medias_link:                  Medias
       menus_link:                   Menus
+      users_link:                   Users
     page_not_found:                 Page not found
     pages:
       title:                        Pages admin
@@ -84,7 +92,7 @@ fulgurio:
         filename:                   File name
       edit_form:
         title:                      Edit media admin
-        legend:                     Edit medias 
+        legend:                     Edit media
         success_msg:                Media has been modified !
       delete_confirm_message:       Are you sure to delete "%FILENAME%" ?
       media_types:
@@ -114,3 +122,30 @@ fulgurio:
       moving_success_msg:           Menu changed is successfull !
       add_form:
         menu_label:                 Menu
+    users:
+      title:                        Users manager
+      add_new_user:                 Add new user
+      no_user:                      No user found
+      not_fount:                    Not found
+      delete_confirm_message:       Are you sure to delete "%username%" ?
+      delete_success_message:       User has been removed !
+      add_form:
+        title:                      Add a new user admin
+        legend:                     Add a new user
+        success_msg:                User has been created !
+        username_label:             Username
+        password_label:             Password
+        password_second_label:      Type your password again
+        email_label:                Email
+        is_active_label:            Actived
+        username_is_required:       Username is required
+        username_is_already_used:   Username is already used
+        password_is_required:       Password is required
+        passwords_must_match:       Passwords must match
+        email_is_required:          Email is required
+        email_is_already_used:      Email is already used
+        email_is_not_valid:         Email is not valid
+      edit_form:
+        title:                      Edit user admin
+        legend:                     Edit user 
+        success_msg:                User has been modified !

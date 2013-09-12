@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/fulguriolightcms/css/admin.css') }}" />
+</head>
+<body class="login">
+<div class="container">
+	<form action="{{ path('LightCMS_login_check') }}" class="form-signin" method="post">
+		<h2 class="form-signin-heading">{% trans from 'admin' %}fulgurio.lightcms.login.login{% endtrans %}</h2>
+{% if error %}
+		<div>{{ error.message|trans() }}</div>
+{% endif %}
+		<input type="text" class="input-block-level" placeholder="{% trans from 'admin' %}fulgurio.lightcms.login.username{% endtrans %}" name="_username" value="{{ last_username }}">
+		<input type="password" class="input-block-level" placeholder="{% trans from 'admin' %}fulgurio.lightcms.login.password{% endtrans %}" name="_password">
+		<label class="checkbox">
+			<input type="checkbox" name="_remember_me"> {% trans from 'admin' %}fulgurio.lightcms.login.remember_me{% endtrans %}
+		</label>
+		<button class="btn btn-large btn-primary" type="submit">{% trans from 'admin' %}fulgurio.lightcms.login.sign_in{% endtrans %}</button>
+	</form>
+</div>
+</body>
+</html>

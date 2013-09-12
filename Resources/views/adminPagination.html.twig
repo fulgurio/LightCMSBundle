@@ -1,10 +1,10 @@
 {% if pageCount > 1 %}
 									<div class="pagination">
 										<ul class="pull-right">
-{%   if current != first %}
-											<li><a href="{{ path(route, query|merge({'page': first})) }}" class="page_first" title="{% trans from 'admin' %}fulgurio.lightcms.first_page{% endtrans %}"><i class="icon-fast-backward"></i></a></li>
+{%   if current != 1 %}
+											<li><a href="{{ path(route, query|merge({'page': 1})) }}" class="page_first" title="{% trans from 'admin' %}fulgurio.lightcms.first_page{% endtrans %}"><i class="icon-fast-backward"></i></a></li>
 {%   endif %}
-{%   if current  - 1 != first %}
+{%   if current - 1 != 0 %}
 {%     if current > 1 %}
 											<li><a href="{{ path(route, query|merge({'page': current - 1})) }}" title="{% trans from 'admin' %}fulgurio.lightcms.previous_page{% endtrans %}"><i class="icon-backward"></i></a></li>
 {%     else %}
@@ -12,15 +12,15 @@
 {%     endif %}
 {%   endif %}
 											<li class="active"><a>Page <strong>{{ current }}</strong> / {{ pageCount }}</a></li>
-{%   if current + 1 != last %}
+{%   if current + 1 != pageCount %}
 {%     if current < pageCount %}
 											<li><a href="{{ path(route, query|merge({'page': current + 1})) }}" title="{% trans from 'admin' %}fulgurio.lightcms.next_page{% endtrans %}"><i class="icon-forward"></i></a></li>
 {%     else %}
 											<li class="disabled"><a>&raquo;</a></li>
 {%     endif %}
 {%   endif %}
-{%   if current != last %}
-											<li><a href="{{ path(route, query|merge({'page': last})) }}" class="page_last" title="{% trans from 'admin' %}fulgurio.lightcms.last_page{% endtrans %}"><i class="icon-fast-forward"></i></a></li>
+{%   if current != pageCount %}
+											<li><a href="{{ path(route, query|merge({'page': pageCount})) }}" class="page_last" title="{% trans from 'admin' %}fulgurio.lightcms.last_page{% endtrans %}"><i class="icon-fast-forward"></i></a></li>
 {%   endif %}
 										</ul>
 										<br class="clearfix" />

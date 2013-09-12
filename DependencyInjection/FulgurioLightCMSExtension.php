@@ -77,10 +77,10 @@ class FulgurioLightCMSExtension extends Extension
         }
         if ($container->hasParameter('fulgurio_light_cms.models'))
         {
-        	$models = $container->getParameter('fulgurio_light_cms.models');
-        	$config['models'] = array_merge($config['models'], $models);
+            $models = $container->getParameter('fulgurio_light_cms.models');
+            $config['models'] = array_merge($config['models'], $models);
         }
-       	$container->setParameter('fulgurio_light_cms.models', $config['models']);
+           $container->setParameter('fulgurio_light_cms.models', $config['models']);
         if (!isset($config['thumbs']))
         {
             $config['thumbs'] = array();

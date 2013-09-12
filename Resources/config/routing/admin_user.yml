@@ -1,0 +1,15 @@
+AdminUsersAdd:
+    pattern:  /add
+    defaults: { _controller: FulgurioLightCMSBundle:AdminUser:add }
+
+AdminUsersEdit:
+    pattern:  /{userId}/edit
+    defaults: { _controller: FulgurioLightCMSBundle:AdminUser:edit }
+
+AdminUsersRemove:
+    pattern:  /{userId}/remove
+    defaults: { _controller: FulgurioLightCMSBundle:AdminUser:remove }
+
+AdminUsers:
+    pattern:  /
+    defaults: { _controller: FulgurioLightCMSBundle:AdminUser:list }
