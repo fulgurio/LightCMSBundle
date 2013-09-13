@@ -23,8 +23,7 @@ Fulgurio\LightCMSBundle\Entity\User:
       length: 60
       unique: true
     roles:
-      type: string
-      length: 16
+      type: array
     is_active:
       type: boolean
     created_at:

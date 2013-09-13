@@ -100,6 +100,15 @@ class FulgurioLightCMSExtension extends Extension
             $container->setParameter('fulgurio_light_cms.menus', $config['menus']);
         }
 
+        if (isset($config['roles']) && !empty($config['roles']))
+        {
+            $container->setParameter('fulgurio_light_cms.users.roles', $config['roles']);
+        }
+        else
+        {
+            $container->setParameter('fulgurio_light_cms.users.roles', array('ROLE_ADMIN'));
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

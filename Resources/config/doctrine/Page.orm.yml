@@ -71,3 +71,7 @@ Fulgurio\LightCMSBundle\Entity\Page:
       inversedBy: children
     owner:
       targetEntity: User
+      joinColumn:
+        name: owner_id
+        referencedColumnName: id
+        onDelete: SET NULL

@@ -141,6 +141,9 @@ fulgurio:
         password_label:             Password
         password_second_label:      Type your password again
         email_label:                Email
+        roles_label:                Roles
+        roles:
+          ROLE_ADMIN:               Administrator
         is_active_label:            Actived
         username_is_required:       Username is required
         username_is_already_used:   Username is already used

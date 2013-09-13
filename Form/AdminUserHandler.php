@@ -57,17 +57,14 @@ class AdminUserHandler
             $this->form->bindRequest($this->request);
             if ($this->form->isValid())
             {
-               $data = $this->request->get('user');
-               $user->setUsername($data['username']);
                $encoder = $this->factory->getEncoder($user);
-               if (trim($data['password']['first']) != '') {
-                   $password = $encoder->encodePassword($data['password']['first'], $user->getSalt());
+               if (trim($user->getPassword()) != '') {
+                   $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                    $user->setPassword($password);
                }
                else {
                    $user->setPassword($clonedUser->getPassword());
                }
-               $user->setEmail($data['email']);
                 // New user
                 if ($user->getId() == 0)
                 {
@@ -77,8 +74,6 @@ class AdminUserHandler
                 {
                     $user->setUpdatedAt(new \DateTime());
                 }
-                $user->setIsActive(isset($data['is_active']));
-                $user->setRoles('ROLE_ADMIN');
                 $em = $this->doctrine->getEntityManager();
                 $em->persist($user);
                 $em->flush();

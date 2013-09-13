@@ -141,6 +141,9 @@ fulgurio:
         password_label:             Mot de passe
         password_second_label:      Saisissez une seconde fois votre mot de passe
         email_label:                Courriel
+        roles_label:                Droits
+        roles:
+          ROLE_ADMIN:               Administrateur
         is_active_label:            Activé
         username_is_required:       Le nom d'utilisateur est obligatoire
         username_is_already_used:   Le nom d'utilisateur est déjà utilisé

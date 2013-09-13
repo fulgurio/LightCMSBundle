@@ -55,7 +55,8 @@ class UserAddCommand extends DoctrineCommand
         $user->setUsername($username);
         $user->setPassword($password);
         $user->setEmail($email);
-        $user->setRoles($roles);
+        $user->setIsActive(TRUE);
+        $user->setRoles(array($roles));
         $user->setCreatedAt(new \DateTime());
         $em = $this->getEntityManager(NULL);
         $em->persist($user);

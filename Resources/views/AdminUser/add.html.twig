@@ -46,6 +46,20 @@
 						<input type="email" id="u_email" class="input-xlarge" name="{{ form.getChild('email').get('full_name') }}" value="{{ form.getChild('email').get('value') }}" />
 					</div>
 				</div>
+{% if form.getChild('roles').get('choices')|length > 1 %}
+				<div class="control-group">
+					<label class="control-label" for="p_roles">{% trans from "admin" %}fulgurio.lightcms.users.add_form.roles_label{% endtrans %}</label>
+					<div class="controls">
+						<select name="{{ form.getChild('roles').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_roles">
+{%   for choice in form.getChild('roles').get('choices') %}
+							<option value="{{ choice }}"{% if choice in form.getChild('roles').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.users.add_form.roles.' ~ choice)|trans({}, 'admin') }}</option>
+{%   endfor %}
+						</select>
+					</div>
+				</div>
+{% else %}
+				<input type="hidden" name="{{ form.getChild('roles').get('full_name') }}" value="ROLE_ADMIN" />
+{% endif %}
 				<div class="control-group">
 					<label class="checkbox" for="u_is_active">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.is_active_label{% endtrans %}
 						<input type="checkbox" id="u_is_active" class="input-xlarge" name="{{ form.getChild('is_active').get('full_name') }}"{% if form.getChild('is_active').get('checked') %} checked="checked"{% endif %} />

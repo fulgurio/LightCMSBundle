@@ -33,7 +33,7 @@ class AdminUserController extends Controller
         //@todo
         $nbPerPage = 10;
         $request = $this->container->get('request');
-        $page = $this->get('request')->get('page') > 1 ? $request->get('page') - 1 : 0;
+        $page = $request->get('page') > 1 ? $request->get('page') - 1 : 0;
         $usersNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:User')->count($filters);
         $users = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:User')->findAllWithPagination($filters, $nbPerPage, $page * $nbPerPage);
         return $this->render('FulgurioLightCMSBundle:AdminUser:list.html.twig', array(
@@ -74,7 +74,6 @@ class AdminUserController extends Controller
      */
     function createUser(User $user)
     {
-        $request = $this->container->get('request');
         $options = array();
         if ($user->getId() > 0)
         {

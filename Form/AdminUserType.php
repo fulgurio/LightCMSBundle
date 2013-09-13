@@ -19,6 +19,26 @@ use Symfony\Component\Form\FormError;
 class AdminUserType extends AbstractType
 {
     /**
+     * Availables roles
+     * @var array
+     */
+    private $roles;
+
+
+    /**
+     * Constructor
+     *
+     * @param object $container
+     */
+    public function __construct($container)
+    {
+        if ($container->hasParameter('fulgurio_light_cms.users.roles'))
+        {
+            $this->roles = $container->getParameter('fulgurio_light_cms.users.roles');
+        }
+    }
+
+    /**
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
@@ -32,6 +52,12 @@ class AdminUserType extends AbstractType
                     'invalid_message' => 'fulgurio.lightcms.users.add_form.passwords_must_match',
             ))
             ->add('email', 'email')
+            ->add('roles', 'choice', array(
+                    'choices'   => $this->roles,
+                    'multiple'  => TRUE,
+                    'required' => FALSE,
+                )
+            )
             ->add('is_active', 'checkbox')
             ->addValidator(new CallbackValidator(function(FormInterface $form) use ($options) {
                 $passwordField = $form->get('password');
@@ -49,6 +75,6 @@ class AdminUserType extends AbstractType
      */
     final public function getName()
     {
-    	return 'user';
+        return 'user';
     }
 }

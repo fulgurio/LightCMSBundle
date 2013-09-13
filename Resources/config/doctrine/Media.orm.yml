@@ -27,3 +27,7 @@ Fulgurio\LightCMSBundle\Entity\Media:
   manyToOne:
     owner:
       targetEntity: User
+      joinColumn:
+        name: owner_id
+        referencedColumnName: id
+        onDelete: SET NULL
