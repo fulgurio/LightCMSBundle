@@ -7,9 +7,7 @@
 </form>
 <script>
 $('.popupClose').click(function(e) {
-	if ($.nmTop()) {
-		e.preventDefault();
-		$.nmTop().close();
-	}
+	$('#myModal').modal('hide');
+	e.preventDefault();
 });
 </script>
