@@ -24,3 +24,6 @@ Fulgurio\LightCMSBundle\Entity\Media:
     updated_at:
       type: datetime
       nullable: true
+  manyToOne:
+    owner:
+      targetEntity: User

@@ -47,6 +47,11 @@ class Media
      */
     private $updated_at;
 
+    /**
+     * @var Fulgurio\LightCMSBundle\Entity\User
+     */
+    private $owner;
+
 
     /**
      * Get id
@@ -156,5 +161,25 @@ class Media
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param Fulgurio\LightCMSBundle\Entity\User $owner
+     */
+    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return Fulgurio\LightCMSBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }

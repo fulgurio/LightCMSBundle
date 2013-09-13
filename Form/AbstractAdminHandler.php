@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class AbstractAdminHandler
 {
@@ -34,6 +35,12 @@ abstract class AbstractAdminHandler
      * @var RegistryInterface
      */
     protected $doctrine;
+
+    /**
+     * User object
+     * @var UserInterface
+     */
+    protected $user;
 
     /**
      * Slug suffix separator, if slug already exist
@@ -70,6 +77,16 @@ abstract class AbstractAdminHandler
     public function setDoctrine(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
+    }
+
+    /**
+     * $user setter
+     *
+     * @param UserInterface $user
+     */
+    public function setUser(UserInterface$user)
+    {
+        $this->user = $user;
     }
 
     /**

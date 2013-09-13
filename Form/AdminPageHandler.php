@@ -49,6 +49,7 @@ class AdminPageHandler extends AbstractAdminHandler
                 // New page
                 if ($page->getId() == 0)
                 {
+                    $page->setOwner($this->user);
                     $page->setCreatedAt(new \DateTime());
                     $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
                 }

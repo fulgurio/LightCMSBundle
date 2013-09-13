@@ -28,7 +28,6 @@ class AdminMediaHandler extends AbstractAdminHandler
      *
      * @param Media $media
      * @return boolean
-     * @todo : folder owner
      */
     public function process(Media $media)
     {
@@ -74,6 +73,7 @@ class AdminMediaHandler extends AbstractAdminHandler
                     // New media
                     if ($media->getId() == 0)
                     {
+                        $media->setOwner($this->user);
                         $media->setCreatedAt($currentDate);
                     }
                     else

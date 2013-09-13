@@ -69,3 +69,5 @@ Fulgurio\LightCMSBundle\Entity\Page:
     parent:
       targetEntity: Page
       inversedBy: children
+    owner:
+      targetEntity: User
