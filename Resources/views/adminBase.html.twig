@@ -30,5 +30,12 @@
 </div>
 {% include 'FulgurioLightCMSBundle::adminPopup.html.twig' %}
 {% block javascriptBottom %}{% endblock %}
+<script>
+$(document).ready(function() {
+	$('#myModal').on('hidden', function () {
+		$(this).removeData('modal');
+	});
+});
+</script>
 </body>
 </html>
