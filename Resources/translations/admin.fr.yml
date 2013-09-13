@@ -1,6 +1,7 @@
 fulgurio:
   lightcms:
     lightcms_title:                 LightCMS
+    hello_username:                 Bonjour %USERNAME%
     save:                           Enregistrer
     search:                         Rechercher
     cancel:                         Annuler
@@ -124,11 +125,14 @@ fulgurio:
         menu_label:                 Menu
     users:
       title:                        Gestion des utilisateurs
+      username:                     Identifiant
+      email:                        Courriel
       add_new_user:                 Ajouter un nouvel utilisateur
       no_user:                      Aucun utilisateur trouvé
       not_fount:                    Utilisateur trouvé
       delete_confirm_message:       Etes-vous sûr de voulour supprimer "%username%" ?
       delete_success_message:       L'utilisateur a été effacé !
+      current_user_deletion_error:  Vous ne pouvez supprimer l'utilisateur actuel
       add_form:
         title:                      Administration d'un nouvel utilisateur
         legend:                     Ajouter un nouvel utilisateur

@@ -111,7 +111,10 @@ class AdminUserController extends Controller
     public function removeAction($userId)
     {
         $user = $this->getUser($userId);
-        //@todo : on ne peut pas supprimer l'utilisateur courant
+        if ($user->getId() == $this->get('security.context')->getToken()->getUser()->getId())
+        {
+            throw new AccessDeniedException($this->get('translator')->trans('fulgurio.lightcms.users.current_user_deletion_error', array(), 'admin'));
+        }
         $request = $this->container->get('request');
         if ($request->request->get('confirm') === 'yes')
         {

@@ -57,6 +57,7 @@ class User implements UserInterface, \Serializable
         list ($this->id) = unserialize($serialized);
     }
 
+
     /**
      * @var integer $id
      */
@@ -134,6 +135,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * Set salt
      *
      * @param string $salt
@@ -161,16 +172,6 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**

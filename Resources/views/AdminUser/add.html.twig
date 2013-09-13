@@ -23,31 +23,31 @@
 		<div class="row">
 			<div class="span11">
 				<div class="control-group">
-					<label class="control-label" for="u_username">{% trans from "admin" %}fulgurio.lightcms.users.add_form.username_label{% endtrans %}</label>
+					<label class="control-label" for="u_username">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.username_label{% endtrans %}</label>
 					<div class="controls">
 						<input type="text" id="u_username" class="input-xlarge" name="{{ form.getChild('username').get('full_name') }}" value="{{ form.getChild('username').get('value') }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="u_password_first">{% trans from "admin" %}fulgurio.lightcms.users.add_form.password_label{% endtrans %}</label>
+					<label class="control-label" for="u_password_first">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.password_label{% endtrans %}</label>
 					<div class="controls">
 						<input type="password" id="u_password_first" class="input-xlarge" name="{{ form.getChild('password').getChild('first').get('full_name') }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="u_password_second">{% trans from "admin" %}fulgurio.lightcms.users.add_form.password_second_label{% endtrans %}</label>
+					<label class="control-label" for="u_password_second">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.password_second_label{% endtrans %}</label>
 					<div class="controls">
 						<input type="password" id="u_password_second" class="input-xlarge" name="{{ form.getChild('password').getChild('second').get('full_name') }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="u_email">{% trans from "admin" %}fulgurio.lightcms.users.add_form.email_label{% endtrans %}</label>
+					<label class="control-label" for="u_email">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.email_label{% endtrans %}</label>
 					<div class="controls">
 						<input type="email" id="u_email" class="input-xlarge" name="{{ form.getChild('email').get('full_name') }}" value="{{ form.getChild('email').get('value') }}" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="checkbox" for="u_is_active">{% trans from "admin" %}fulgurio.lightcms.users.add_form.is_active_label{% endtrans %}
+					<label class="checkbox" for="u_is_active">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.is_active_label{% endtrans %}
 						<input type="checkbox" id="u_is_active" class="input-xlarge" name="{{ form.getChild('is_active').get('full_name') }}"{% if form.getChild('is_active').get('checked') %} checked="checked"{% endif %} />
 					</label>
 				</div>
@@ -62,4 +62,4 @@
 </form>
 {% endblock %}
 
-{% block title %}{% if userId is defined %}{% trans from "admin" %}fulgurio.lightcms.users.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.users.add_form.title{% endtrans %}{% endif %}{% endblock %}
+{% block title %}{% if userId is defined %}{% trans from 'admin' %}fulgurio.lightcms.users.edit_form.title{% endtrans %}{% else %}{% trans from 'admin' %}fulgurio.lightcms.users.add_form.title{% endtrans %}{% endif %}{% endblock %}

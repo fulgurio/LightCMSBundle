@@ -28,21 +28,19 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>{#Cover#}</th>
-							<th>{#{{ knp_pagination_sortable(users, 'fulgurio.lightcms.user.username'|trans, 'u.username')|raw }}#}</th>
-							<th>{#}{{ knp_pagination_sortable(users, 'fulgurio.lightcms.users.email'|trans, 'u.email')|raw }}#}</th>
+							<th>{% trans from 'admin' %}fulgurio.lightcms.users.username{% endtrans %}</th>
+							<th>{% trans from 'admin' %}fulgurio.lightcms.users.email{% endtrans %}</th>
 							<th>{#Options#}</th>
 						</tr>
 					</thead>
 					<tbody>
 {% for user in users %}
 						<tr>
-							<td>
 							<td>{{ user.username}}</td>
 							<td>{{ user.email }}</td>
 							<td>
 								<a href="{{ path('AdminUsersEdit', {userId: user.id}) }}" class="icon-edit"></a>
-								<a href="{{ path('AdminUsersRemove', {userId: user.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+								{% if app.user.id != user.id %}<a href="{{ path('AdminUsersRemove', {userId: user.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>{% endif %}
 							</td>
 						</tr>
 {% endfor %}
