@@ -17,7 +17,7 @@ Fulgurio\LightCMSBundle\Entity\User:
       length: 32
     password:
       type: string
-      length: 40
+      length: 64
     email:
       type: string
       length: 60
