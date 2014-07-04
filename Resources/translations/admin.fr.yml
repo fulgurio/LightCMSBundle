@@ -115,6 +115,7 @@ fulgurio:
           center:                   Centre
           right:                    Droite
         add_file:                   Ajouter un fichier
+        insert_into_post:           Insérer dans l'article
         url:                        Url
     menus:
       title:                        Gestion des menus

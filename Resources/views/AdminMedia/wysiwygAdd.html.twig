@@ -37,7 +37,7 @@
 								<span class="btn btn-success fileinput-button">
 									<i class="icon-plus icon-white"></i>
 									<span>{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.add_file{% endtrans %}</span>
-									<input type="file" name="{{ form.media.get('full_name') }}" multiple>
+									<input type="file" name="{{ form.media.vars.full_name }}" multiple>
 								</span>
 							</div>
 							<div class="span5 fileupload-progress fade">
@@ -112,7 +112,7 @@
 			</div>
 			<footer>
 				<div class="form-actions">
-					<input type="hidden" name="{{ form._token.get('full_name') }}" value="{{ form._token.get('value') }}" />
+					<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
 					<button disabled="disabled" class="btn btn-primary pull-right" id="mediaSubmit">{% trans from 'admin' %}fulgurio.lightcms.medias.wysiwyg.insert_into_post{% endtrans %}</button>
 				</div>
 			</footer>

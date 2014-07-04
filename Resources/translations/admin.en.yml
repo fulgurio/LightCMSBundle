@@ -115,6 +115,7 @@ fulgurio:
           center:                   Center
           right:                    Right
         add_file:                   Add file
+        insert_into_post:           Insert into post
         url:                        Url
     menus:
       title:                        Menus manager
