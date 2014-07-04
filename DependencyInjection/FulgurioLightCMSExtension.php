@@ -63,8 +63,8 @@ class FulgurioLightCMSExtension extends Extension
             $config['models']['redirect'] = array(
                 'name' => 'redirect',
                 'back' => array(
-                    'form' =>     'Fulgurio\LightCMSBundle\Form\AdminRedirectPageType',
-                    'handler' =>  'Fulgurio\LightCMSBundle\Form\AdminRedirectPageHandler',
+                    'form' =>     'Fulgurio\LightCMSBundle\Form\Type\AdminRedirectPageType',
+                    'handler' =>  'Fulgurio\LightCMSBundle\Form\Handler\AdminRedirectPageHandler',
                     'template' => 'FulgurioLightCMSBundle:models:redirectAdminAddForm.html.twig',
                     'view' =>     'FulgurioLightCMSBundle:models:redirectAdminView.html.twig',
                 ),

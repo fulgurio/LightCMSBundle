@@ -14,9 +14,10 @@ use Fulgurio\LightCMSBundle\Entity\User;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\DoctrineBundle\Command\DoctrineCommand;
+use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 
 class UserAddCommand extends DoctrineCommand
+//class UserAddCommand
 {
     /**
      * (non-PHPdoc)
@@ -42,10 +43,11 @@ class UserAddCommand extends DoctrineCommand
     {
         $user = new User();
         $username = $input->getArgument('username');
-        $password = $input->getArgument('password');
         $factory = $this->getContainer()->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword($password, $user->getSalt());
+        $password = $encoder->encodePassword(
+                $input->getArgument('password'),
+                $user->getSalt());
         $email = $input->getArgument('email');
         $roles = $input->getArgument('role');
         if (!$roles)

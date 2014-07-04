@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Type;
 
 use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackValidator;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityRepository;
 
 abstract class AbstractAdminPageType extends AbstractType
@@ -59,7 +59,7 @@ abstract class AbstractAdminPageType extends AbstractType
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $pageHandler = $this;
         $builder
@@ -80,18 +80,21 @@ abstract class AbstractAdminPageType extends AbstractType
             ->add('fullpath')
             ->add('content', 'text')
             ->add('status', 'choice', array(
-                'choices'   => array('draft', 'published'),
+                'choices'   => array(
+                    'draft' => 'draft',
+                    'published' => 'published'),
                 'required' => TRUE,
                 )
             )
             ->add('sourceId')
-            ->addValidator(new CallbackValidator(function(FormInterface $form) use ($pageHandler) {
+            ->addEventListener(FormEvents::POST_BIND, function(FormEvent $event) use ($pageHandler) {
+                $form = $event->getForm();
                 $title = $form->get('title');
                 if (in_array(LightCMSUtils::makeSlug($title->getData()), $pageHandler->getSlugExclusions()))
                 {
                     $title->addError(new FormError('fulgurio.lightcms.pages.add_form.title_is_not_allowed'));
                 }
-            }))
+            })
         ;
         if (!empty($this->langs) && count($this->langs) > 1)
         {
@@ -123,7 +126,7 @@ abstract class AbstractAdminPageType extends AbstractType
         {
             return array();
         }
-        return ($this->slugExclusions);
+        return $this->slugExclusions;
     }
 
     /**
@@ -138,7 +141,7 @@ abstract class AbstractAdminPageType extends AbstractType
         {
             if (!isset($model['hidden']) || $model['hidden'] == FALSE)
             {
-                $this->models[$modelName] = $model;
+                $this->models[$modelName] = $modelName;
             }
         }
     }

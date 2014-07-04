@@ -12,78 +12,78 @@
 <form action="{{ action }}" method="post" id="p_form">
 	<fieldset>
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
-{% if form.getChild('model').get('errors')
-    or form.getChild('title').get('errors')
-    or form.getChild('status').get('errors')
-    or form.getChild('target_link').get('errors') %}
+{% if form.model.vars.errors is not empty
+    or form.title.vars.errors is not empty
+    or form.status.vars.errors is not empty
+    or form.target_link.vars.errors is not empty %}
 			<div class="alert alert-error">
-{%   for error in form.getChild('model').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.getChild('title').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.getChild('status').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.getChild('target_link').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.model.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.title.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.status.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.target_link.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 			</div>
 {% endif %}
 		<div class="row">
 			<div class="span7">
-{% if form.getChild('model').get('choices')|length > 1 %}
+{% if form.model.vars.choices|length > 1 %}
 				<div class="control-group">
 					<label class="control-label" for="p_model">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
 					<div class="controls form-inline">
-						<select name="{{ form.getChild('model').get('full_name') }}" class="input-xlarge span2" id="p_model" >
-{%   for choiceName, choice in form.getChild('model').get('choices') %}
-							<option value="{{ choiceName }}"{% if choiceName == form.getChild('model').get('value') or (choiceName == 'redirect' and pageId is not defined and form.getChild('model').get('value') == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
+						<select name="{{ form.model.vars.full_name }}" class="input-xlarge span2" id="p_model" >
+{%   for choiceName, choice in form.model.vars.choices %}
+							<option value="{{ choiceName }}"{% if choiceName == form.model.vars.value or (choiceName == 'redirect' and pageId is not defined and form.model.vars.value == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choiceName)|trans({}, 'admin') }}</option>
 {%   endfor %}
 						</select>
 						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
 					</div>
 				</div>
 {% else %}
-				<input type="hidden" id="p_model" class="input-small" name="{{ form.getChild('model').get('full_name') }}" value="redirect" />
+				<input type="hidden" id="p_model" class="input-small" name="{{ form.model.vars.full_name }}" value="redirect" />
 {% endif %}
 				<div class="control-group">
 					<label class="control-label" for="p_title">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="text" id="p_title" class="input-xlarge" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" required="required" />
+						<input type="text" id="p_title" class="input-xlarge" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" required="required" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="p_target_link">{% trans from "admin" %}fulgurio.lightcms.redirect.add_form.target_link{% endtrans %}</label>
 					<div class="controls">
-						<input type="text" id="p_target_link" class="input-xlarge" name="{{ form.getChild('target_link').get('full_name') }}" value="{% if form.getChild('target_link').get('value') %}{{ form.getChild('target_link').get('value') }}{% else %}{% if pageMetas['target_link'] is defined %}{{ pageMetas['target_link'].metaValue }}{% endif %}{% endif %}" />
+						<input type="text" id="p_target_link" class="input-xlarge" name="{{ form.target_link.vars.full_name }}" value="{% if form.target_link.vars.value %}{{ form.target_link.vars.value }}{% else %}{% if pageMetas['target_link'] is defined %}{{ pageMetas['target_link'].metaValue }}{% endif %}{% endif %}" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="p_status">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.getChild('status').get('full_name') }}" class="input-xlarge" id="p_status" >
-{% for choice in form.getChild('status').get('choices') %}
-							<option value="{{ choice }}"{% if choice in form.getChild('status').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ choice)|trans({}, 'admin') }}</option>
+						<select name="{{ form.status.vars.full_name }}" class="input-xlarge" id="p_status" >
+{% for choice in form.status.vars.choices %}
+							<option value="{{ choice.value }}"{% if choice.value in form.status.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ choice.label)|trans({}, 'admin') }}</option>
 {% endfor %}
 						</select>
 					</div>
 				</div>
 			</div>
-{% if useMultiLang is defined or form.getChild('availableMenu').get('choices')|length > 0 %}
+{% if useMultiLang is defined or form.availableMenu.vars.choices|length > 0 %}
 			<div class="well span4 pull-right">
 {%   if useMultiLang is defined %}
 				<div class="control-group">
 					<label class="control-label" for="p_lang">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.getChild('lang').get('full_name') }}" class="input-small" id="p_lang" >
-{%     for choice in form.getChild('lang').get('choices') %}
-							<option value="{{ choice }}"{% if choice in form.getChild('lang').get('value') %} selected="selected"{% endif %}>{{ choice }}</option>
+						<select name="{{ form.lang.vars.full_name }}" class="input-small" id="p_lang" >
+{%     for choice in form.lang.vars.choices %}
+							<option value="{{ choice }}"{% if choice in form.lang.vars.value %} selected="selected"{% endif %}>{{ choice }}</option>
 {%     endfor %}
 						</select>
 					</div>
 				</div>
 {%   endif %}
-{%   if form.getChild('availableMenu').get('choices')|length > 0 %}
+{%   if form.availableMenu.vars.choices|length > 0 %}
 				<div class="control-group">
 					<label class="control-label" for="p_availableMenu">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.getChild('availableMenu').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_availableMenu" >
-{%     for choice in form.getChild('availableMenu').get('choices') %}
-							<option value="{{ choice }}"{% if choice in form.getChild('availableMenu').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice)|trans({}, 'admin') }}</option>
+						<select name="{{ form.availableMenu.vars.full_name }}" multiple="multiple" class="input-xlarge" id="p_availableMenu" >
+{%     for choice in form.availableMenu.vars.choices %}
+							<option value="{{ choice }}"{% if choice in form.availableMenu.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice)|trans({}, 'admin') }}</option>
 {%     endfor %}
 						 </select>
 					</div>
@@ -93,10 +93,10 @@
 {% endif %}
 		</div>
 		<div class="form-actions">
-			<input type="hidden" name="{{ form.getChild('content').get('full_name') }}" value="" />
-			<input type="hidden" name="{{ form.getChild('parent').get('full_name') }}" value="{{ form.getChild('parent').get('value') }}" />
-			<input type="hidden" name="{{ form.getChild('sourceId').get('full_name') }}" value="{{ form.getChild('sourceId').get('value') }}" />
-			<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
+			<input type="hidden" name="{{ form.content.vars.full_name }}" value="" />
+			<input type="hidden" name="{{ form.parent.vars.full_name }}" value="{{ form.parent.vars.value }}" />
+			<input type="hidden" name="{{ form.sourceId.vars.full_name }}" value="{{ form.sourceId.vars.value }}" />
+			<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
 			<button type="submit" class="btn btn-primary" name="realSubmit" value="1">{% trans from 'admin' %}fulgurio.lightcms.save{% endtrans %}</button>
 			<a href="{{ cancelPath }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.cancel{% endtrans %}</a>
 		</div>

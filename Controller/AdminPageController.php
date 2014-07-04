@@ -11,10 +11,7 @@
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
-use Fulgurio\LightCMSBundle\Form\AdminPageHandler;
-use Fulgurio\LightCMSBundle\Form\AdminPageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -133,25 +130,26 @@ class AdminPageController extends Controller
      */
     private function createPage($page, $options, $models)
     {
-        if ($this->get('request')->getMethod() == 'POST')
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST')
         {
-            $data = $this->get('request')->get('page');
+            $data = $request->get('page');
             $page->setModel($data['model']);
         }
-        $formClassName = isset($models[$page->getModel()]['back']['form']) ? $models[$page->getModel()]['back']['form'] : '\Fulgurio\LightCMSBundle\Form\AdminPageType';
-        $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\AdminPageHandler';
+        $formClassName = isset($models[$page->getModel()]['back']['form']) ? $models[$page->getModel()]['back']['form'] : '\Fulgurio\LightCMSBundle\Form\Type\AdminPageType';
+        $formHandlerClassName = isset($models[$page->getModel()]['back']['handler']) ? $models[$page->getModel()]['back']['handler'] : '\Fulgurio\LightCMSBundle\Form\Handler\AdminPageHandler';
         $formType = new $formClassName($this->container);
         $formType->setModels($models);
         $form = $this->createForm($formType, $page);
         $formHandler = new $formHandlerClassName();
         $formHandler->setForm($form);
-        $formHandler->setRequest($this->get('request'));
+        $formHandler->setRequest($request);
         $formHandler->setDoctrine($this->getDoctrine());
-        $formHandler->setUser($this->get('security.context')->getToken()->getUser());
+        $formHandler->setUser($this->getUser());
         $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
         if ($formHandler->process($page))
         {
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                     'success',
                     $this->get('translator')->trans(
                             isset($options['pageId']) ? 'fulgurio.lightcms.pages.edit_form.success_msg' : 'fulgurio.lightcms.pages.add_form.success_msg',
@@ -186,22 +184,22 @@ class AdminPageController extends Controller
         {
             throw new AccessDeniedException();
         }
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         if ($request->request->get('confirm') === 'yes')
         {
             if ($this->container->getParameter('fulgurio_light_cms.allow_recursive_page_delete') == FALSE
                     && $page->hasChildren())
             {
-                $this->get('session')->setFlash(
+                $this->get('session')->getFlashBag()->add(
                         'error',
                         $this->get('translator')->trans('fulgurio.lightcms.pages.recursive_remove_not_allowed', array(), 'admin')
                 );
-                return new RedirectResponse($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
+                return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
             }
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($page);
             $em->flush();
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                     'success',
                     $this->get('translator')->trans('fulgurio.lightcms.pages.delete_success_message', array(), 'admin')
             );
@@ -209,11 +207,11 @@ class AdminPageController extends Controller
             {
                 return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $page->getParentId())));
             }
-            return new RedirectResponse($this->generateUrl('AdminPages'));
+            return $this->redirect($this->generateUrl('AdminPages'));
         }
         else if ($request->request->get('confirm') === 'no')
         {
-            return new RedirectResponse($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
+            return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
         }
         $templateName = $request->isXmlHttpRequest() ? 'FulgurioLightCMSBundle::adminConfirmAjax.html.twig' : 'FulgurioLightCMSBundle::adminConfirm.html.twig';
         return $this->render($templateName, array(
@@ -260,7 +258,7 @@ class AdminPageController extends Controller
      */
     public function changePositionAction()
     {
-        $request = $this->get('request');
+        $request = $this->getRequest();
         if ($request->isXmlHttpRequest())
         {
             $em = $this->getDoctrine()->getEntityManager();
@@ -298,7 +296,7 @@ class AdminPageController extends Controller
             $em->flush();
             $response = new Response(json_encode(array('code' => 42)));
             $response->headers->set('Content-Type', 'application/json');
-            return ($response);
+            return $response;
         }
         throw new AccessDeniedException();
     }
@@ -317,7 +315,7 @@ class AdminPageController extends Controller
                 $this->get('translator')->trans('fulgurio.lightcms.page_not_found', array(), 'admin')
             );
         }
-        return ($page);
+        return $page;
     }
 
     /**
@@ -334,6 +332,6 @@ class AdminPageController extends Controller
         {
             $pageMetas[$meta->getMetaKey()] = $meta;
         }
-        return ($pageMetas);
+        return $pageMetas;
     }
 }

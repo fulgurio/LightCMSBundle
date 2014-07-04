@@ -1,13 +1,15 @@
 LightCMS
 ========
-LightCMS is a CMS (Content Manager System) which is built with Symfony 2 framework. 
-Well, you can say "another CMS for what ?". Actually, many CMS make many thing, and need cpu ressource to display a website.
+LightCMS is a CMS (Content Manager System) which is built with Symfony 2
+framework.
+Well, you can say "another CMS for what ?". Actually, many CMS make many thing,
+and need cpu ressource to display a website.
 
 Features include:
 - Pages are displaying like a tree, easier to find a page for edition
 - Posts listing is available
 - Page model is usefull for specified page development
- 
+
 Documentation
 -------------
 Coming soon
@@ -17,53 +19,32 @@ Installation
 
 Installation is not so hard
 
-1. Download FulgurioLightCMSBundle and dependent bundles
-2. Configure the Autoloader
-3. Enable the Bundle
-4. Import routing
-5. Configure your yml files
-6. Try it !
+1. Download FulgurioLightCMSBundle using composer
+2. Enable the Bundle
+3. Import routing
+4. Configure your yml files
+5: Set database fixture
 
 That's easy !
 
-### Step 1: Download FulgurioLightCMSBundle and dependent bundles
+### Step 1: Download FulgurioLightCMSBundle
 
-First, you need to install :
-* [doctrine-fixture](http://symfony.com/doc/2.0/bundles/DoctrineFixturesBundle/index.html) for CMS data initialization
-* [KnpPaginator bundle](https://github.com/KnpLabs/KnpPaginatorBundle)
-* [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle)
+First, edit composer.json, and add the bundle
 
-**Using the vendors script**
+``` yaml
+{
+    "require": {
+        "fulgurio/light-cms-bundle" : "dev-master"
+    }
+}```
 
-Add the following lines in your `deps` file (you can do at the same time of DoctrineFixturesBundle):
-
-``` ini
-[FulgurioLightCMSBundle]
-    git=http://github.com/fulgurio/LightCMSBundle.git
-    target=/bundles/Fulgurio/LightCMSBundle
-```
-
-Just download the bundle with vendors loading tool :
+After, just launch composer, it will load all dependencies
 
 ``` bash
-$ php bin/vendors install
+$ ./composer update
 ```
 
-### Step 2: Configure the Autoloader
-
-Add the `Fulgurio` namespace to your autoloader:
-
-``` php
-<?php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    // ...
-    'Fulgurio\\LightCMSBundle' => __DIR__.'/../vendor/bundles',
-));
-```
-
-### Step 3: Enable the bundle
+### Step 2: Enable the bundle
 
 Finally, enable the bundle in the kernel:
 
@@ -75,26 +56,34 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+        new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         new Fulgurio\LightCMSBundle\FulgurioLightCMSBundle(),
     );
 }
 ```
 
-### Step 4: Import routing file
+### Step 3: Import routing file
 
-Now that you have activated and configured the bundle, all that is left to do is import the FulgurioLightCMSBundle routing file.
+Now that you have activated and configured the bundle, all that is left to do is
+ import the FulgurioLightCMSBundle routing file.
 
-You need to put it on the bottom of your file, to be the last routes used (if no route parse, LightCMS try to found the page into the database)
+You need to put it on the bottom of your file, to be the last routes used (if no
+ route parse, LightCMS try to found the page into the database)
 
 ``` yaml
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
 FulgurioLightCMSBundle:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing.yml"
     prefix:   /
 ```
 
-### Step 5: Configure your yml files
+### Step 4: Configure your yml files
 
-You need to set on the anonymous access, and to limit admin access. Edit config/security.yml file and put the following configuration :
+You need to set on the anonymous access, and to limit admin access. Edit
+config/security.yml file and put the following configuration :
 ```yaml
     firewalls:
         secured_area:
@@ -106,7 +95,8 @@ You need to set on the anonymous access, and to limit admin access. Edit config/
         - { path: ^/admin, roles: ROLE_ADMIN }
 ```
 
-After that, you need to enable the translation (actually, only english and french is available)
+After that, you need to enable the translation (actually, only english and
+french is available)
 ``` yaml
 # app/config/config.yml
 
@@ -114,23 +104,16 @@ framework:
     translator: ~
 ```
 
-### Step 6: Try it !
+### Step 5: Set database fixture
 
-Just before to try, don't forget to clear your cache. And if everything's working well, you will see the homepage
+You need to load database schema and default data. With doctrine and
+doctrine-fixture-bundle, no problem !
 
-License
--------
-This bundle is under the MIT license. See the complete license in the bundle:
+``` bash
+$ ./bin/console doctrine:schema:update --force
 
-About
------
-LightCMSBundle is a [Fulgurio](https://github.com/fulgurio) initiative.
+$ ./bin/console doctrine:fixtures:load
+```
 
-Reporting an issue or a feature request
----------------------------------------
-Issues and feature requests are tracked in the [Github issue tracker](https://github.com/fulgurio/LightCMSBundle/issues).
-
-When reporting a bug, it may be a good idea to reproduce it in a basic project
-built using the [Symfony Standard Edition](https://github.com/symfony/symfony-standard)
-to allow developers of the bundle to reproduce the issue by simply cloning it
-and following some steps.
+Just before to try, don't forget to clear your cache. And if everything's
+working well, you will see the homepage

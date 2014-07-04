@@ -93,7 +93,7 @@ fulgurio:
         filename:                   Nom du fichier
       edit_form:
         title:                      Edition du média
-        legend:                     Edition du média 
+        legend:                     Edition du média
         success_msg:                Le média a été modifié !
       delete_confirm_message:       Êtes-vous sûr de vouloir supprimer "%FILENAME%" ?
       media_types:
@@ -144,6 +144,7 @@ fulgurio:
         roles_label:                Droits
         roles:
           ROLE_ADMIN:               Administrateur
+        role_is_invalid:            Le rôle est erroné
         is_active_label:            Activé
         username_is_required:       Le nom d'utilisateur est obligatoire
         username_is_already_used:   Le nom d'utilisateur est déjà utilisé

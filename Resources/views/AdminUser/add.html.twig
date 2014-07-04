@@ -11,13 +11,15 @@
 <form action="{{ action }}" method="post">
 	<fieldset>
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
-{% if form.getChild('username').get('errors')
-    or form.getChild('email').get('errors')
-    or form.getChild('password').get('errors') %}
+{% if form.username.vars.errors is not empty
+    or form.email.vars.errors is not empty
+    or form.password.first.vars.errors is not empty
+    or form.roles.vars.errors is not empty %}
 			<div class="alert alert-error">
-{%   for error in form.getChild('username').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.getChild('email').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.getChild('password').get('errors') %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.username.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.email.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.password.first.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.roles.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
 			</div>
 {% endif %}
 		<div class="row">
@@ -25,50 +27,50 @@
 				<div class="control-group">
 					<label class="control-label" for="u_username">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.username_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="text" id="u_username" class="input-xlarge" name="{{ form.getChild('username').get('full_name') }}" value="{{ form.getChild('username').get('value') }}" autocomplete="off" />
+						<input type="text" id="u_username" class="input-xlarge" name="{{ form.username.vars.full_name }}" value="{{ form.username.vars.value }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="u_password_first">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.password_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="password" id="u_password_first" class="input-xlarge" name="{{ form.getChild('password').getChild('first').get('full_name') }}" autocomplete="off" />
+						<input type="password" id="u_password_first" class="input-xlarge" name="{{ form.password.first.vars.full_name }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="u_password_second">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.password_second_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="password" id="u_password_second" class="input-xlarge" name="{{ form.getChild('password').getChild('second').get('full_name') }}" autocomplete="off" />
+						<input type="password" id="u_password_second" class="input-xlarge" name="{{ form.password.second.vars.full_name }}" autocomplete="off" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="u_email">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.email_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="email" id="u_email" class="input-xlarge" name="{{ form.getChild('email').get('full_name') }}" value="{{ form.getChild('email').get('value') }}" />
+						<input type="email" id="u_email" class="input-xlarge" name="{{ form.email.vars.full_name }}" value="{{ form.email.vars.value }}" />
 					</div>
 				</div>
-{% if form.getChild('roles').get('choices')|length > 1 %}
+{% if form.roles.vars.choices|length > 1 %}
 				<div class="control-group">
 					<label class="control-label" for="p_roles">{% trans from "admin" %}fulgurio.lightcms.users.add_form.roles_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.getChild('roles').get('full_name') }}" multiple="multiple" class="input-xlarge" id="p_roles">
-{%   for choice in form.getChild('roles').get('choices') %}
-							<option value="{{ choice }}"{% if choice in form.getChild('roles').get('value') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.users.add_form.roles.' ~ choice)|trans({}, 'admin') }}</option>
+						<select name="{{ form.roles.vars.full_name }}" multiple="multiple" class="input-xlarge" id="p_roles">
+{%   for choice in form.roles.vars.choices %}
+							<option value="{{ choice }}"{% if choice in form.roles.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.users.add_form.roles.' ~ choice)|trans({}, 'admin') }}</option>
 {%   endfor %}
 						</select>
 					</div>
 				</div>
 {% else %}
-				<input type="hidden" name="{{ form.getChild('roles').get('full_name') }}" value="ROLE_ADMIN" />
+				<input type="hidden" name="{{ form.roles.vars.full_name }}" value="ROLE_ADMIN" />
 {% endif %}
 				<div class="control-group">
 					<label class="checkbox" for="u_is_active">{% trans from 'admin' %}fulgurio.lightcms.users.add_form.is_active_label{% endtrans %}
-						<input type="checkbox" id="u_is_active" class="input-xlarge" name="{{ form.getChild('is_active').get('full_name') }}"{% if form.getChild('is_active').get('checked') %} checked="checked"{% endif %} />
+						<input type="checkbox" id="u_is_active" class="input-xlarge" name="{{ form.is_active.vars.full_name }}"{% if form.is_active.vars.checked %} checked="checked"{% endif %} />
 					</label>
 				</div>
 			</div>
 		</div>
 		<div class="form-actions">
-			<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
+			<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
 			<button type="submit" class="btn btn-primary" name="realSubmit" value="1">{% trans from 'admin' %}fulgurio.lightcms.save{% endtrans %}</button>
 			<a href="{{ path('AdminUsers') }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.cancel{% endtrans %}</a>
 		</div>

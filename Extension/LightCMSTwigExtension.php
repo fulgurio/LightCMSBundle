@@ -108,7 +108,7 @@ class LightCMSTwigExtension extends \Twig_Extension
     public function allowChildrens(Page $page)
     {
         $models = $this->container->getParameter('fulgurio_light_cms.models');
-        return ($models[$page->getModel()]['allow_childrens']);
+        return $models[$page->getModel()]['allow_childrens'];
     }
 
     /**
@@ -150,7 +150,7 @@ class LightCMSTwigExtension extends \Twig_Extension
                         $langs[$lang] = $page->getParent()->getId();
                     }
                 }
-                return ($langs);
+                return $langs;
             }
             // Normal children page
             else if ($nbAvailableTranslatedPages != $nbAvailableTranslatedParents && $nbAvailableTranslatedParents < $nbAvailableLangs)
@@ -174,7 +174,7 @@ class LightCMSTwigExtension extends \Twig_Extension
                         unset($langs[$lang]);
                     }
                 }
-                return ($langs);
+                return $langs;
             }
         }
         return FALSE;
@@ -236,7 +236,7 @@ class LightCMSTwigExtension extends \Twig_Extension
 //                 }
 //             }
         }
-        return ($availablePages);
+        return $availablePages;
     }
 
     /**

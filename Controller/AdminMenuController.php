@@ -11,9 +11,7 @@
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -41,7 +39,7 @@ class AdminMenuController extends Controller
     /**
      * Move up page position in menu
      *
-     * @param integer $pageId
+     * @param number $pageId
      * @param string $menuName
      * @return
      */
@@ -57,15 +55,17 @@ class AdminMenuController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($pageMenu);
             $em->flush();
-            $this->get('session')->setFlash('notice', $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
+            $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
         }
-        return (new RedirectResponse($this->generateUrl('AdminMenus')));
+        return $this->redirect($this->generateUrl('AdminMenus'));
     }
 
     /**
      * Move up page position in menu
      *
-     * @param integer $pageId
+     * @param number $pageId
      * @param string $menuName
      * @return
      */
@@ -83,22 +83,21 @@ class AdminMenuController extends Controller
             $em->flush();
             $this->get('session')->setFlash('notice', $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
         }
-        return (new RedirectResponse($this->generateUrl('AdminMenus')));
+        return $this->redirect($this->generateUrl('AdminMenus'));
     }
 
     /**
      * Change position of page in menu, in ajax
      *
      * @throws AccessDeniedException
-     * @param integer $pageId
+     * @param number $pageId
      * @param string $menuName
-     * @param integer $newPosition
+     * @param number $newPosition
      * @return Response
      */
     public function changePositionAction($pageId, $menuName, $newPosition)
     {
-        $request = $this->get('request');
-        if ($request->isXmlHttpRequest())
+        if ($this->getRequest()->isXmlHttpRequest())
         {
             $pageMenuRepo = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:PageMenu');
             $pageMenu = $pageMenuRepo->findOneBy(array('page' => $pageId, 'label' => $menuName));

@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('models')
                     ->useAttributeAsKey('name')
-                    ->addDefaultsIfNotSet()
+//                    ->addDefaultsIfNotSet()
                     ->prototype('array')
                         ->children()
                             ->scalarNode('name')->end()
@@ -98,9 +98,9 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->children()
-                            ->arrayNode('roles')
-                                ->prototype('scalar')->end()
-                            ->end()
+                ->arrayNode('roles')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
         return $treeBuilder;

@@ -11,11 +11,9 @@
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\User;
-use Fulgurio\LightCMSBundle\Form\AdminUserHandler;
-use Fulgurio\LightCMSBundle\Form\AdminUserType;
+use Fulgurio\LightCMSBundle\Form\Handler\AdminUserHandler;
+use Fulgurio\LightCMSBundle\Form\Type\AdminUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -32,7 +30,7 @@ class AdminUserController extends Controller
         $filters = array();
         //@todo
         $nbPerPage = 10;
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         $page = $request->get('page') > 1 ? $request->get('page') - 1 : 0;
         $usersNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:User')->count($filters);
         $users = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:User')->findAllWithPagination($filters, $nbPerPage, $page * $nbPerPage);
@@ -62,7 +60,7 @@ class AdminUserController extends Controller
      */
     function editAction($userId)
     {
-        $user = $this->getUser($userId);
+        $user = $this->getSpecifiedUser($userId);
         return $this->createUser($user);
     }
 
@@ -82,12 +80,12 @@ class AdminUserController extends Controller
         $form = $this->createForm(new AdminUserType($this->container), $user);
         $formHandler = new AdminUserHandler();
         $formHandler->setForm($form);
-        $formHandler->setRequest($this->get('request'));
+        $formHandler->setRequest($this->getRequest());
         $formHandler->setDoctrine($this->getDoctrine());
         $formHandler->setFactory($this->container->get('security.encoder_factory'));
         if ($formHandler->process($user))
         {
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                     'success',
                     $this->get('translator')->trans(
                             isset($options['userId']) ? 'fulgurio.lightcms.users.edit_form.success_msg' : 'fulgurio.lightcms.users.add_form.success_msg',
@@ -109,26 +107,26 @@ class AdminUserController extends Controller
      */
     public function removeAction($userId)
     {
-        $user = $this->getUser($userId);
-        if ($user->getId() == $this->get('security.context')->getToken()->getUser()->getId())
+        $user = $this->getSpecifiedUser($userId);
+        if ($user->getId() == $this->getUser()->getId())
         {
             throw new AccessDeniedException($this->get('translator')->trans('fulgurio.lightcms.users.current_user_deletion_error', array(), 'admin'));
         }
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         if ($request->request->get('confirm') === 'yes')
         {
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                     'success',
                     $this->get('translator')->trans('fulgurio.lightcms.users.delete_success_message', array(), 'admin')
             );
-            return new RedirectResponse($this->generateUrl('AdminUsers'));
+            return $this->redirect($this->generateUrl('AdminUsers'));
         }
         else if ($request->request->get('confirm') === 'no')
         {
-            return new RedirectResponse($this->generateUrl('AdminUsers'));
+            return $this->redirect($this->generateUrl('AdminUsers'));
         }
         $templateName = $request->isXmlHttpRequest() ? 'FulgurioLightCMSBundle::adminConfirmAjax.html.twig' : 'FulgurioLightCMSBundle::adminConfirm.html.twig';
         return $this->render($templateName, array(
@@ -140,10 +138,10 @@ class AdminUserController extends Controller
     /**
      * Get user from given ID, and ckeck if it exists
      *
-     * @param integer $userId
+     * @param number $userId
      * @throws NotFoundHttpException
      */
-    private function getUser($userId)
+    private function getSpecifiedUser($userId)
     {
         if (!$user = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:User')->findOneBy(array('id' => $userId)))
         {
@@ -151,6 +149,6 @@ class AdminUserController extends Controller
                     $this->get('translator')->trans('fulgurio.lightcms.users.not_found', array(), 'admin')
             );
         }
-        return ($user);
+        return $user;
     }
 }

@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Handler;
 
-use Fulgurio\LightCMSBundle\Form\AdminPageHandler;
+use Fulgurio\LightCMSBundle\Form\Handler\AdminPageHandler;
 use Fulgurio\LightCMSBundle\Entity\Page;
 
 class AdminRedirectPageHandler extends AdminPageHandler

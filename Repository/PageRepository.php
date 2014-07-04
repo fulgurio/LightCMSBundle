@@ -79,6 +79,6 @@ class PageRepository extends EntityRepository
         $query = $this->getEntityManager()->createQuery('SELECT MAX(p.position) FROM FulgurioLightCMSBundle:Page p WHERE p.parent=:parentId AND p.page_type=:pageType');
         $query->setParameter('pageType', 'page');
         $query->setParameter('parentId', $parentId);
-        return ($query->getSingleScalarResult() + 1);
+        return $query->getSingleScalarResult() + 1;
     }
 }

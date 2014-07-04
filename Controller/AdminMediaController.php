@@ -11,11 +11,10 @@
 namespace Fulgurio\LightCMSBundle\Controller;
 
 use Fulgurio\LightCMSBundle\Entity\Media;
-use Fulgurio\LightCMSBundle\Form\AdminMediaHandler;
-use Fulgurio\LightCMSBundle\Form\AdminMediaType;
+use Fulgurio\LightCMSBundle\Form\Handler\AdminMediaHandler;
+use Fulgurio\LightCMSBundle\Form\Type\AdminMediaType;
 use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,7 +31,7 @@ class AdminMediaController extends Controller
         $filters = array();
         //@todo : put the number on config
         $nbPerPage = 24;
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         if ($request->get('filter'))
         {
             $filters['media_type'] = $request->get('filter') . '%';
@@ -41,7 +40,7 @@ class AdminMediaController extends Controller
         {
             $filters['original_name'] = $request->get('filename') . '%';
         }
-        $page = $this->get('request')->get('page') > 1 ? $request->get('page') - 1 : 0;
+        $page = $request->get('page') > 1 ? $request->get('page') - 1 : 0;
         $mediasNb = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->count($filters);
         if ($request->isXmlHttpRequest())
         {
@@ -85,7 +84,7 @@ class AdminMediaController extends Controller
     /**
      * Edit media
      *
-     * @param integer $mediaId if specified, we are on edit media form
+     * @param number $mediaId if specified, we are on edit media form
      */
     function editAction($mediaId)
     {
@@ -101,13 +100,13 @@ class AdminMediaController extends Controller
      */
     private function createMedia(Media $media)
     {
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         $form = $this->createForm(new AdminMediaType($this->container), $media);
         $formHandler = new AdminMediaHandler();
         $formHandler->setForm($form);
-        $formHandler->setRequest($this->get('request'));
+        $formHandler->setRequest($request);
         $formHandler->setDoctrine($this->getDoctrine());
-        $formHandler->setUser($this->get('security.context')->getToken()->getUser());
+        $formHandler->setUser($this->getUser());
         $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
         $formHandler->setThumbSizes($this->container->getParameter('fulgurio_light_cms.thumbs'));
         if ($formHandler->process($media))
@@ -126,7 +125,7 @@ class AdminMediaController extends Controller
                     )
                 )));
             }
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                 'success',
                 $this->get('translator')->trans(
                     isset($options['pageId']) ? 'fulgurio.lightcms.medias.edit_form.success_msg' : 'fulgurio.lightcms.medias.add_form.success_msg',
@@ -152,12 +151,12 @@ class AdminMediaController extends Controller
     /**
      * Remove media, with confirm form
      *
-     * @param integer $mediaId
+     * @param number $mediaId
      */
     public function removeAction($mediaId)
     {
         $media = $this->getMedia($mediaId);
-        $request = $this->container->get('request');
+        $request = $this->getRequest();
         if ($request->request->get('confirm') === 'yes' || $request->get('confirm') === 'yes')
         {
             $filename = LightCMSUtils::getUploadDir(FALSE) . $media->getFullPath();
@@ -179,11 +178,11 @@ class AdminMediaController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($media);
             $em->flush();
-            return new RedirectResponse($this->generateUrl('AdminMedias'));
+            return $this->redirect($this->generateUrl('AdminMedias'));
         }
         else if ($request->request->get('confirm') === 'no')
         {
-            return new RedirectResponse($this->generateUrl('AdminMedias', array('mediaId' => $mediaId)));
+            return $this->redirect($this->generateUrl('AdminMedias', array('mediaId' => $mediaId)));
         }
         $templateName = $request->isXmlHttpRequest() ? 'FulgurioLightCMSBundle::adminConfirmAjax.html.twig' : 'FulgurioLightCMSBundle::adminConfirm.html.twig';
         return $this->render($templateName, array(
@@ -247,7 +246,7 @@ class AdminMediaController extends Controller
     /**
      * Get page from given ID, and ckeck if it exists
      *
-     * @param integer $pageId
+     * @param number $mediaId
      * @throws NotFoundHttpException
      */
     private function getMedia($mediaId)
@@ -258,7 +257,7 @@ class AdminMediaController extends Controller
                 $this->get('translator')->trans('fulgurio.lightcms.medias.not_found', array(), 'admin')
             );
         }
-        return ($page);
+        return $page;
     }
 
     /**
@@ -271,6 +270,6 @@ class AdminMediaController extends Controller
     {
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
-        return ($response);
+        return $response;
     }
 }

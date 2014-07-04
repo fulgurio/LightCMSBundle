@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Fulgurio\LightCMSBundle\Entity\User
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * Constructor
@@ -122,6 +122,8 @@ class User implements UserInterface, \Serializable
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -152,6 +154,8 @@ class User implements UserInterface, \Serializable
     public function setSalt($salt)
     {
         $this->salt = $salt;
+
+        return $this;
     }
 
     /**
@@ -172,6 +176,8 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -182,6 +188,8 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -202,6 +210,8 @@ class User implements UserInterface, \Serializable
     public function setRoles($roles)
     {
         $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -222,6 +232,8 @@ class User implements UserInterface, \Serializable
     public function setIsActive($isActive)
     {
         $this->is_active = $isActive;
+
+        return $this;
     }
 
     /**
@@ -242,6 +254,8 @@ class User implements UserInterface, \Serializable
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
+
+        return $this;
     }
 
     /**
@@ -262,6 +276,8 @@ class User implements UserInterface, \Serializable
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
+
+        return $this;
     }
 
     /**

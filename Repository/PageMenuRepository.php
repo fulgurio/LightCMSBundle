@@ -11,7 +11,6 @@
 namespace Fulgurio\LightCMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * PageMenuRepository
@@ -57,17 +56,17 @@ class PageMenuRepository extends EntityRepository
                     }
                 }
             }
-            return ($tmp2);
+            return $tmp2;
         }
-        return ($results);
+        return $results;
     }
 
     /**
      * Up pages menu position
      *
      * @param string $menuName
-     * @param integer $position
-     * @param integer $positionLimit
+     * @param number $position
+     * @param number $positionLimit
      */
     public function upMenuPagesPosition($menuName, $position, $positionLimit = NULL)
     {
@@ -89,8 +88,8 @@ class PageMenuRepository extends EntityRepository
      * Down pages menu position
      *
      * @param string $menuName
-     * @param integer $position
-     * @param integer $positionLimit
+     * @param number $position
+     * @param number $positionLimit
      */
     public function downMenuPagesPosition($menuName, $position, $positionLimit = NULL)
     {
@@ -112,23 +111,23 @@ class PageMenuRepository extends EntityRepository
      * Get last position in menu
      *
      * @param string $menuName
-     * @return integer
+     * @return number
      */
     public function getLastMenuPosition($menuName)
     {
         $query = $this->getEntityManager()->createQuery('SELECT MAX(m.position) FROM FulgurioLightCMSBundle:PageMenu m WHERE m.label=:menuName');
         $query->setParameter('menuName', $menuName);
-        return ($query->getSingleScalarResult());
+        return $query->getSingleScalarResult();
     }
 
     /**
      * Get next position in menu
      *
      * @param string $menuName
-     * @return integer
+     * @return number
      */
     public function getNextMenuPosition($menuName)
     {
-        return ($this->getLastMenuPosition($menuName) + 1);
+        return $this->getLastMenuPosition($menuName) + 1;
     }
 }

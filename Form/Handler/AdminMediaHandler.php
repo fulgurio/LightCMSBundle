@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Handler;
 
 use Fulgurio\LightCMSBundle\Entity\Media;
-use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
+use Fulgurio\LightCMSBundle\Form\Handler\AbstractAdminHandler;
 use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminMediaHandler extends AbstractAdminHandler
@@ -33,14 +33,15 @@ class AdminMediaHandler extends AbstractAdminHandler
     {
         if ($this->request->getMethod() == 'POST')
         {
-            $this->form->bindRequest($this->request);
+            $this->form->handleRequest($this->request);
             if ($this->form->isValid())
             {
                 $currentDate = new \DateTime();
                 $file = $this->form->get('media')->getData();
                 if (!is_null($file))
                 {
-                    if ($file->getError() == UPLOAD_ERR_OK) {
+                    if ($file->getError() == UPLOAD_ERR_OK)
+                    {
                         $oldFile = LightCMSUtils::getUploadDir(FALSE) . $media->getFullpath();
                         if (is_file($oldFile))
                         {
@@ -67,8 +68,9 @@ class AdminMediaHandler extends AbstractAdminHandler
                             }
                         }
                     }
-                    else {
-                        return (FALSE);
+                    else
+                        {
+                        return FALSE;
                     }
                     // New media
                     if ($media->getId() == 0)
@@ -83,11 +85,11 @@ class AdminMediaHandler extends AbstractAdminHandler
                     $em = $this->doctrine->getEntityManager();
                     $em->persist($media);
                     $em->flush();
-                    return (TRUE);
+                    return TRUE;
                 }
             }
         }
-        return (FALSE);
+        return FALSE;
     }
 
     /**
@@ -98,15 +100,17 @@ class AdminMediaHandler extends AbstractAdminHandler
      * @param number $counter
      * @return string
      */
-    private function getUniqFilename($path, $filename, $counter = 0) {
+    private function getUniqFilename($path, $filename, $counter = 0)
+    {
         $pos = mb_strrpos($filename, '.');
         $file = mb_substr($filename, 0, $pos);
         $extension = mb_substr($filename, $pos);
         $postfix = $counter > 0 ? $this->slugSuffixSeparator . $counter : '';
-        if (file_exists($path . '/' . $file . $postfix . $extension)) {
-            return ($this->getUniqFilename($path, $filename, $counter + 1));
+        if (file_exists($path . '/' . $file . $postfix . $extension))
+        {
+            return $this->getUniqFilename($path, $filename, $counter + 1);
         }
-        return ($file . $postfix . $extension);
+        return $file . $postfix . $extension;
     }
 
     /**

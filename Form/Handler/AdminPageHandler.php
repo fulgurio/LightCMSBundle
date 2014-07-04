@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Handler;
 
 use Fulgurio\LightCMSBundle\Entity\Page;
 use Fulgurio\LightCMSBundle\Entity\PageMeta;
 use Fulgurio\LightCMSBundle\Entity\PageMenu;
-use Fulgurio\LightCMSBundle\Form\AbstractAdminHandler;
+use Fulgurio\LightCMSBundle\Form\Handler\AbstractAdminHandler;
 use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
 
 class AdminPageHandler extends AbstractAdminHandler
@@ -39,7 +39,7 @@ class AdminPageHandler extends AbstractAdminHandler
             {
                 return FALSE;
             }
-            $this->form->bindRequest($this->request);
+            $this->form->handleRequest($this->request);
             if ($this->form->isValid())
             {
                 $data = $this->request->get('page');
@@ -71,10 +71,10 @@ class AdminPageHandler extends AbstractAdminHandler
                 $this->beforePersist($page);
                 $em->persist($page);
                 $em->flush();
-                return (TRUE);
+                return TRUE;
             }
         }
-        return (FALSE);
+        return FALSE;
     }
 
     /**
@@ -82,12 +82,11 @@ class AdminPageHandler extends AbstractAdminHandler
      *
      * @param string $slug
      * @param Page $page
-     * @param integer $number
+     * @param number $number
      * @return string
      */
     protected function addSuffixNumber($slug, Page $page, $number = 0)
     {
-        $em = $this->doctrine->getEntityManager();
         $slugTmp = $number > 0 ? $slug . $this->slugSuffixSeparator . $number : $slug;
         $parentFullpath = $page->getParent()->getFullpath();
         $foundedPage = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array(
@@ -223,7 +222,7 @@ class AdminPageHandler extends AbstractAdminHandler
             $entity->setMetaKey($metaName);
         }
         $entity->setMetaValue($metaValue);
-        return ($entity);
+        return $entity;
     }
 
     /**

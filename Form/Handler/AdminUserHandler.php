@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Handler;
 
 use Fulgurio\LightCMSBundle\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -46,7 +46,7 @@ class AdminUserHandler
     /**
      * Processing form values
      *
-     * @param Page $page
+     * @param User $user
      * @return boolean
      */
     public function process(User $user)
@@ -54,17 +54,19 @@ class AdminUserHandler
         if ($this->request->getMethod() == 'POST')
         {
             $clonedUser = clone $user;
-            $this->form->bindRequest($this->request);
+            $this->form->handleRequest($this->request);
             if ($this->form->isValid())
             {
-               $encoder = $this->factory->getEncoder($user);
-               if (trim($user->getPassword()) != '') {
-                   $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                   $user->setPassword($password);
-               }
-               else {
-                   $user->setPassword($clonedUser->getPassword());
-               }
+                $encoder = $this->factory->getEncoder($user);
+                if (trim($user->getPassword()) != '')
+                {
+                    $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                    $user->setPassword($password);
+                }
+                else
+                {
+                    $user->setPassword($clonedUser->getPassword());
+                }
                 // New user
                 if ($user->getId() == 0)
                 {
@@ -77,10 +79,10 @@ class AdminUserHandler
                 $em = $this->doctrine->getEntityManager();
                 $em->persist($user);
                 $em->flush();
-                return (TRUE);
+                return TRUE;
             }
         }
-        return (FALSE);
+        return FALSE;
     }
 
     /**

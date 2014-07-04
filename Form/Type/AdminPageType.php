@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Type;
 
-use Fulgurio\LightCMSBundle\Form\AbstractAdminPageType;
-use Symfony\Component\Form\FormBuilder;
+use Fulgurio\LightCMSBundle\Form\Type\AbstractAdminPageType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AdminPageType extends AbstractAdminPageType
 {
@@ -40,7 +40,7 @@ class AdminPageType extends AbstractAdminPageType
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
@@ -50,8 +50,8 @@ class AdminPageType extends AbstractAdminPageType
                 'required' => FALSE,
                 )
             )
-            ->add('meta_keywords', null, array('required' => FALSE, 'property_path' => FALSE))
-            ->add('meta_description', 'text', array('required' => FALSE, 'property_path' => FALSE))
+            ->add('meta_keywords', null, array('required' => FALSE, 'mapped' => FALSE))
+            ->add('meta_description', 'text', array('required' => FALSE, 'mapped' => FALSE))
         ;
     }
 }

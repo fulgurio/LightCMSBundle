@@ -24,8 +24,8 @@ class UserRepository extends EntityRepository
      * Find users with pagination
      *
      * @param array $filters
-     * @param integer $limit
-     * @param integer $offset
+     * @param number $limit
+     * @param number $offset
      * @param boolean $resultInArray
      *
      * @return array
@@ -85,6 +85,6 @@ class UserRepository extends EntityRepository
             }
             $where = ' WHERE ' . substr($where, 4);
         }
-        return ($where);
+        return $where;
     }
 }

@@ -11,7 +11,7 @@
 				<span class="btn btn-success fileinput-button">
 					<i class="icon-plus icon-white"></i>
 					<span>{% trans from 'admin' %}fulgurio.lightcms.medias.add_form.add_files{% endtrans %}</span>
-					<input type="file" name="{{ form.media.get('full_name') }}" multiple>
+					<input type="file" name="{{ form.media.vars.full_name }}" multiple>
 				</span>
 				<button type="submit" class="btn btn-primary start">
 					<i class="icon-upload icon-white"></i>
@@ -42,7 +42,7 @@
 		<br>
 		<!-- The table listing the files available for upload/download -->
 		<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-		<input type="hidden" name="{{ form._token.get('full_name') }}" value="{{ form._token.get('value') }}" />
+		<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
 		<div class="form-actions">
 			<a href="{{ path('AdminMedias') }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.back{% endtrans %}</a>
 		</div>

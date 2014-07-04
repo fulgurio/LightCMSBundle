@@ -24,8 +24,8 @@ class MediaRepository extends EntityRepository
      * Find media with pagination
      *
      * @param array $filters
-     * @param integer $limit
-     * @param integer $offset
+     * @param number $limit
+     * @param number $offset
      * @param boolean $resultInArray
      *
      * @return array
@@ -51,7 +51,7 @@ class MediaRepository extends EntityRepository
     /**
      * Count number of result
      *
-     * @param unknown $filters
+     * @param array $filters
      * @return Ambigous <\Doctrine\ORM\mixed, mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement>
      */
     public function count($filters)
@@ -85,6 +85,6 @@ class MediaRepository extends EntityRepository
             }
             $where = ' WHERE ' . substr($where, 4);
         }
-        return ($where);
+        return $where;
     }
 }

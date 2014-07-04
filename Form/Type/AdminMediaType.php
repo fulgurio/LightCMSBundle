@@ -8,13 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Fulgurio\LightCMSBundle\Form;
+namespace Fulgurio\LightCMSBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\CallbackValidator;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminMediaType extends AbstractType
@@ -23,11 +20,11 @@ class AdminMediaType extends AbstractType
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('media', 'file', array('invalid_message' => 'shalama.baseland.home.add_form.invalid_picture', 'property_path' => FALSE))
+            ->add('media', 'file', array('invalid_message' => 'shalama.baseland.home.add_form.invalid_picture', 'mapped' => FALSE))
         ;
     }
 
@@ -39,7 +36,7 @@ class AdminMediaType extends AbstractType
      */
     static public function isImage(UploadedFile $file)
     {
-        return (substr($file->getMimeType(), 0, 6) == 'image/');
+        return substr($file->getMimeType(), 0, 6) == 'image/';
     }
 
     /**

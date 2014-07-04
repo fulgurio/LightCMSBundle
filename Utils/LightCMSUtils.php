@@ -10,9 +10,6 @@
 
 namespace Fulgurio\LightCMSBundle\Utils;
 
-use Fulgurio\LightCMSBundle\Entity\Media;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 /**
  * LightCMS utils
  */
@@ -59,7 +56,7 @@ class LightCMSUtils
      */
     static function getUploadUrl()
     {
-        return ('/uploads/');
+        return '/uploads/';
     }
 
     /**
@@ -75,15 +72,15 @@ class LightCMSUtils
         if (substr($mimeType, 0, 5) == 'image')
         {
             $pos = mb_strrpos($filename, '.');
-            return (mb_substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . mb_substr($filename, $pos));
+            return mb_substr($filename, 0, $pos) . '_' . $size['width'] . 'x' . $size['height'] . mb_substr($filename, $pos);
         }
         else if ($mimeType == 'application/pdf')
         {
-            return ($GLOBALS['kernel']->getContainer()->get('templating.helper.assets')->getUrl('bundles/fulguriolightcms/img/thumb_pdf.png'));
+            return $GLOBALS['kernel']->getContainer()->get('templating.helper.assets')->getUrl('bundles/fulguriolightcms/img/thumb_pdf.png');
         }
         else
         {
-            return ('http://www.placehold.it/' . $size['width'] . 'x' . $size['height'] . '/EFEFEF/AAAAAA');
+            return 'http://www.placehold.it/' . $size['width'] . 'x' . $size['height'] . '/EFEFEF/AAAAAA';
         }
     }
 
@@ -92,15 +89,16 @@ class LightCMSUtils
      *
      * @param string $sourcefile
      * @param string $destfile
-     * @param integer $fw
-     * @param integer $fh
-     * @param integer $jpegquality
+     * @param number $fw
+     * @param number $fh
+     * @param number $jpegquality
      * @todo : use Exception
      */
     static function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 80)
     {
         list($ow, $oh, $from_type) = getimagesize($sourcefile);
-        switch($from_type) {
+        switch($from_type)
+        {
             case 1: // GIF
                 $srcImage = imageCreateFromGif($sourcefile) or die('Impossible de convertir cette image');
                 break;
@@ -113,7 +111,8 @@ class LightCMSUtils
             default:
                 return;
         }
-        if (($fw / $ow) > ($fh / $oh)) {
+        if (($fw / $ow) > ($fh / $oh))
+        {
             $tempw = $fw;
             $temph = ($fw / $ow) * $oh;
         }
@@ -125,7 +124,7 @@ class LightCMSUtils
         //    imageAntiAlias($tempImage, true);
         imagecopyresampled($tempImage, $srcImage, ($fw - $tempw) / 2, ($fh - $temph) / 2, 0, 0, $tempw, $temph, $ow, $oh);
         imageJpeg($tempImage, $destfile, $jpegquality);
-        return (getimagesize($destfile));
+        return getimagesize($destfile);
     }
 
     /**
@@ -137,15 +136,15 @@ class LightCMSUtils
      */
     static public function makeSlug($title, $isFile = FALSE)
     {
-        $slug = strtr(utf8_decode(mb_strtolower($title, 'UTF-8')), utf8_decode('àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'), 'aaaaaaooooooeeeeciiiiuuuuyn');
+        $slug = strtr(
+                utf8_decode(mb_strtolower($title, 'UTF-8')),
+                utf8_decode(
+                        'àáâãäåòóôõöøèéêëçìíîïùúûüÿñ'),
+                        'aaaaaaooooooeeeeciiiiuuuuyn');
         if ($isFile)
         {
-            $slug = preg_replace(array('`[^a-z0-9\._]`i', '`[-]+`'), '-', $slug);
+            return preg_replace(array('`[^a-z0-9\._]`i', '`[-]+`'), '-', $slug);
         }
-        else
-        {
-            $slug = preg_replace(array('`[^a-z0-9]`i', '`[-]+`'), '-', $slug);
-        }
-        return ($slug);
+        return preg_replace(array('`[^a-z0-9]`i', '`[-]+`'), '-', $slug);
     }
 }
