@@ -247,7 +247,8 @@ class AdminPageController extends Controller
         }
         $newPage->setStatus('draft');
         $newPage->setSourceId($sourceId);
-        return $this->createPage($newPage, array('pageMetas' => $this->getPageMetas($sourceId), 'parent' => $target, 'sourceId' => $sourceId));
+        $models = $this->container->getParameter('fulgurio_light_cms.models');
+        return $this->createPage($newPage, array('pageMetas' => $this->getPageMetas($sourceId), 'parent' => $target, 'sourceId' => $sourceId), $models);
     }
 
     /**
