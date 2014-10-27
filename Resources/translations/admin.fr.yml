@@ -120,7 +120,7 @@ fulgurio:
     menus:
       title:                        Gestion des menus
       legend:                       Gestion des menus
-      no_page:                      Aucune page associé au menu
+      no_page:                      Aucune page associée au menu
       moving_success_msg:           Le changement du menu a été réalisé !
       add_form:
         menu_label:                 Menu
