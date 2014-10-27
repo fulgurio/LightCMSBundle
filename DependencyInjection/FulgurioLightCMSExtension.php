@@ -97,7 +97,12 @@ class FulgurioLightCMSExtension extends Extension
 
         if (isset($config['menus']))
         {
-            $container->setParameter('fulgurio_light_cms.menus', $config['menus']);
+            $menus = array();
+            foreach ($config['menus'] as $menu)
+            {
+                $menus[$menu] = $menu;
+            }
+            $container->setParameter('fulgurio_light_cms.menus', $menus);
         }
 
         if (isset($config['roles']) && !empty($config['roles']))
