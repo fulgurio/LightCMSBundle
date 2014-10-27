@@ -34,7 +34,7 @@
 							<option value="{{ choice.value }}"{% if choice.value == form.model.vars.value or (choice.value == 'redirect' and pageId is not defined and form.model.vars.value == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choice.label)|trans({}, 'admin') }}</option>
 {%   endfor %}
 						</select>
-						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
+						<noscript><button type="submit" class="btn" name="changeModel" value="1">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.change{% endtrans %}</button></noscript>
 					</div>
 				</div>
 {% else %}

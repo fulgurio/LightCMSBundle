@@ -17,9 +17,9 @@
     or form.title.vars.errors is not empty
     or form.status.vars.errors is not empty %}
 			<div class="alert alert-error">
-{%   for error in form.model.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}aaa<br />{%   endfor %}
-{%   for error in form.title.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}bbb<br />{%   endfor %}
-{%   for error in form.status.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}ccc<br />{%   endfor %}
+{%   for error in form.model.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+{%   for error in form.title.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+{%   for error in form.status.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
 			</div>
 {% endif %}
 		<div class="row">
@@ -33,7 +33,7 @@
 							<option value="{{ choice.value }}"{% if choice.value == form.model.vars.value or (choice.value == 'standard' and pageId is not defined and form.model.vars.value == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choice.label)|trans({}, 'admin') }}</option>
 {%   endfor %}
 						</select>
-						<noscript><button type="submit" class="btn" name="changeModel" value="1">Changer</button></noscript>
+						<noscript><button type="submit" class="btn" name="changeModel" value="1">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.change{% endtrans %}</button></noscript>
 					</div>
 				</div>
 {% else %}
@@ -68,9 +68,9 @@
 					<label class="control-label" for="p_lang">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
 					<div class="controls">
 						<select name="{{ form.lang.vars.full_name }}" class="input-small" id="p_lang" >
-{% for choice in form.lang.vars.choices %}
+{%   for choice in form.lang.vars.choices %}
 							<option value="{{ choice.value }}"{% if choice.value in form.lang.vars.value %} selected="selected"{% endif %}>{{ choice.label }}</option>
-{% endfor %}
+{%   endfor %}
 						</select>
 					</div>
 				</div>

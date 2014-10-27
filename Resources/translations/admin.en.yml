@@ -40,6 +40,7 @@ fulgurio:
       add_form:
         title:                      Add a new child page admin
         legend:                     Add a new child page
+        change:                     Change
         status:
           draft:                    Draft
           published:                Published

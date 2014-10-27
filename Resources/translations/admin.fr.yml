@@ -40,6 +40,7 @@ fulgurio:
       add_form:
         title:                      Ajouter une page fille
         legend:                     Ajouter une page fille
+        change:                     Changer
         status:
           draft:                    Brouillon
           published:                Publiée
