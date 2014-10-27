@@ -40,7 +40,11 @@ class FulgurioLightCMSExtension extends Extension
         $container->setParameter('fulgurio_light_cms.slug_exclusions', $config['slug_exclusions']);
         if (count($config['langs']) > 1)
         {
-            $container->setParameter('fulgurio_light_cms.languages', $config['langs']);
+            $langs = array();
+            foreach ($config['langs'] as $lang) {
+                $langs[$lang] = $lang;
+            }
+            $container->setParameter('fulgurio_light_cms.languages', $langs);
         }
         $container->setParameter('fulgurio_light_cms.wysiwyg', isset($config['wysiwyg']) ? $config['wysiwyg']: null);
         if (!isset($config['models']))
