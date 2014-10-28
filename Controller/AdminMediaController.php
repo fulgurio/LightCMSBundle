@@ -101,6 +101,7 @@ class AdminMediaController extends Controller
     private function createMedia(Media $media)
     {
         $request = $this->getRequest();
+        $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
         $form = $this->createForm(new AdminMediaType($this->container), $media);
         $formHandler = new AdminMediaHandler();
         $formHandler->setForm($form);
@@ -108,12 +109,11 @@ class AdminMediaController extends Controller
         $formHandler->setDoctrine($this->getDoctrine());
         $formHandler->setUser($this->getUser());
         $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
-        $formHandler->setThumbSizes($this->container->getParameter('fulgurio_light_cms.thumbs'));
+        $formHandler->setThumbSizes($thumbSizes);
         if ($formHandler->process($media))
         {
             if ($request->isXmlHttpRequest())
             {
-                $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
                 return $this->jsonResponse((object) array('files' => array(
                     (object) array(
                         'id' => $media->getId(),

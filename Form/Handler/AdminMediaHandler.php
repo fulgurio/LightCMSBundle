@@ -102,9 +102,16 @@ class AdminMediaHandler extends AbstractAdminHandler
      */
     private function getUniqFilename($path, $filename, $counter = 0)
     {
-        $pos = mb_strrpos($filename, '.');
-        $file = mb_substr($filename, 0, $pos);
-        $extension = mb_substr($filename, $pos);
+        if (($pos = mb_strrpos($filename, '.')) == FALSE)
+        {
+            $file = $filename;
+            $extension = '';
+        }
+        else
+        {
+            $file = mb_substr($filename, 0, $pos);
+            $extension = mb_substr($filename, $pos);
+        }
         $postfix = $counter > 0 ? $this->slugSuffixSeparator . $counter : '';
         if (file_exists($path . '/' . $file . $postfix . $extension))
         {
