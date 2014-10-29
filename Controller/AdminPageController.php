@@ -89,7 +89,7 @@ class AdminPageController extends Controller
         }
         $page = new Page();
         $parent = $this->getPage($parentId);
-        if (!$models[$parent->getModel()]['allow_childrens'])
+        if (!$models[$parent->getModel()]['allow_children'])
         {
             throw new AccessDeniedException();
         }

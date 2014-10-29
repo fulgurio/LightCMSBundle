@@ -36,7 +36,7 @@ fulgurio:
       show:                         Show
       edit:                         Edit
       remove:                       Remove
-      recursive_remove_not_allowed: Page has childrens. Please remove them before and try to remove this one
+      recursive_remove_not_allowed: Page has children. Please remove them before and try to remove this one
       add_form:
         title:                      Add a new child page admin
         legend:                     Add a new child page

@@ -58,7 +58,7 @@ class FulgurioLightCMSExtension extends Extension
                 'front' => array(
                     'template' => 'FulgurioLightCMSBundle:models:standardFront.html.twig'
                 ),
-                'allow_childrens' => TRUE,
+                'allow_children' => TRUE,
                 'is_unique' => FALSE
             );
         }
@@ -75,7 +75,7 @@ class FulgurioLightCMSExtension extends Extension
                 'front' => array(
                     'controller' => 'Fulgurio\LightCMSBundle\Controller\FrontRedirectPageController::redirect',
                 ),
-                'allow_childrens' => TRUE,
+                'allow_children' => TRUE,
                 'is_unique' => FALSE
             );
         }

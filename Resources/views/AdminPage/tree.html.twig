@@ -1,12 +1,12 @@
 <ul>
 {% for page in pages %}
-	<li id="pid-{{ page.id }}" data-id="{{ page.id }}" class="page_{{ page.model }}{% if page.status == 'draft' %} draft{% endif %}{% if selectedPage is defined and selectedPage.parent is not null and selectedPage.parent.fullpath|slice(0, page.fullpath|length) == page.fullpath %} jstree-open{% endif %}"{% if allowChildrens(page) == false %} rel="no-children"{% endif %}>
+	<li id="pid-{{ page.id }}" data-id="{{ page.id }}" class="page_{{ page.model }}{% if page.status == 'draft' %} draft{% endif %}{% if selectedPage is defined and selectedPage.parent is not null and selectedPage.parent.fullpath|slice(0, page.fullpath|length) == page.fullpath %} jstree-open{% endif %}"{% if allowChildren(page) == false %} rel="no-children"{% endif %}>
 {%   if selectedPage is defined and selectedPage == page %}
 		<a class="likeText">{{ page.title }}</a>
 {% else %}
 		<a href="{{ path('AdminPagesSelect', { pageId: page.id }) }}"{% if page.status == 'draft' %} class="draft"{% endif %}>{{ page.title }}</a>
 {% endif %}
-{%   if allowChildrens(page) and childrenPages[page.id] is defined %}
+{%   if allowChildren(page) and childrenPages[page.id] is defined %}
 {%     include 'FulgurioLightCMSBundle:AdminPage:tree.html.twig' with { 'pages': childrenPages[page.id] } %}
 {%   endif %}
 	</li>

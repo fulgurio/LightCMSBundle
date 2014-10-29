@@ -82,7 +82,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('template')->end()
                                 ->end()
                             ->end()
-                            ->scalarNode('allow_childrens')
+                            ->scalarNode('allow_children')
                                 ->defaultValue(TRUE)
                             ->end()
                             ->scalarNode('is_unique')

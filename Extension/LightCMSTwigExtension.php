@@ -60,7 +60,7 @@ class LightCMSTwigExtension extends \Twig_Extension
         return array(
             'dataForBreadcrumb'   => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
             'pagePath'            => new \Twig_Function_Method($this, 'getPagePath'),
-            'allowChildrens'      => new \Twig_Function_Method($this, 'allowChildrens'),
+            'allowChildren'      => new \Twig_Function_Method($this, 'allowChildren'),
             'needTranslatedPages' => new \Twig_Function_Method($this, 'needTranslatedPages'),
             'thumb'               => new \Twig_Function_Method($this, 'thumb'),
             'getPagesMenu'        => new \Twig_Function_Method($this, 'getPagesMenu', array('is_safe' => array('html'))),
@@ -105,10 +105,10 @@ class LightCMSTwigExtension extends \Twig_Extension
      *
      * @param Page $page
      */
-    public function allowChildrens(Page $page)
+    public function allowChildren(Page $page)
     {
         $models = $this->container->getParameter('fulgurio_light_cms.models');
-        return $models[$page->getModel()]['allow_childrens'];
+        return $models[$page->getModel()]['allow_children'];
     }
 
     /**
