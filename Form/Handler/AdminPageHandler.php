@@ -45,7 +45,7 @@ class AdminPageHandler extends AbstractAdminHandler
                 $data = $this->request->get('page');
                 $this->updatePageMetas($page, $data);
                 $this->updatePageMenuPosition($page);
-                $em = $this->doctrine->getEntityManager();
+                $em = $this->doctrine->getManager();
                 // New page
                 if ($page->getId() == 0)
                 {
@@ -122,7 +122,7 @@ class AdminPageHandler extends AbstractAdminHandler
                 foreach ($page->getChildren() as $children)
                 {
                     $this->makeFullpath($children);
-                    $this->doctrine->getEntityManager()->persist($children);
+                    $this->doctrine->getManager()->persist($children);
                 }
             }
         }
@@ -136,7 +136,7 @@ class AdminPageHandler extends AbstractAdminHandler
      */
     protected function updatePageMetas(Page $page, $data)
     {
-        $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getManager();
         if (isset($data['meta_keywords']))
         {
             $em->persist($this->initMetaEntity($page, 'meta_keywords', trim($data['meta_keywords'])));
@@ -155,7 +155,7 @@ class AdminPageHandler extends AbstractAdminHandler
     private function updatePageMenuPosition(Page $page)
     {
         $pageMenuRepository = $this->doctrine->getRepository('FulgurioLightCMSBundle:PageMenu');
-        $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getManager();
         $data = $this->request->get('page');
         if (isset($data['availableMenu']))
         {

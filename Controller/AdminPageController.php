@@ -80,7 +80,7 @@ class AdminPageController extends Controller
         {
             if ($model['is_unique'])
             {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 if ($em->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array('model' => $modelName)))
                 {
                     unset($models[$modelName]);
@@ -196,7 +196,8 @@ class AdminPageController extends Controller
                 );
                 return $this->redirect($this->generateUrl('AdminPagesSelect', array('pageId' => $pageId)));
             }
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
+
             $em->remove($page);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
@@ -230,7 +231,7 @@ class AdminPageController extends Controller
      */
     public function copyAction($sourceId, $targetId, $lang)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $source = $this->getPage($sourceId);
         $target = $this->getPage($targetId);
         $newPage = clone($source);
@@ -262,7 +263,7 @@ class AdminPageController extends Controller
         $request = $this->getRequest();
         if ($request->isXmlHttpRequest())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $pageRepository = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page');
             $page = $this->getPage($request->request->get('pageId'));
             $parentId = $request->request->get('parentId');

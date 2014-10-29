@@ -115,7 +115,7 @@ class AdminUserController extends Controller
         $request = $this->getRequest();
         if ($request->request->get('confirm') === 'yes')
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
             $this->get('session')->getFlashBag()->add(

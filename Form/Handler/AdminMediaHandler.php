@@ -82,7 +82,7 @@ class AdminMediaHandler extends AbstractAdminHandler
                     {
                         $media->setUpdatedAt($currentDate);
                     }
-                    $em = $this->doctrine->getEntityManager();
+                    $em = $this->doctrine->getManager();
                     $em->persist($media);
                     $em->flush();
                     return TRUE;

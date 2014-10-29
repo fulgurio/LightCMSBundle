@@ -175,7 +175,7 @@ class AdminMediaController extends Controller
                     }
                 }
             }
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->remove($media);
             $em->flush();
             return $this->redirect($this->generateUrl('AdminMedias'));

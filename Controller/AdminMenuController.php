@@ -52,7 +52,7 @@ class AdminMenuController extends Controller
         {
             $pageMenuRepo->downMenuPagesPosition($menuName, $position - 1, $position);
             $pageMenu->setPosition($position - 1);
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($pageMenu);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
@@ -78,7 +78,7 @@ class AdminMenuController extends Controller
         {
             $pageMenuRepo->upMenuPagesPosition($menuName, $position + 1, $position + 1);
             $pageMenu->setPosition($position + 1);
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($pageMenu);
             $em->flush();
             $this->get('session')->setFlash('notice', $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
@@ -114,7 +114,7 @@ class AdminMenuController extends Controller
                         // Down !
                         $pageMenuRepo->upMenuPagesPosition($pageMenu->getLabel(), $pageMenu->getPosition() + 1, $newPosition);
                         $pageMenu->setPosition($newPosition);
-                        $em = $this->getDoctrine()->getEntityManager();
+                        $em = $this->getDoctrine()->getManager();
                         $em->persist($pageMenu);
                         $em->flush();
                     }
@@ -124,7 +124,7 @@ class AdminMenuController extends Controller
                     // Up !
                     $pageMenuRepo->downMenuPagesPosition($pageMenu->getLabel(), $newPosition, $pageMenu->getPosition());
                     $pageMenu->setPosition($newPosition);
-                    $em = $this->getDoctrine()->getEntityManager();
+                    $em = $this->getDoctrine()->getManager();
                     $em->persist($pageMenu);
                     $em->flush();
                 }
