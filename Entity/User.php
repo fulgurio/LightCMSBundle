@@ -59,47 +59,47 @@ class User implements UserInterface
 
 
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $username
+     * @var string
      */
     private $username;
 
     /**
-     * @var string $salt
+     * @var string
      */
     private $salt;
 
     /**
-     * @var string $password
+     * @var string
      */
     private $password;
 
     /**
-     * @var string $email
+     * @var string
      */
     private $email;
 
     /**
-     * @var string $roles
+     * @var array
      */
     private $roles;
 
     /**
-     * @var boolean $is_active
+     * @var boolean
      */
     private $is_active;
 
     /**
-     * @var datetime $created_at
+     * @var \DateTime
      */
     private $created_at;
 
     /**
-     * @var datetime $updated_at
+     * @var \DateTime
      */
     private $updated_at;
 
@@ -118,6 +118,7 @@ class User implements UserInterface
      * Set username
      *
      * @param string $username
+     * @return User
      */
     public function setUsername($username)
     {
@@ -137,19 +138,10 @@ class User implements UserInterface
     }
 
     /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set salt
      *
      * @param string $salt
+     * @return User
      */
     public function setSalt($salt)
     {
@@ -172,6 +164,7 @@ class User implements UserInterface
      * Set password
      *
      * @param string $password
+     * @return User
      */
     public function setPassword($password)
     {
@@ -181,9 +174,20 @@ class User implements UserInterface
     }
 
     /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * Set email
      *
      * @param string $email
+     * @return User
      */
     public function setEmail($email)
     {
@@ -205,7 +209,8 @@ class User implements UserInterface
     /**
      * Set roles
      *
-     * @param string $roles
+     * @param array $roles
+     * @return User
      */
     public function setRoles($roles)
     {
@@ -217,17 +222,18 @@ class User implements UserInterface
     /**
      * Get roles
      *
-     * @return string
+     * @return array
      */
     public function getRoles()
     {
-        return ($this->roles);
+        return $this->roles;
     }
 
     /**
      * Set is_active
      *
      * @param boolean $isActive
+     * @return User
      */
     public function setIsActive($isActive)
     {
@@ -249,7 +255,8 @@ class User implements UserInterface
     /**
      * Set created_at
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return User
      */
     public function setCreatedAt($createdAt)
     {
@@ -261,7 +268,7 @@ class User implements UserInterface
     /**
      * Get created_at
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -271,7 +278,8 @@ class User implements UserInterface
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return User
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -283,7 +291,7 @@ class User implements UserInterface
     /**
      * Get updated_at
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {

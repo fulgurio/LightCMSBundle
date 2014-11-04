@@ -23,7 +23,7 @@ Installation is not so hard
 2. Enable the Bundle
 3. Import routing
 4. Configure your yml files
-5: Set database fixture
+5. Set database fixture
 
 That's easy !
 

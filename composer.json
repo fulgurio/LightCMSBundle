@@ -1,32 +1,30 @@
 {
-	"name" : "fulgurio/light-cms-bundle",
-	"description" : "Light CMS using Symfony 2 framework",
-	"type" : "symfony-bundle",
-	"authors" : [{
-			"name" : "Fulgurio",
-			"homepage" : "http://fulgurio.net"
-		}
-	],
-	"keywords" : [
-		"content management system",
-		"cms",
-		"blog"
-	],
-	"homepage" : "http://github.com/fulgurio/LightCMSBundle",
-	"license" : [
-		"GPL"
-	],
-	"require" : {
-		"doctrine/doctrine-fixtures-bundle": "dev-master",
-		"friendsofsymfony/jsrouting-bundle" : "1.1.*",
-		"php" : ">=5.3.2",
-		"symfony/framework-bundle" : "~2.3"
-	},
-	"autoload" : {
-		"psr-0" : {
-			"Fulgurio\\LightCMSBundle" : ""
-		}
-	},
-	"target-dir" : "Fulgurio/LightCMSBundle",
-	"minimum-stability" : "dev"
+    "name" : "fulgurio/light-cms-bundle",
+    "description" : "Light CMS using Symfony 2 framework",
+    "type" : "symfony-bundle",
+    "authors" : [{
+            "name" : "Fulgurio",
+            "homepage" : "http://fulgurio.net"
+        }
+    ],
+    "keywords" : [
+        "content management system",
+        "cms",
+        "blog"
+    ],
+    "homepage" : "http://github.com/fulgurio/LightCMSBundle",
+    "license" : "GPL",
+    "require" : {
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "friendsofsymfony/jsrouting-bundle" : "1.1.*",
+        "php" : ">=5.3.2",
+        "symfony/framework-bundle" : "~2.3"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Fulgurio\\LightCMSBundle" : ""
+        }
+    },
+    "target-dir" : "Fulgurio/LightCMSBundle",
+    "minimum-stability" : "dev"
 }

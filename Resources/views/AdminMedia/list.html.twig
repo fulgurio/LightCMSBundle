@@ -27,25 +27,25 @@
 {% else %}
 				<br />
 				<ul class="thumbnails">
-{% for media in medias %}
+{%   for media in medias %}
 					<li class="span2">
 						<div class="thumbnail">
-{%    if media.fullPath is null %}
+{%      if media.fullPath is null %}
 							<img src="http://www.placehold.it/50x50/EFEFEF/AAAAAA" data-src="holder.js/300x200" alt=""></a>
-{%    else %}
+{%      else %}
 							<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ thumb(media, 'medium') }}" alt="" /></a>
-{%    endif %}
+{%      endif %}
 							<h6 title="{{ media.originalName }}"><span>{{ media.originalName }}</span>
 								<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="pull-right icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
 								<br class="clearfix" />
 							</h6>
 						</div>
 					</li>
-{% endfor %}
+{%   endfor %}
 				</ul>
-{% include 'FulgurioLightCMSBundle::adminPagination.html.twig' %}
+{%   include 'FulgurioLightCMSBundle::adminPagination.html.twig' %}
 			</form>
-{% include 'FulgurioLightCMSBundle::adminLightbox.html.twig' %}
+{%   include 'FulgurioLightCMSBundle::adminLightbox.html.twig' %}
 {% endif %}
 {% endblock %}
 

@@ -18,37 +18,37 @@ use Doctrine\ORM\Mapping as ORM;
 class Media
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $original_name
+     * @var string
      */
     private $original_name;
 
     /**
-     * @var string $full_path
+     * @var string
      */
     private $full_path;
 
     /**
-     * @var string $media_type
+     * @var string
      */
     private $media_type;
 
     /**
-     * @var datetime $created_at
+     * @var \DateTime
      */
     private $created_at;
 
     /**
-     * @var datetime $updated_at
+     * @var \DateTime
      */
     private $updated_at;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\User
+     * @var \Fulgurio\LightCMSBundle\Entity\User
      */
     private $owner;
 
@@ -56,7 +56,7 @@ class Media
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -67,16 +67,19 @@ class Media
      * Set original_name
      *
      * @param string $originalName
+     * @return Media
      */
     public function setOriginalName($originalName)
     {
         $this->original_name = $originalName;
+
+        return $this;
     }
 
     /**
      * Get original_name
      *
-     * @return string
+     * @return string 
      */
     public function getOriginalName()
     {
@@ -87,16 +90,19 @@ class Media
      * Set full_path
      *
      * @param string $fullPath
+     * @return Media
      */
     public function setFullPath($fullPath)
     {
         $this->full_path = $fullPath;
+
+        return $this;
     }
 
     /**
      * Get full_path
      *
-     * @return string
+     * @return string 
      */
     public function getFullPath()
     {
@@ -107,16 +113,19 @@ class Media
      * Set media_type
      *
      * @param string $mediaType
+     * @return Media
      */
     public function setMediaType($mediaType)
     {
         $this->media_type = $mediaType;
+
+        return $this;
     }
 
     /**
      * Get media_type
      *
-     * @return string
+     * @return string 
      */
     public function getMediaType()
     {
@@ -126,17 +135,20 @@ class Media
     /**
      * Set created_at
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return Media
      */
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
+
+        return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return datetime
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
@@ -146,17 +158,20 @@ class Media
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return Media
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
+
+        return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return datetime
+     * @return \DateTime 
      */
     public function getUpdatedAt()
     {
@@ -166,17 +181,20 @@ class Media
     /**
      * Set owner
      *
-     * @param Fulgurio\LightCMSBundle\Entity\User $owner
+     * @param \Fulgurio\LightCMSBundle\Entity\User $owner
+     * @return Media
      */
-    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner)
+    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner = null)
     {
         $this->owner = $owner;
+
+        return $this;
     }
 
     /**
      * Get owner
      *
-     * @return Fulgurio\LightCMSBundle\Entity\User
+     * @return \Fulgurio\LightCMSBundle\Entity\User 
      */
     public function getOwner()
     {

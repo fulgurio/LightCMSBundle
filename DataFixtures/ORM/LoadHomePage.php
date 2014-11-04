@@ -47,9 +47,9 @@ class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedF
         $manager->persist($meta2);
         $meta3 = $this->addMeta($homepage, 'is_home', TRUE);
         $manager->persist($meta3);
-        $homepage->addPageMeta($meta1);
-        $homepage->addPageMeta($meta2);
-        $homepage->addPageMeta($meta3);
+        $homepage->addMetum($meta1);
+        $homepage->addMetum($meta2);
+        $homepage->addMetum($meta3);
         $manager->persist($homepage);
         $this->addReference('homepage', $homepage);
         $manager->flush();

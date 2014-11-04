@@ -18,22 +18,22 @@ use Doctrine\ORM\Mapping as ORM;
 class PageMeta
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $meta_key
+     * @var string
      */
     private $meta_key;
 
     /**
-     * @var text $meta_value
+     * @var string
      */
     private $meta_value;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\Page
+     * @var \Fulgurio\LightCMSBundle\Entity\Page
      */
     private $page;
 
@@ -41,7 +41,7 @@ class PageMeta
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -52,16 +52,19 @@ class PageMeta
      * Set meta_key
      *
      * @param string $metaKey
+     * @return PageMeta
      */
     public function setMetaKey($metaKey)
     {
         $this->meta_key = $metaKey;
+
+        return $this;
     }
 
     /**
      * Get meta_key
      *
-     * @return string
+     * @return string 
      */
     public function getMetaKey()
     {
@@ -71,17 +74,20 @@ class PageMeta
     /**
      * Set meta_value
      *
-     * @param text $metaValue
+     * @param string $metaValue
+     * @return PageMeta
      */
     public function setMetaValue($metaValue)
     {
         $this->meta_value = $metaValue;
+
+        return $this;
     }
 
     /**
      * Get meta_value
      *
-     * @return text
+     * @return string 
      */
     public function getMetaValue()
     {
@@ -91,17 +97,20 @@ class PageMeta
     /**
      * Set page
      *
-     * @param Fulgurio\LightCMSBundle\Entity\Page $page
+     * @param \Fulgurio\LightCMSBundle\Entity\Page $page
+     * @return PageMeta
      */
-    public function setPage(\Fulgurio\LightCMSBundle\Entity\Page $page)
+    public function setPage(\Fulgurio\LightCMSBundle\Entity\Page $page = null)
     {
         $this->page = $page;
+
+        return $this;
     }
 
     /**
      * Get page
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page
+     * @return \Fulgurio\LightCMSBundle\Entity\Page 
      */
     public function getPage()
     {

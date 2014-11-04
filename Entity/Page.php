@@ -88,99 +88,103 @@ class Page
     }
 
 
-    public function setAvailableMenu($selectedMenus) {}
-
+    public function setAvailableMenu($selectedMenus)
+    {
+    }
 
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var integer $parent_id
+     * @var integer
      */
     private $parent_id;
 
     /**
-     * @var string $title
+     * @var string
      */
     private $title;
 
     /**
-     * @var string $fullpath
+     * @var string
      */
     private $fullpath;
 
     /**
-     * @var string $slug
+     * @var string
      */
     private $slug;
 
     /**
-     * @var integer $position
+     * @var integer
      */
     private $position;
 
     /**
-     * @var string $status
+     * @var string
      */
     private $status;
 
     /**
-     * @var text $content
+     * @var string
      */
     private $content;
 
     /**
-     * @var string $lang
+     * @var string
      */
     private $lang;
 
     /**
-     * @var integer $source_id
+     * @var integer
      */
     private $source_id;
 
     /**
-     * @var datetime $created_at
+     * @var \DateTime
      */
     private $created_at;
 
     /**
-     * @var datetime $updated_at
+     * @var \DateTime
      */
     private $updated_at;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\User
-     */
-    private $owner;
-
-    /**
-     * @var Fulgurio\LightCMSBundle\Entity\Page
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $children;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\PageMeta
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $meta;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\PageMenu
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $menu;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\Page
+     * @var \Fulgurio\LightCMSBundle\Entity\Page
      */
     private $parent;
 
+    /**
+     * @var \Fulgurio\LightCMSBundle\Entity\User
+     */
+    private $owner;
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->menu = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->menu = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -197,10 +201,13 @@ class Page
      * Set parent_id
      *
      * @param integer $parentId
+     * @return Page
      */
     public function setParentId($parentId)
     {
         $this->parent_id = $parentId;
+
+        return $this;
     }
 
     /**
@@ -217,10 +224,13 @@ class Page
      * Set model
      *
      * @param string $model
+     * @return Page
      */
     public function setModel($model)
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**
@@ -237,10 +247,13 @@ class Page
      * Set page_type
      *
      * @param string $pageType
+     * @return Page
      */
     public function setPageType($pageType)
     {
         $this->page_type = $pageType;
+
+        return $this;
     }
 
     /**
@@ -257,10 +270,13 @@ class Page
      * Set title
      *
      * @param string $title
+     * @return Page
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -277,10 +293,13 @@ class Page
      * Set fullpath
      *
      * @param string $fullpath
+     * @return Page
      */
     public function setFullpath($fullpath)
     {
         $this->fullpath = $fullpath;
+
+        return $this;
     }
 
     /**
@@ -297,10 +316,13 @@ class Page
      * Set slug
      *
      * @param string $slug
+     * @return Page
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -317,10 +339,13 @@ class Page
      * Set position
      *
      * @param integer $position
+     * @return Page
      */
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
     }
 
     /**
@@ -337,10 +362,13 @@ class Page
      * Set status
      *
      * @param string $status
+     * @return Page
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
@@ -356,17 +384,20 @@ class Page
     /**
      * Set content
      *
-     * @param text $content
+     * @param string $content
+     * @return Page
      */
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**
      * Get content
      *
-     * @return text
+     * @return string
      */
     public function getContent()
     {
@@ -377,10 +408,13 @@ class Page
      * Set lang
      *
      * @param string $lang
+     * @return Page
      */
     public function setLang($lang)
     {
         $this->lang = $lang;
+
+        return $this;
     }
 
     /**
@@ -397,10 +431,13 @@ class Page
      * Set source_id
      *
      * @param integer $sourceId
+     * @return Page
      */
     public function setSourceId($sourceId)
     {
         $this->source_id = $sourceId;
+
+        return $this;
     }
 
     /**
@@ -416,17 +453,20 @@ class Page
     /**
      * Set created_at
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return Page
      */
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
+
+        return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -436,17 +476,20 @@ class Page
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return Page
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
+
+        return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -456,17 +499,20 @@ class Page
     /**
      * Set owner
      *
-     * @param Fulgurio\LightCMSBundle\Entity\User $owner
+     * @param \Fulgurio\LightCMSBundle\Entity\User $owner
+     * @return Page
      */
-    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner)
+    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner = null)
     {
         $this->owner = $owner;
+
+        return $this;
     }
 
     /**
      * Get owner
      *
-     * @return Fulgurio\LightCMSBundle\Entity\User
+     * @return \Fulgurio\LightCMSBundle\Entity\User
      */
     public function getOwner()
     {
@@ -476,17 +522,30 @@ class Page
     /**
      * Add children
      *
-     * @param Fulgurio\LightCMSBundle\Entity\Page $children
+     * @param \Fulgurio\LightCMSBundle\Entity\Page $children
+     * @return Page
      */
-    public function addPage(\Fulgurio\LightCMSBundle\Entity\Page $children)
+    public function addChild(\Fulgurio\LightCMSBundle\Entity\Page $children)
     {
         $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Fulgurio\LightCMSBundle\Entity\Page $children
+     */
+    public function removeChild(\Fulgurio\LightCMSBundle\Entity\Page $children)
+    {
+        $this->children->removeElement($children);
     }
 
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -496,17 +555,30 @@ class Page
     /**
      * Add meta
      *
-     * @param Fulgurio\LightCMSBundle\Entity\PageMeta $meta
+     * @param \Fulgurio\LightCMSBundle\Entity\PageMeta $meta
+     * @return Page
      */
-    public function addPageMeta(\Fulgurio\LightCMSBundle\Entity\PageMeta $meta)
+    public function addMetum(\Fulgurio\LightCMSBundle\Entity\PageMeta $meta)
     {
         $this->meta[] = $meta;
+
+        return $this;
+    }
+
+    /**
+     * Remove meta
+     *
+     * @param \Fulgurio\LightCMSBundle\Entity\PageMeta $meta
+     */
+    public function removeMetum(\Fulgurio\LightCMSBundle\Entity\PageMeta $meta)
+    {
+        $this->meta->removeElement($meta);
     }
 
     /**
      * Get meta
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMeta()
     {
@@ -516,17 +588,30 @@ class Page
     /**
      * Add menu
      *
-     * @param Fulgurio\LightCMSBundle\Entity\PageMenu $menu
+     * @param \Fulgurio\LightCMSBundle\Entity\PageMenu $menu
+     * @return Page
      */
-    public function addPageMenu(\Fulgurio\LightCMSBundle\Entity\PageMenu $menu)
+    public function addMenu(\Fulgurio\LightCMSBundle\Entity\PageMenu $menu)
     {
         $this->menu[] = $menu;
+
+        return $this;
+    }
+
+    /**
+     * Remove menu
+     *
+     * @param \Fulgurio\LightCMSBundle\Entity\PageMenu $menu
+     */
+    public function removeMenu(\Fulgurio\LightCMSBundle\Entity\PageMenu $menu)
+    {
+        $this->menu->removeElement($menu);
     }
 
     /**
      * Get menu
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMenu()
     {
@@ -536,17 +621,20 @@ class Page
     /**
      * Set parent
      *
-     * @param Fulgurio\LightCMSBundle\Entity\Page $parent
+     * @param \Fulgurio\LightCMSBundle\Entity\Page $parent
+     * @return Page
      */
-    public function setParent(\Fulgurio\LightCMSBundle\Entity\Page $parent)
+    public function setParent(\Fulgurio\LightCMSBundle\Entity\Page $parent = null)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
      * Get parent
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page
+     * @return \Fulgurio\LightCMSBundle\Entity\Page
      */
     public function getParent()
     {

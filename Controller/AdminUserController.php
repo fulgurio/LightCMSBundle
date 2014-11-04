@@ -97,7 +97,6 @@ class AdminUserController extends Controller
         }
         $options['form'] = $form->createView();
         return $this->render('FulgurioLightCMSBundle:AdminUser:add.html.twig', $options);
-
     }
 
     /**

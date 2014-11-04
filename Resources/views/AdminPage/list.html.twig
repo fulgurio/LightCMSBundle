@@ -14,7 +14,7 @@
 {% endif %}
 	</div>
 	<div class="span8">
-{% block pageContent%}
+{% block pageContent %}
 		<p>{% trans from 'admin' %}fulgurio.lightcms.pages.text_info{% endtrans %}</p>
 {% endblock %}
 	</div>
@@ -33,7 +33,7 @@ $(".treeview").jstree({
 			"html_data",
 			"dnd",
 			"cookies",
-			"types",
+			"types"
 		]
 	})
 	.bind("move_node.jstree", function (e, data) {
@@ -46,7 +46,7 @@ $(".treeview").jstree({
 			data : {
 				"parentId" : parentId,
 				"pageId" : pageId,
-				"position" : data.rslt.cp + 1,
+				"position" : data.rslt.cp + 1
 			},
 			success : function (r) {
 				//location.reload();

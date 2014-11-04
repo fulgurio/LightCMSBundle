@@ -18,22 +18,22 @@ use Doctrine\ORM\Mapping as ORM;
 class PageMenu
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $label
+     * @var string
      */
     private $label;
 
     /**
-     * @var integer $position
+     * @var integer
      */
     private $position;
 
     /**
-     * @var Fulgurio\LightCMSBundle\Entity\Page
+     * @var \Fulgurio\LightCMSBundle\Entity\Page
      */
     private $page;
 
@@ -41,7 +41,7 @@ class PageMenu
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -52,16 +52,19 @@ class PageMenu
      * Set label
      *
      * @param string $label
+     * @return PageMenu
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
     }
 
     /**
      * Get label
      *
-     * @return string
+     * @return string 
      */
     public function getLabel()
     {
@@ -72,16 +75,19 @@ class PageMenu
      * Set position
      *
      * @param integer $position
+     * @return PageMenu
      */
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
     }
 
     /**
      * Get position
      *
-     * @return integer
+     * @return integer 
      */
     public function getPosition()
     {
@@ -91,17 +97,20 @@ class PageMenu
     /**
      * Set page
      *
-     * @param Fulgurio\LightCMSBundle\Entity\Page $page
+     * @param \Fulgurio\LightCMSBundle\Entity\Page $page
+     * @return PageMenu
      */
-    public function setPage(\Fulgurio\LightCMSBundle\Entity\Page $page)
+    public function setPage(\Fulgurio\LightCMSBundle\Entity\Page $page = null)
     {
         $this->page = $page;
+
+        return $this;
     }
 
     /**
      * Get page
      *
-     * @return Fulgurio\LightCMSBundle\Entity\Page
+     * @return \Fulgurio\LightCMSBundle\Entity\Page 
      */
     public function getPage()
     {

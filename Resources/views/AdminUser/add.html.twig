@@ -16,10 +16,10 @@
     or form.password.first.vars.errors is not empty
     or form.roles.vars.errors is not empty %}
 			<div class="alert alert-error">
-{%   for error in form.username.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.email.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.password.first.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
-{%   for error in form.roles.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{%   endfor %}
+{%   for error in form.username.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+{%   for error in form.email.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+{%   for error in form.password.first.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+{%   for error in form.roles.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
 			</div>
 {% endif %}
 		<div class="row">
