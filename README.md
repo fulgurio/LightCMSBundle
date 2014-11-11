@@ -36,7 +36,8 @@ First, edit composer.json, and add the bundle
     "require": {
         "fulgurio/light-cms-bundle" : "dev-master"
     }
-}```
+}
+```
 
 After, just launch composer, it will load all dependencies
 
