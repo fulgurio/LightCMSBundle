@@ -111,9 +111,9 @@ You need to load database schema and default data. With doctrine and
 doctrine-fixture-bundle, no problem !
 
 ``` bash
-$ ./bin/console doctrine:schema:update --force
+$ ./app/console doctrine:schema:update --force
 
-$ ./bin/console doctrine:fixtures:load
+$ ./app/console doctrine:fixtures:load
 ```
 
 Just before to try, don't forget to clear your cache. And if everything's
