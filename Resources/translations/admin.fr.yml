@@ -20,7 +20,7 @@ fulgurio:
       password:                     Mot de passe
       remember_me:                  Se souvenir de moi
       sign_in:                      Se connecter
-      logout:                       Se déconnecter
+      logout:                       se déconnecter
     header_link:
       pages_link:                   Pages
       medias_link:                  Medias

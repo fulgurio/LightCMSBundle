@@ -75,7 +75,10 @@ class AdminMediaHandler extends AbstractAdminHandler
                     // New media
                     if ($media->getId() == 0)
                     {
-                        $media->setOwner($this->user);
+						if (is_a($this->user, 'Fulgurio\LightCMSBundle\Entity\User'))
+						{
+							$media->setOwner($this->user);
+						}
                         $media->setCreatedAt($currentDate);
                     }
                     else

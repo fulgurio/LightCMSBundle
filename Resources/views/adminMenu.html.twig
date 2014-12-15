@@ -3,7 +3,14 @@
 						<li{% if app.request.attributes.get('_route')|slice(0, 10) == 'AdminPages' %} class="active"{% endif %}><a href="{{ path('AdminPages') }}">{% trans from 'admin' %}fulgurio.lightcms.header_link.pages_link{% endtrans %}</a></li>
 						<li{% if app.request.attributes.get('_route')|slice(0, 11) == 'AdminMedias' %} class="active"{% endif %}><a href="{{ path('AdminMedias') }}">{% trans from 'admin' %}fulgurio.lightcms.header_link.medias_link{% endtrans %}</a></li>
 						<li{% if app.request.attributes.get('_route')|slice(0, 11) == 'AdminMenus' %} class="active"{% endif %}><a href="{{ path('AdminMenus') }}">{% trans from 'admin' %}fulgurio.lightcms.header_link.menus_link{% endtrans %}</a></li>
+{# In case of WWW-AUTHENTIFICATION, you don't need user manager #}
+{% if app.user.id is defined %}
 						<li{% if app.request.attributes.get('_route')|slice(0, 11) == 'AdminUsers' %} class="active"{% endif %}><a href="{{ path('AdminUsers') }}">{% trans from 'admin' %}fulgurio.lightcms.header_link.users_link{% endtrans %}</a></li>
+{% endif %}
 					</ul>
-					<p class="navbar-text pull-right" style="float: right">{% trans with { '%USERNAME%': app.user.username } from 'admin' %}fulgurio.lightcms.hello_username{% endtrans %}, <a href="{{ path('LightCMS_logout') }}">{% trans from 'admin' %}fulgurio.lightcms.login.logout{% endtrans %}</a></p>
+					<p class="navbar-text pull-right">
+						{% trans with { '%USERNAME%': app.user.username } from 'admin' %}fulgurio.lightcms.hello_username{% endtrans %}
+{# In case of WWW-AUTHENTIFICATION, we will not display the logout link #}
+{% if app.user.id is defined %}, <a href="{{ path('LightCMS_logout') }}">{% trans from 'admin' %}fulgurio.lightcms.login.logout{% endtrans %}</a>{% endif %}
++					</p>
 				</nav>
