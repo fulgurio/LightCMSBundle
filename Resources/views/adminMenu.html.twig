@@ -12,5 +12,5 @@
 						{% trans with { '%USERNAME%': app.user.username } from 'admin' %}fulgurio.lightcms.hello_username{% endtrans %}
 {# In case of WWW-AUTHENTIFICATION, we will not display the logout link #}
 {% if app.user.id is defined %}, <a href="{{ path('LightCMS_logout') }}">{% trans from 'admin' %}fulgurio.lightcms.login.logout{% endtrans %}</a>{% endif %}
-+					</p>
+					</p>
 				</nav>
