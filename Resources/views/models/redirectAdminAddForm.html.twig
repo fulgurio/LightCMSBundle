@@ -9,7 +9,7 @@
 {%   set action = path('AdminPagesAddChild', { 'parentId': parent.id }) %}
 {%   set cancelPath = path('AdminPagesSelect', { 'pageId' : parent.id} ) %}
 {% endif %}
-<form action="{{ action }}" method="post" id="p_form">
+<form action="{{ action }}" method="post" id="{{ form.vars.id }}">
 	<fieldset>
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
 {% if form.model.vars.errors is not empty
@@ -27,9 +27,9 @@
 			<div class="span7">
 {% if form.model.vars.choices|length > 1 %}
 				<div class="control-group">
-					<label class="control-label" for="p_model">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.model.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
 					<div class="controls form-inline">
-						<select name="{{ form.model.vars.full_name }}" class="input-xlarge span2" id="p_model" >
+						<select name="{{ form.model.vars.full_name }}" class="input-xlarge span2" id="{{ form.model.vars.id }}">
 {%   for choice in form.model.vars.choices %}
 							<option value="{{ choice.value }}"{% if choice.value == form.model.vars.value or (choice.value == 'redirect' and pageId is not defined and form.model.vars.value == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choice.label)|trans({}, 'admin') }}</option>
 {%   endfor %}
@@ -38,24 +38,24 @@
 					</div>
 				</div>
 {% else %}
-				<input type="hidden" id="p_model" class="input-small" name="{{ form.model.vars.full_name }}" value="redirect" />
+				<input type="hidden" id="{{ form.model.vars.id }}" class="input-small" name="{{ form.model.vars.full_name }}" value="redirect" />
 {% endif %}
 				<div class="control-group">
-					<label class="control-label" for="p_title">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.title.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</label>
 					<div class="controls">
-						<input type="text" id="p_title" class="input-xlarge" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" required="required" />
+						<input type="text" id="{{ form.title.vars.id }}" class="input-xlarge" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" required="required" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="p_target_link">{% trans from "admin" %}fulgurio.lightcms.redirect.add_form.target_link{% endtrans %}</label>
+					<label class="control-label" for="{{ form.target_link.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.redirect.add_form.target_link{% endtrans %}</label>
 					<div class="controls">
-						<input type="text" id="p_target_link" class="input-xlarge" name="{{ form.target_link.vars.full_name }}" value="{% if form.target_link.vars.value %}{{ form.target_link.vars.value }}{% else %}{% if pageMetas['target_link'] is defined %}{{ pageMetas['target_link'].metaValue }}{% endif %}{% endif %}" />
+						<input type="text" id="{{ form.target_link.vars.id }}" class="input-xlarge" name="{{ form.target_link.vars.full_name }}" value="{% if form.target_link.vars.value %}{{ form.target_link.vars.value }}{% else %}{% if pageMetas['target_link'] is defined %}{{ pageMetas['target_link'].metaValue }}{% endif %}{% endif %}" />
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="p_status">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.status.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.status.vars.full_name }}" class="input-xlarge" id="p_status" >
+						<select name="{{ form.status.vars.full_name }}" class="input-xlarge" id="{{ form.status.vars.id }}">
 {% for choice in form.status.vars.choices %}
 							<option value="{{ choice.value }}"{% if choice.value in form.status.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ choice.label)|trans({}, 'admin') }}</option>
 {% endfor %}
@@ -67,9 +67,9 @@
 			<div class="well span4 pull-right">
 {%   if useMultiLang is defined %}
 				<div class="control-group">
-					<label class="control-label" for="p_lang">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.lang.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.lang.vars.full_name }}" class="input-small" id="p_lang" >
+						<select name="{{ form.lang.vars.full_name }}" class="input-small" id="{{ form.lang.vars.id }}">
 {%     for choice in form.lang.vars.choices %}
 							<option value="{{ choice.value }}"{% if choice.value in form.lang.vars.value %} selected="selected"{% endif %}>{{ choice.label }}</option>
 {%     endfor %}
@@ -79,9 +79,9 @@
 {%   endif %}
 {%   if form.availableMenu.vars.choices|length > 0 %}
 				<div class="control-group">
-					<label class="control-label" for="p_availableMenu">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.availableMenu.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
 					<div class="controls">
-						<select name="{{ form.availableMenu.vars.full_name }}" multiple="multiple" class="input-xlarge" id="p_availableMenu">
+						<select name="{{ form.availableMenu.vars.full_name }}" multiple="multiple" class="input-xlarge" id="{{ form.availableMenu.vars.id }}">
 {%     for choice in form.availableMenu.vars.choices %}
 							<option value="{{ choice.value }}"{% if choice.value in form.availableMenu.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice.label)|trans({}, 'admin') }}</option>
 {%     endfor %}
@@ -109,8 +109,8 @@
 {% block javascriptBottom %}
 <script>
 $(function() {
-	$('#p_model').change(function() {
-		$('#p_form').submit();
+	$("#{{ form.model.vars.id }}").change(function() {
+		$("#{{ form.vars.id }}").submit();
 	});
 });
 </script>
