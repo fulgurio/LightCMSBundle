@@ -213,10 +213,6 @@ class LightCMSTwigExtension extends \Twig_Extension
         $availablePages = array();
         foreach ($pages as &$page)
         {
-            if ($page->getStatus() != 'published')
-            {
-                continue;
-            }
 //             $pageAccesses = $page->getAccess();
 //             if (empty($pageAccesses))
 //             {
