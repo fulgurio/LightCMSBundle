@@ -70,6 +70,8 @@ FulgurioLightCMSBundle:
 You need to set on the anonymous access, and to limit admin access. Edit
 config/security.yml file and put the following configuration :
 ```yaml
+# app/config/security.yml
+
     firewalls:
         secured_area:
             pattern:    ^/
@@ -87,6 +89,17 @@ french is available)
 
 framework:
     translator: ~
+```
+
+and doctrine filters
+``` yaml
+doctrine:
+    orm:
+// ...
+        filters:
+            page:
+                class: Fulgurio\LightCMSBundle\Filter\PageFilter
+                enabled: false
 ```
 
 ### Step 5: Set database fixture

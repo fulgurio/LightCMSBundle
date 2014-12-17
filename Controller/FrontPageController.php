@@ -31,6 +31,9 @@ class FrontPageController extends Controller
      */
     public function showAction()
     {
+        // Page filter : only published page are loaded (menu, or any where in the page)
+        $filter = $this->getDoctrine()->getManager()->getFilters()->enable('page');
+        $filter->setParameter('status', 'published');
         $models = $this->container->getParameter('fulgurio_light_cms.models');
         $templateName = isset($models[$this->page->getModel()]['front']['template']) ? $models[$this->page->getModel()]['front']['template'] : 'FulgurioLightCMSBundle:models:standardFront.html.twig';
         $pageRoot = $this->page->getSlug() == '' ? $this->page : $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Page')->findOneByFullpath('');
