@@ -58,12 +58,12 @@ class LightCMSTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'dataForBreadcrumb'   => new \Twig_Function_Method($this, 'getDataForBreadcrumb'),
-            'pagePath'            => new \Twig_Function_Method($this, 'getPagePath'),
-            'allowChildren'      => new \Twig_Function_Method($this, 'allowChildren'),
-            'needTranslatedPages' => new \Twig_Function_Method($this, 'needTranslatedPages'),
-            'thumb'               => new \Twig_Function_Method($this, 'thumb'),
-            'getPagesMenu'        => new \Twig_Function_Method($this, 'getPagesMenu', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('dataForBreadcrumb', array($this, 'getDataForBreadcrumb')),
+            new \Twig_SimpleFunction('pagePath', array($this, 'getPagePath')),
+            new \Twig_SimpleFunction('allowChildren', array($this, 'allowChildren')),
+            new \Twig_SimpleFunction('needTranslatedPages', array($this, 'needTranslatedPages')),
+            new \Twig_SimpleFunction('thumb', array($this, 'thumb')),
+            new \Twig_SimpleFunction('getPagesMenu', array($this, 'getPagesMenu', array('is_safe' => array('html'))))
         );
     }
 
