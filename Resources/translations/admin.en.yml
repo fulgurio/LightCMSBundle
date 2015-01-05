@@ -57,6 +57,7 @@ fulgurio:
         status_is_required:         Status is required
         published_at_label:         Published at
         redirection_target_label:   Redirection target
+        target_link_is_required:    Redirection target is required
         meta_keywords_label:        Meta keywords
         meta_description_label:     Meta description
         title_is_not_allowed:       This page title is not allowed

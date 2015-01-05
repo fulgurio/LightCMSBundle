@@ -17,7 +17,8 @@ body.login {
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
 	box-shadow: 0 1px 2px rgba(0,0,0,.05);
-}.form-signin .form-signin-heading,
+}
+.form-signin .form-signin-heading,
 .form-signin .checkbox {
 	margin-bottom: 10px;
 }
@@ -50,6 +51,8 @@ body.login {
 .treeview li.draft > a > .jstree-icon {
 	background-image: url("../img/page_white_error.png");
 }
+/** End Tree **/
+
 .mediaPopup .nav a {
 	cursor: pointer;
 }
@@ -64,10 +67,10 @@ body.login {
 	overflow-x: hidden;
 	margin-left: 0;
 }
-#mediasLibrary ul li { 
-	display: block; 
-	float: left; 
-	width: 110px; 
+#mediasLibrary ul li {
+	display: block;
+	float: left;
+	width: 110px;
 	height: 110px;
 	position: relative;
 	margin: 5px;

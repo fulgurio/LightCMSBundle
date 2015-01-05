@@ -57,6 +57,7 @@ fulgurio:
         status_is_required:         Le statut est obligatoire
         published_at_label:         Publié à
         redirection_target_label:   Cible de la redirection
+        target_link_is_required:    La cible de la redirection est requise
         meta_keywords_label:        Meta mots clés
         meta_description_label:     Meta description
         title_is_not_allowed:       Le nom de page est réservé

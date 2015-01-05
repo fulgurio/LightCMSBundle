@@ -33,7 +33,7 @@ class AdminPageHandler extends AbstractAdminHandler
      */
     public function process(Page $page)
     {
-        if ($this->request->getMethod() == 'POST')
+        if ($this->request->getMethod() === 'POST')
         {
             if ($this->request->get('realSubmit') !== '1')
             {
@@ -93,7 +93,7 @@ class AdminPageHandler extends AbstractAdminHandler
         $slugTmp = $number > 0 ? $slug . $this->slugSuffixSeparator . $number : $slug;
         $parentFullpath = $page->getParent()->getFullpath();
         $foundedPage = $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->findOneBy(array(
-                'fullpath' => ($parentFullpath != '' ? ($parentFullpath . '/') : '') . $slugTmp
+                'fullpath' => ($parentFullpath !== '' ? ($parentFullpath . '/') : '') . $slugTmp
         ));
         if ($foundedPage && $foundedPage != $page)
         {
@@ -109,7 +109,7 @@ class AdminPageHandler extends AbstractAdminHandler
      */
     public function makeFullpath(Page $page)
     {
-        if ($page->getParent() == NULL)
+        if ($page->getParent() === NULL)
         {
             $page->setFullpath('');
             $page->setSlug('');
@@ -137,7 +137,7 @@ class AdminPageHandler extends AbstractAdminHandler
      * @param Page $page
      * @param array $data
      */
-    protected function updatePageMetas(Page $page, $data)
+    protected function updatePageMetas(Page $page, array $data)
     {
         $em = $this->doctrine->getManager();
         if (isset($data['meta_keywords']))

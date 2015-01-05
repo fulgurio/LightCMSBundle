@@ -1,0 +1,107 @@
+{% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
+
+{% block content %}
+<form action="{{ action }}" method="post" id="{{ form.vars.id }}">
+	<fieldset>
+		<legend>{{ legend|trans({}, 'admin') }}</legend>
+{% if form.vars.errors is not empty %}
+			<div class="alert alert-error">
+{%   for error in form.vars.errors %}{{ error.messageTemplate|trans({}, 'admin') }}<br />{% endfor %}
+			</div>
+{% endif %}
+		<div class="row">
+			<div class="span7">
+{% if form.model.vars.choices|length > 1 %}
+				<div class="control-group">
+					<label class="control-label" for="{{ form.model.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.model_label{% endtrans %}</label>
+					<div class="controls form-inline">
+						<select name="{{ form.model.vars.full_name }}" class="input-xlarge span2" id="{{ form.model.vars.id }}">
+{%   for choice in form.model.vars.choices %}
+							<option value="{{ choice.value }}"{% if choice.value == form.model.vars.value or (choice.value == 'redirect' and pageId is not defined and form.model.vars.value == '') %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.model.' ~ choice.label)|trans({}, 'admin') }}</option>
+{%   endfor %}
+						</select>
+						<noscript><button type="submit" class="btn" name="changeModel" value="1">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.change{% endtrans %}</button></noscript>
+						<script>
+document.getElementById("{{ form.model.vars.id }}").onchange = function() {
+	document.getElementById("{{ form.vars.id }}").submit();
+};
+						</script>
+					</div>
+				</div>
+{% else %}
+				<input type="hidden" id="{{ form.model.vars.id }}" class="input-small" name="{{ form.model.vars.full_name }}" value="redirect" />
+{% endif %}
+				<div class="control-group">
+					<label class="control-label" for="{{ form.title.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title_label{% endtrans %}</label>
+					<div class="controls">
+						<input type="text" id="{{ form.title.vars.id }}" class="input-xlarge" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" />
+					</div>
+				</div>
+{% block leftFields %}{% endblock %}
+				<div class="control-group">
+					<label class="control-label" for="{{ form.status.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.status_label{% endtrans %}</label>
+					<div class="controls">
+						<select name="{{ form.status.vars.full_name }}" class="input-xlarge" id="{{ form.status.vars.id }}">
+{% for choice in form.status.vars.choices %}
+							<option value="{{ choice.value }}"{% if choice.value in form.status.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.status.' ~ choice.label)|trans({}, 'admin') }}</option>
+{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+{% block rightFields %}
+{% if useMultiLang is defined or form.availableMenu is defined %}
+			<div class="well span4 pull-right">
+{%   if useMultiLang is defined and form.lang.vars.choices|length > 0 %}
+				<div class="control-group">
+					<label class="control-label" for="{{ form.lang.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.lang_label{% endtrans %}</label>
+					<div class="controls">
+						<select name="{{ form.lang.vars.full_name }}" class="input-small" id="{{ form.lang.vars.id }}">
+{%     for choice in form.lang.vars.choices %}
+							<option value="{{ choice.value }}"{% if choice.value in form.lang.vars.value %} selected="selected"{% endif %}>{{ choice.label }}</option>
+{%     endfor %}
+						</select>
+					</div>
+				</div>
+{%   endif %}
+{%   if form.availableMenu is defined %}
+				<div class="control-group">
+					<label class="control-label" for="{{ form.availableMenu.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.menus.add_form.menu_label{% endtrans %}</label>
+					<div class="controls">
+						<select name="{{ form.availableMenu.vars.full_name }}" multiple="multiple" class="input-xlarge" id="{{ form.availableMenu.vars.id }}">
+{%     for choice in form.availableMenu.vars.choices %}
+							<option value="{{ choice.value }}"{% if choice.value in form.availableMenu.vars.value %} selected="selected"{% endif %}>{{ ('fulgurio.lightcms.pages.add_form.menu.' ~ choice.label)|trans({}, 'admin') }}</option>
+{%     endfor %}
+						</select>
+					</div>
+				</div>
+{%   endif %}
+			</div>
+{% endif %}
+{% include 'FulgurioLightCMSBundle:models:_metaFields.html.twig' with { 'form' : form } %}
+{% endblock %}
+		</div>
+{% block bottomFields %}{% endblock %}
+		<div class="form-actions">
+			<input type="hidden" name="{{ form.content.vars.full_name }}" value="" />
+			<input type="hidden" name="{{ form.parent.vars.full_name }}" value="{{ form.parent.vars.value }}" />
+			<input type="hidden" name="{{ form.sourceId.vars.full_name }}" value="{{ form.sourceId.vars.value }}" />
+			<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+			<button type="submit" class="btn btn-primary" name="realSubmit" value="1">{% trans from 'admin' %}fulgurio.lightcms.save{% endtrans %}</button>
+			<a href="{{ cancelPath }}" class="btn">{% trans from 'admin' %}fulgurio.lightcms.cancel{% endtrans %}</a>
+		</div>
+	</fieldset>
+</form>
+{% endblock %}
+
+{% block title %}{% if pageId is defined %}{% trans from "admin" %}fulgurio.lightcms.pages.edit_form.title{% endtrans %}{% else %}{% trans from "admin" %}fulgurio.lightcms.pages.add_form.title{% endtrans %}{% endif %}{% endblock %}
+
+{% if pageId is defined %}
+{%   set legend = 'fulgurio.lightcms.pages.edit_form.legend' %}
+{%   set action = path('AdminPagesEdit', { 'pageId' : pageId} ) %}
+{%   set cancelPath = path('AdminPagesSelect', { 'pageId' : pageId} ) %}
+{% else %}
+{%   set legend = 'fulgurio.lightcms.pages.add_form.legend' %}
+{%   set action = path('AdminPagesAddChild', { 'parentId': parent.id }) %}
+{%   set cancelPath = path('AdminPagesSelect', { 'pageId' : parent.id} ) %}
+{% endif %}

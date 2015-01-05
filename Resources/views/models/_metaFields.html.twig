@@ -1,0 +1,14 @@
+			<div class="well span4 pull-right">
+				<div class="control-group">
+					<label class="control-label" for="{{ form.meta_keywords.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.meta_keywords_label{% endtrans %}</label>
+					<div class="controls">
+						<input type="text" id="{{ form.meta_keywords.vars.id }}" class="input-xlarge" name="{{ form.meta_keywords.vars.full_name }}" value="{% if form.meta_keywords.vars.value %}{{ form.meta_keywords.vars.value }}{% else %}{% if pageMetas['meta_keywords'] is defined %}{{ pageMetas['meta_keywords'].metaValue }}{% endif %}{% endif %}" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="{{ form.meta_description.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.meta_description_label{% endtrans %}</label>
+					<div class="controls">
+						<textarea class="input-xlarge" id="{{ form.meta_description.vars.id }}" cols="20" rows="5" name="{{ form.meta_description.vars.full_name }}">{% if form.meta_description.vars.value %}{{ form.meta_description.vars.value }}{% else %}{% if pageMetas['meta_description'] is defined %}{{ pageMetas['meta_description'].metaValue }}{% endif %}{% endif %}</textarea>
+					</div>
+				</div>
+			</div>

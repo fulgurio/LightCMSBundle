@@ -12,30 +12,10 @@ namespace Fulgurio\LightCMSBundle\Form\Type;
 
 use Fulgurio\LightCMSBundle\Form\Type\AbstractAdminPageType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminRedirectPageType extends AbstractAdminPageType
 {
-    /**
-     * Menu name
-     * @var array
-     */
-    private $menus;
-
-
-    /**
-     * Constructor
-     *
-     * @param $container
-     */
-    public function __construct($container)
-    {
-        parent::__construct($container);
-        if ($container->hasParameter('fulgurio_light_cms.menus'))
-        {
-            $this->menus = $container->getParameter('fulgurio_light_cms.menus');
-        }
-    }
-
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
@@ -44,12 +24,13 @@ class AdminRedirectPageType extends AbstractAdminPageType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('target_link', 'text', array('required' => FALSE, 'mapped' => FALSE))
-            ->add('availableMenu', 'choice', array(
-                'choices'   => $this->menus,
-                'multiple'  => TRUE,
-                'required' => FALSE,
+            ->add('target_link', 'text', array(
+                'required' => TRUE,
+                'mapped' => FALSE,
+                'error_bubbling' => TRUE,
+                'constraints' => array(
+                    new NotBlank(array('message' => 'fulgurio.lightcms.pages.add_form.target_link_is_required'))
                 )
-            );
+        ));
     }
 }
