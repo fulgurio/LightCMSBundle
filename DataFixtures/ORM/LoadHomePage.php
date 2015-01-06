@@ -22,7 +22,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
  *
  * @author Vincent GUERARD <v.guerard@fulgurio.net>
  */
-class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
+class LoadHomePage extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /**
      * Load homepage
