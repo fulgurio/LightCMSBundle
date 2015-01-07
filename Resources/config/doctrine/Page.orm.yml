@@ -69,6 +69,8 @@ Fulgurio\LightCMSBundle\Entity\Page:
     parent:
       targetEntity: Page
       inversedBy: children
+      joinColumn:
+        onDelete: CASCADE
     owner:
       targetEntity: User
       joinColumn:
