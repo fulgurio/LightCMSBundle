@@ -132,7 +132,8 @@ fulgurio:
       email:                        Email
       add_new_user:                 Add new user
       no_user:                      No user found
-      not_fount:                    Not found
+      not_found:                    Not found
+      not_available:                Not available
       delete_confirm_message:       Are you sure to delete "%username%" ?
       delete_success_message:       User has been removed !
       current_user_deletion_error:  You can't remove current user

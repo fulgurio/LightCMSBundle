@@ -27,8 +27,8 @@ class AdminUserController extends Controller
      */
     public function listAction()
     {
+        $this->checkConfiguration();
         $filters = array();
-        //@todo
         $nbPerPage = 10;
         $request = $this->getRequest();
         $page = $request->get('page') > 1 ? $request->get('page') - 1 : 0;
@@ -45,21 +45,23 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Add user
+     * Add new user
      */
     public function addAction()
     {
+        $this->checkConfiguration();
         $user = new User();
         return $this->createUser($user);
     }
 
     /**
-     * Edit user
+     * Edit existing user
      *
      * @param number $userId
      */
-    function editAction($userId)
+    public function editAction($userId)
     {
+        $this->checkConfiguration();
         $user = $this->getSpecifiedUser($userId);
         return $this->createUser($user);
     }
@@ -68,9 +70,9 @@ class AdminUserController extends Controller
      * Create user form
      *
      * @param User $user
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return  \Symfony\Component\HttpFoundation\Response
      */
-    function createUser(User $user)
+    private function createUser(User $user)
     {
         $options = array();
         if ($user->getId() > 0)
@@ -78,11 +80,12 @@ class AdminUserController extends Controller
             $options['userId'] = $user->getId();
         }
         $form = $this->createForm(new AdminUserType($this->container), $user);
-        $formHandler = new AdminUserHandler();
-        $formHandler->setForm($form);
-        $formHandler->setRequest($this->getRequest());
-        $formHandler->setDoctrine($this->getDoctrine());
-        $formHandler->setFactory($this->container->get('security.encoder_factory'));
+        $formHandler = new AdminUserHandler(
+                $form,
+                $this->getRequest(),
+                $this->getDoctrine(),
+                $this->container->get('security.encoder_factory')
+        );
         if ($formHandler->process($user))
         {
             $this->get('session')->getFlashBag()->add(
@@ -106,6 +109,7 @@ class AdminUserController extends Controller
      */
     public function removeAction($userId)
     {
+        $this->checkConfiguration();
         $user = $this->getSpecifiedUser($userId);
         if ($user->getId() == $this->getUser()->getId())
         {
@@ -135,9 +139,26 @@ class AdminUserController extends Controller
     }
 
     /**
+     * Check if configuration allows users manager access
+     *
+     * @throws AccessDeniedException
+     */
+    private function checkConfiguration()
+    {
+        $currentUser = $this->getUser();
+        if (get_class($currentUser) !== 'Fulgurio\LightCMSBundle\Entity\User')
+        {
+            throw new AccessDeniedException(
+                    $this->get('translator')->trans('fulgurio.lightcms.users.not_available', array(), 'admin')
+            );
+        }
+    }
+
+    /**
      * Get user from given ID, and ckeck if it exists
      *
      * @param number $userId
+     * @return Fulgurio\LightCMSBundle\Entity\User
      * @throws NotFoundHttpException
      */
     private function getSpecifiedUser($userId)

@@ -15,7 +15,7 @@ That's easy !
 
 First, edit composer.json, and add the bundle
 
-``` yaml
+``` json
 {
     "require": {
         "fulgurio/light-cms-bundle" : "dev-master"
@@ -57,6 +57,7 @@ You need to put it on the bottom of your file, to be the last routes used (if no
  route parse, LightCMS try to found the page into the database)
 
 ``` yaml
+# app/config/routing.yml
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
@@ -69,9 +70,8 @@ FulgurioLightCMSBundle:
 
 You need to set on the anonymous access, and to limit admin access. Edit
 config/security.yml file and put the following configuration :
-```yaml
+``` yaml
 # app/config/security.yml
-
     firewalls:
         secured_area:
             pattern:    ^/
@@ -86,7 +86,6 @@ After that, you need to enable the translation (actually, only english and
 french is available)
 ``` yaml
 # app/config/config.yml
-
 framework:
     translator: ~
 ```

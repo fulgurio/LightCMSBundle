@@ -44,6 +44,22 @@ class AdminUserHandler
 
 
     /**
+     * Constructor
+     *
+     * @param Form $form
+     * @param Request $request
+     * @param RegistryInterface $doctrine
+     * @param EncoderFactoryInterface $factory
+     */
+    public function __construct(Form $form, Request $request, RegistryInterface $doctrine, EncoderFactoryInterface $factory)
+    {
+        $this->form = $form;
+        $this->request = $request;
+        $this->doctrine = $doctrine;
+        $this->factory = $factory;
+    }
+
+    /**
      * Processing form values
      *
      * @param User $user
@@ -51,7 +67,7 @@ class AdminUserHandler
      */
     public function process(User $user)
     {
-        if ($this->request->getMethod() == 'POST')
+        if ($this->request->getMethod() === 'POST')
         {
             $clonedUser = clone $user;
             $this->form->handleRequest($this->request);
@@ -83,45 +99,5 @@ class AdminUserHandler
             }
         }
         return FALSE;
-    }
-
-    /**
-     * $form setter
-     *
-     * @param Form $form
-     */
-    public function setForm(Form $form)
-    {
-        $this->form = $form;
-    }
-
-    /**
-     * $request setter
-     *
-     * @param Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * $doctrine setter
-     *
-     * @param RegistryInterface $doctrine
-     */
-    public function setDoctrine(RegistryInterface $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
-    /**
-     * $factory setter
-     *
-     * @param EncoderFactory $factory
-     */
-    public function setFactory(EncoderFactoryInterface $factory)
-    {
-        $this->factory = $factory;
     }
 }

@@ -10,15 +10,23 @@
 
 namespace Fulgurio\LightCMSBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase as LiipWebTestCase;
 
 /**
  * Admin access tests
  *
  * @author Vincent GUERARD <v.guerard@fulgurio.net>
  */
-class AdminDashboardControllerTest extends WebTestCase
+class AdminDashboardControllerTest extends LiipWebTestCase
 {
+    /**
+     * Init database
+     */
+    public function setup()
+    {
+        $this->loadFixtures(array('Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadUsers'));
+    }
+
     /**
      * Unauthentified access test
      */
@@ -27,8 +35,17 @@ class AdminDashboardControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/admin/');
+
         $response = $client->getResponse();
-        $this->assertEquals($response->getStatusCode(), 401);
+        if ($client->getContainer()->has('security.firewall.map.context.lightcms_secured_area'))
+        {
+            $this->assertEquals($response->getStatusCode(), 302);
+            $this->assertTrue($response->isRedirect('http://localhost/login'));
+        }
+        elseif ($client->getContainer()->has('security.firewall.map.context.secured_area'))
+        {
+            $this->assertEquals($response->getStatusCode(), 401);
+        }
 
         // User is not authentified
         $security = $client->getContainer()->get('security.context');
@@ -44,7 +61,31 @@ class AdminDashboardControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'adminpass'
         ));
+
         $crawler = $client->request('GET', '/admin/');
+
+        if ($client->getContainer()->has('security.firewall.map.context.lightcms_secured_area'))
+        {
+            $this->loadFixtures(array('Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadUsers'));
+
+            $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
+
+            $crawler = $client->followRedirect();
+
+            $form = $crawler->filter('button[type=submit]')->form();
+
+            // set some values
+            $form['_username'] = 'test1';
+            $form['_password'] = 'test1Password';
+
+            // submit the form
+            $client->submit($form);
+            $crawler = $client->followRedirect();
+        }
+        elseif (!$client->getContainer()->has('security.firewall.map.context.secured_area'))
+        {
+            $this->markTestSkipped('No firewall is set');
+        }
 
         $this->assertCount(
                 1,
@@ -53,6 +94,7 @@ class AdminDashboardControllerTest extends WebTestCase
 
         // User is authentified
         $security = $client->getContainer()->get('security.context');
-        $this->assertTrue($security->isGranted('ROLE_USER'));
+
+        $this->assertTrue($security->isGranted('ROLE_ADMIN'));
     }
 }
