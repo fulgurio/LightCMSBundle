@@ -42,6 +42,7 @@ class LoadRedirectPage extends AbstractFixture implements FixtureInterface, Orde
         $redirectPage->setUpdatedAt($currentDate);
 
         $redirectPage->setParent($this->getReference('page-homepage'));
+        $redirectPage->setOwner($this->getReference('user1'));
 
         $meta = new PageMeta();
         $meta->setMetaKey('target_link');
@@ -58,6 +59,6 @@ class LoadRedirectPage extends AbstractFixture implements FixtureInterface, Orde
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

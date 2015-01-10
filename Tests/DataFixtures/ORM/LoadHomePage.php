@@ -50,8 +50,10 @@ class LoadHomePage extends AbstractFixture implements FixtureInterface, OrderedF
         $homepage->addMetum($meta1);
         $homepage->addMetum($meta2);
         $homepage->addMetum($meta3);
+
+        $homepage->setOwner($this->getReference('user1'));
+
         $manager->persist($homepage);
-        $this->addReference('homepage', $homepage);
         $manager->flush();
 
         $this->addReference('page-homepage', $homepage);
@@ -79,6 +81,6 @@ class LoadHomePage extends AbstractFixture implements FixtureInterface, OrderedF
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

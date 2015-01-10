@@ -41,6 +41,7 @@ class LoadStandardPages extends AbstractFixture implements FixtureInterface, Ord
         $sample1Page->setCreatedAt($currentDate);
         $sample1Page->setUpdatedAt($currentDate);
         $sample1Page->setParent($this->getReference('page-homepage'));
+        $sample1Page->setOwner($this->getReference('user1'));
         $manager->persist($sample1Page);
 
 //        $meta = new PageMeta();
@@ -61,6 +62,7 @@ class LoadStandardPages extends AbstractFixture implements FixtureInterface, Ord
         $sample2Page->setCreatedAt($currentDate);
         $sample2Page->setUpdatedAt($currentDate);
         $sample2Page->setParent($this->getReference('page-homepage'));
+        $sample2Page->setOwner($this->getReference('user2'));
         $manager->persist($sample2Page);
 
         $manager->flush();
@@ -71,6 +73,6 @@ class LoadStandardPages extends AbstractFixture implements FixtureInterface, Ord
      */
     public function getOrder()
     {
-        return 2;
+        return 4;
     }
 }

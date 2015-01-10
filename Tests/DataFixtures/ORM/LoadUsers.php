@@ -16,13 +16,14 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 /**
  * Fixtures of users
  *
  * @author Vincent GUERARD <v.guerard@fulgurio.net>
  */
-class LoadUsers extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
+class LoadUsers extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -56,7 +57,9 @@ class LoadUsers extends AbstractFixture implements FixtureInterface, ContainerAw
                 array('ROLE_ADMIN'),
                 FALSE
         );
+        $this->addReference('user1', $user1);
         $manager->persist($user1);
+        $this->addReference('user2', $user2);
         $manager->persist($user2);
         $manager->flush();
     }
@@ -86,5 +89,13 @@ class LoadUsers extends AbstractFixture implements FixtureInterface, ContainerAw
         $user->setRoles($roles);
         $user->setCreatedAt(new \DateTime());
         return $user;
+    }
+
+    /**
+     * Order of fixture loading
+     */
+    public function getOrder()
+    {
+        return 1;
     }
 }

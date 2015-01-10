@@ -20,6 +20,7 @@ class FrontPageController extends Controller
 {
     /**
      * Page
+     *
      * @var Page
      */
     protected $page;
@@ -27,7 +28,6 @@ class FrontPageController extends Controller
 
     /**
      * Display page
-     *
      */
     public function showAction()
     {
@@ -45,6 +45,7 @@ class FrontPageController extends Controller
 
     /**
      * $page setter
+     *
      * @param Page $page
      */
     final public function setPage(Page $page)
