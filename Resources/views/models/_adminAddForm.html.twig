@@ -83,7 +83,6 @@ document.getElementById("{{ form.model.vars.id }}").onchange = function() {
 		</div>
 {% block bottomFields %}{% endblock %}
 		<div class="form-actions">
-			<input type="hidden" name="{{ form.content.vars.full_name }}" value="" />
 			<input type="hidden" name="{{ form.parent.vars.full_name }}" value="{{ form.parent.vars.value }}" />
 			<input type="hidden" name="{{ form.sourceId.vars.full_name }}" value="{{ form.sourceId.vars.value }}" />
 			<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />

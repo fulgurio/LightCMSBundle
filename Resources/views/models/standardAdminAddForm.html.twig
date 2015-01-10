@@ -2,9 +2,9 @@
 
 {% block leftFields %}
 				<div class="control-group">
-					<label class="control-label" for="p_content">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.content_label{% endtrans %}</label>
+					<label class="control-label" for="{{ form.content.vars.id }}">{% trans from "admin" %}fulgurio.lightcms.pages.add_form.content_label{% endtrans %}</label>
 					<div class="controls">
-						<textarea class="input-xlarge wysiwyg" id="p_content" cols="" rows="8" name="{{ form.content.vars.full_name }}">{{ form.content.vars.value }}</textarea>
+						<textarea class="input-xlarge wysiwyg" id="{{ form.content.vars.id }}" cols="30" rows="8" name="{{ form.content.vars.full_name }}">{{ form.content.vars.value }}</textarea>
 					</div>
 				</div>
 {% endblock %}
