@@ -49,7 +49,7 @@ class AdminPageHandler extends AbstractAdminHandler
                 // New page
                 if ($page->getId() == 0)
                 {
-                    if (is_a($this->user, 'Fulgurio\LightCMSBundle\Entity\User'))
+                    if (get_class($this->user) === 'Fulgurio\LightCMSBundle\Entity\User')
                     {
                         $page->setOwner($this->user);
                     }

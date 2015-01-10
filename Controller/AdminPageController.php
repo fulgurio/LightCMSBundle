@@ -106,7 +106,7 @@ class AdminPageController extends Controller
      *
      * @param number $pageId if specified, we are on edit page form
      */
-    function editAction($pageId)
+    public function editAction($pageId)
     {
         $options = array(
             'pageId' => $pageId,
