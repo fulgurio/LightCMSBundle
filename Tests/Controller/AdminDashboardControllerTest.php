@@ -97,4 +97,32 @@ class AdminDashboardControllerTest extends LiipWebTestCase
 
         $this->assertTrue($security->isGranted('ROLE_ADMIN'));
     }
+
+    /**
+     * Authentification with a disabled account access test
+     */
+    public function testAuthentifiedWithDisabledAccountIndexAction()
+    {
+        $client = static::createClient();
+        if ($client->getContainer()->has('security.firewall.map.context.secured_area'))
+        {
+            $this->markTestSkipped('No firewall is set');
+        }
+
+        $client->request('GET', '/admin/');
+        $crawler = $client->followRedirect();
+
+        $form = $crawler->filter('button[type=submit]')->form();
+
+        // set some values
+        $form['_username'] = 'test2';
+        $form['_password'] = 'test2Password';
+
+        // submit the form
+        $crawler = $client->submit($form);
+
+        // User is authentified
+        $security = $client->getContainer()->get('security.context');
+        $this->assertTrue($security->getToken() === NULL);
+    }
 }

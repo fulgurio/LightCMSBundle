@@ -11,12 +11,12 @@
 namespace Fulgurio\LightCMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * Fulgurio\LightCMSBundle\Entity\User
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * Constructor
@@ -36,7 +36,40 @@ class User implements UserInterface
     /**
      * @inheritDoc
      */
-    public function equals(UserInterface $user)
+    public function isAccountNonExpired()
+    {
+        return TRUE;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isAccountNonLocked()
+    {
+        return TRUE;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isCredentialsNonExpired()
+    {
+        return TRUE;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEnabled()
+    {
+        // Only users with 'enabled' status are enabled
+        return $this->getIsActive() === TRUE;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function equals(AdvancedUserInterface $user)
     {
         return $this->id === $user->getId();
     }
@@ -54,7 +87,7 @@ class User implements UserInterface
      */
     public function unserialize($serialized)
     {
-        list ($this->id) = unserialize($serialized);
+        list($this->id) = unserialize($serialized);
     }
 
 
