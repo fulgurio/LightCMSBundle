@@ -81,7 +81,9 @@ class AdminMenuController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($pageMenu);
             $em->flush();
-            $this->get('session')->setFlash('notice', $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
+            $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    $this->get('translator')->trans('fulgurio.lightcms.menus.moving_success_msg', array(), 'admin'));
         }
         return $this->redirect($this->generateUrl('AdminMenus'));
     }
