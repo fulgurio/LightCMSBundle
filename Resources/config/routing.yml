@@ -1,7 +1,3 @@
-LightCMS_Admin_Users:
-    resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_user.yml"
-    prefix:   /admin/users
-
 LightCMS_Admin_Menus:
     resource: "@FulgurioLightCMSBundle/Resources/config/routing/admin_menu.yml"
     prefix:   /admin/menus
@@ -17,16 +13,6 @@ LightCMS_Admin_Pages:
 LightCMS_Admin_Homepage:
     pattern:   /admin/
     defaults:  { _controller: FulgurioLightCMSBundle:AdminDashboard:index }
-
-LightCMS_login:
-    pattern:   /login
-    defaults:  { _controller: FulgurioLightCMSBundle:Security:login }
-
-LightCMS_login_check:
-    pattern:  /login_check
-
-LightCMS_logout:
-    pattern:  /logout
 
 LightCMS_Page:
     pattern:  /{fullpath}

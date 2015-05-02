@@ -90,7 +90,8 @@ class Page
 
     public function setAvailableMenu($selectedMenus)
     {
-    }
+    } 
+
 
     /**
      * @var integer
@@ -140,6 +141,11 @@ class Page
     /**
      * @var integer
      */
+    private $owner_id;
+
+    /**
+     * @var integer
+     */
     private $source_id;
 
     /**
@@ -171,11 +177,6 @@ class Page
      * @var \Fulgurio\LightCMSBundle\Entity\Page
      */
     private $parent;
-
-    /**
-     * @var \Fulgurio\LightCMSBundle\Entity\User
-     */
-    private $owner;
 
     /**
      * Constructor
@@ -428,6 +429,29 @@ class Page
     }
 
     /**
+     * Set owner_id
+     *
+     * @param integer $ownerId
+     * @return Page
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->owner_id = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * Get owner_id
+     *
+     * @return integer
+     */
+    public function getOwnerId()
+    {
+        return $this->owner_id;
+    }
+
+    /**
      * Set source_id
      *
      * @param integer $sourceId
@@ -494,29 +518,6 @@ class Page
     public function getUpdatedAt()
     {
         return $this->updated_at;
-    }
-
-    /**
-     * Set owner
-     *
-     * @param \Fulgurio\LightCMSBundle\Entity\User $owner
-     * @return Page
-     */
-    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner = null)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return \Fulgurio\LightCMSBundle\Entity\User
-     */
-    public function getOwner()
-    {
-        return $this->owner;
     }
 
     /**

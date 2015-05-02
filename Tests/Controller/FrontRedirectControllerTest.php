@@ -26,8 +26,7 @@ class FrontRedirectControllerTest extends LiipWebTestCase
     {
         $this->loadFixtures(array(
             'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadHomePage',
-            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadRedirectPage',
-            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadUsers'
+            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadRedirectPage'
         ));
         $client = static::createClient();
 

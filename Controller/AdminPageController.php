@@ -142,11 +142,13 @@ class AdminPageController extends Controller
         $formType->setModels($models);
         $form = $this->createForm($formType, $page);
         $formHandler = new $formHandlerClassName();
-        $formHandler->setForm($form);
-        $formHandler->setRequest($request);
-        $formHandler->setDoctrine($this->getDoctrine());
-        $formHandler->setUser($this->getUser());
-        $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
+        $formHandler->setForm($form)
+                ->setRequest($request)
+                ->setDoctrine($this->getDoctrine())
+                ->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
+        if ($this->getUser()) {
+            $formHandler->setUser($this->getUser());
+        }
         if ($formHandler->process($page))
         {
             $this->get('session')->getFlashBag()->add(

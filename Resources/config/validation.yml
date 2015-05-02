@@ -1,8 +1,0 @@
-Fulgurio\LightCMSBundle\Entity\User:
-    constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: username
-            message: fulgurio.lightcms.users.add_form.username_is_already_used
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: email
-            message: fulgurio.lightcms.users.add_form.email_is_already_used

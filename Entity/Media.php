@@ -38,6 +38,11 @@ class Media
     private $media_type;
 
     /**
+     * @var integer
+     */
+    private $owner_id;
+
+    /**
      * @var \DateTime
      */
     private $created_at;
@@ -47,16 +52,11 @@ class Media
      */
     private $updated_at;
 
-    /**
-     * @var \Fulgurio\LightCMSBundle\Entity\User
-     */
-    private $owner;
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -79,7 +79,7 @@ class Media
     /**
      * Get original_name
      *
-     * @return string 
+     * @return string
      */
     public function getOriginalName()
     {
@@ -102,7 +102,7 @@ class Media
     /**
      * Get full_path
      *
-     * @return string 
+     * @return string
      */
     public function getFullPath()
     {
@@ -125,11 +125,34 @@ class Media
     /**
      * Get media_type
      *
-     * @return string 
+     * @return string
      */
     public function getMediaType()
     {
         return $this->media_type;
+    }
+
+    /**
+     * Set owner_id
+     *
+     * @param integer $ownerId
+     * @return Media
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->owner_id = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * Get owner_id
+     *
+     * @return integer
+     */
+    public function getOwnerId()
+    {
+        return $this->owner_id;
     }
 
     /**
@@ -148,7 +171,7 @@ class Media
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -171,33 +194,10 @@ class Media
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updated_at;
-    }
-
-    /**
-     * Set owner
-     *
-     * @param \Fulgurio\LightCMSBundle\Entity\User $owner
-     * @return Media
-     */
-    public function setOwner(\Fulgurio\LightCMSBundle\Entity\User $owner = null)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return \Fulgurio\LightCMSBundle\Entity\User 
-     */
-    public function getOwner()
-    {
-        return $this->owner;
     }
 }

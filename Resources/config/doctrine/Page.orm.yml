@@ -2,6 +2,9 @@ Fulgurio\LightCMSBundle\Entity\Page:
   type: entity
   repositoryClass: Fulgurio\LightCMSBundle\Repository\PageRepository
   table: page
+  indexes:
+      owner_idx:
+          columns: [owner_id]
   fields:
     id:
       type: integer
@@ -41,6 +44,9 @@ Fulgurio\LightCMSBundle\Entity\Page:
       type: string
       length: 2
       nullable: true
+    owner_id:
+      type: integer
+      nullable: true
     source_id:
       type: integer
       nullable: true
@@ -71,9 +77,3 @@ Fulgurio\LightCMSBundle\Entity\Page:
       inversedBy: children
       joinColumn:
         onDelete: CASCADE
-    owner:
-      targetEntity: User
-      joinColumn:
-        name: owner_id
-        referencedColumnName: id
-        onDelete: SET NULL

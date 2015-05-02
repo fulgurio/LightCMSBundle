@@ -1,5 +1,3 @@
-User account is disabled.:          Le compte utilisateur est désactivé
-Bad credentials:                    Utilisateur introuvable, veuillez vérifier votre identifiant ou mot de passe
 fulgurio:
   lightcms:
     lightcms_title:                 LightCMS
@@ -16,18 +14,10 @@ fulgurio:
     previous_page:                  Page précédente
     next_page:                      Page suivante
     last_page:                      Dernière page
-    login:
-      login:                        S'authentifier
-      username:                     Identifiant
-      password:                     Mot de passe
-      remember_me:                  Se souvenir de moi
-      sign_in:                      Se connecter
-      logout:                       se déconnecter
     header_link:
       pages_link:                   Pages
       medias_link:                  Medias
       menus_link:                   Menus
-      users_link:                   Utilisateurs
     page_not_found:                 Page non trouvée
     pages:
       title:                        Pages admin
@@ -128,38 +118,3 @@ fulgurio:
       moving_success_msg:           Le changement du menu a été réalisé !
       add_form:
         menu_label:                 Menu
-    users:
-      title:                        Gestion des utilisateurs
-      username:                     Identifiant
-      email:                        Courriel
-      add_new_user:                 Ajouter un nouvel utilisateur
-      no_user:                      Aucun utilisateur trouvé
-      not_found:                    Utilisateur trouvé
-      not_available:                Non disponible
-      delete_confirm_message:       Etes-vous sûr de voulour supprimer "%username%" ?
-      delete_success_message:       L'utilisateur a été effacé !
-      current_user_deletion_error:  Vous ne pouvez supprimer l'utilisateur actuel
-      add_form:
-        title:                      Administration d'un nouvel utilisateur
-        legend:                     Ajouter un nouvel utilisateur
-        success_msg:                L'utilisateur a été créé !
-        username_label:             Nom d'utilisateur
-        password_label:             Mot de passe
-        password_second_label:      Saisissez une seconde fois votre mot de passe
-        email_label:                Courriel
-        roles_label:                Droits
-        roles:
-          ROLE_ADMIN:               Administrateur
-        role_is_invalid:            Le rôle est erroné
-        is_active_label:            Activé
-        username_is_required:       Le nom d'utilisateur est obligatoire
-        username_is_already_used:   Le nom d'utilisateur est déjà utilisé
-        password_is_required:       Le mot de passe est obligatoire
-        passwords_must_match:       Les mots de passe sont différents
-        email_is_required:          Le courriel est obligatoire
-        email_is_already_used:      Le courriel est déjà utilisé
-        email_is_not_valid:         Le courriel n'est pas valide
-      edit_form:
-        title:                      Administration de l'édition d'un utilisateur
-        legend:                     Modification de l'utilisateur
-        success_msg:                L'utilisateur a été modifié !

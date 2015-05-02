@@ -25,8 +25,7 @@ class FrontPageControllerTest extends LiipWebTestCase
     protected function setUp()
     {
         $this->loadFixtures(array(
-            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadHomePage',
-            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadUsers'
+            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadHomePage'
             ));
     }
 

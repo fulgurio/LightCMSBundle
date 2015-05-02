@@ -23,7 +23,6 @@ abstract class AbstractAdminControllerTest extends LiipWebTestCase
     public function setup()
     {
         $this->loadFixtures(array(
-            'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadUsers',
             'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadHomePage',
             'Fulgurio\LightCMSBundle\Tests\DataFixtures\ORM\LoadStandardPages'
     ));
@@ -39,29 +38,21 @@ abstract class AbstractAdminControllerTest extends LiipWebTestCase
     {
         $client = static::createClient();
 
-        if (!$client->getContainer()->has('security.firewall.map.context.lightcms_secured_area'))
+        if ($client->getContainer()->has('security.firewall.map.context.secured_area'))
         {
-            $this->markTestSkipped('The firewall is not lightcms_secured_area');
+            $client->setServerParameters( array(
+                'PHP_AUTH_USER' => 'admin',
+                'PHP_AUTH_PW'   => 'adminpass'));
+            $client->request('GET', $url);
+
+            // User is authentified
+            $security = $client->getContainer()->get('security.context');
+            $this->assertTrue($security->isGranted('ROLE_ADMIN'));
         }
-        $client->request('GET', $url);
-        $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
-
-        $crawler = $client->followRedirect();
-
-        $form = $crawler->filter('button[type=submit]')->form();
-
-        // set some values
-        $form['_username'] = 'test1';
-        $form['_password'] = 'test1Password';
-
-        // submit the form
-        $client->submit($form);
-        $client->followRedirect();
-
-        // User is authentified
-        $security = $client->getContainer()->get('security.context');
-        $this->assertTrue($security->isGranted('ROLE_ADMIN'));
-
+        else
+        {
+            $client->request('GET', $url);
+        }
         return $client;
     }
 }

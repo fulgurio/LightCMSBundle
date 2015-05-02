@@ -49,9 +49,10 @@ class AdminPageHandler extends AbstractAdminHandler
                 // New page
                 if ($page->getId() == 0)
                 {
-                    if (get_class($this->user) === 'Fulgurio\LightCMSBundle\Entity\User')
+                    if (is_a($this->user, 'Symfony\Component\Security\Core\User\UserInterface')
+                            && method_exists($this->user, 'getId'))
                     {
-                        $page->setOwner($this->user);
+                        $page->setOwnerId($this->user->getId());
                     }
                     $page->setCreatedAt(new \DateTime());
                     $page->setPosition($page->getParent() ? $this->doctrine->getRepository('FulgurioLightCMSBundle:Page')->getNextPosition($page->getParent()->getId()) : 1);
