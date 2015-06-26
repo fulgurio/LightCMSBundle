@@ -12,7 +12,6 @@ namespace Fulgurio\LightCMSBundle\EventListener;
 
 use Fulgurio\LightCMSBundle\Controller\FrontPageController;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -92,8 +91,9 @@ class BeforeListener
                 $models = $this->kernel->getContainer()->getParameter('fulgurio_light_cms.models');
                 if (isset($models[$this->page->getModel()]['front']['controller']))
                 {
-                    $arr = $this->getController($models[$this->page->getModel()]['front']['controller']);
-                    $event->setController($arr);
+                    $controller = $this->getController($models[$this->page->getModel()]['front']['controller']);
+                    $controller[0]->setContainer($this->kernel->getContainer());
+                    $event->setController($controller);
                 }
                 if (method_exists($controller[0], 'setPage'))
                 {
