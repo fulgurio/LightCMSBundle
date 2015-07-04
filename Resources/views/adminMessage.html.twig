@@ -1,3 +1,3 @@
-{% for flashMessage in app.session.flashbag.get('notice') %}			<div class="alert alert-notice">{{ flashMessage|trans }}<br /></div>{% endfor %}
-{% for flashMessage in app.session.flashbag.get('error') %}			<div class="alert alert-error">{{ flashMessage|trans }}<br /></div>{% endfor %}
-{% for flashMessage in app.session.flashbag.get('success') %}			<div class="alert alert-success">{{ flashMessage|trans }}<br /></div>{% endfor %}
+{% for flashMessage in app.session.flashbag.get('notice') %}			<div class="alert alert-notice">{{ flashMessage|trans({}, 'admin') }}<br /></div>{% endfor %}
+{% for flashMessage in app.session.flashbag.get('error') %}			<div class="alert alert-error">{{ flashMessage|trans({}, 'admin') }}<br /></div>{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}			<div class="alert alert-success">{{ flashMessage|trans({}, 'admin') }}<br /></div>{% endfor %}
