@@ -1,7 +1,7 @@
 {% extends 'FulgurioLightCMSBundle::adminBase.html.twig' %}
 
 {% block content %}
-<form action="{{ action }}" method="post" id="{{ form.vars.id }}">
+<form action="{{ action }}" method="post" id="{{ form.vars.id }}" enctype="multipart/form-data">
 	<fieldset>
 		<legend>{{ legend|trans({}, 'admin') }}</legend>
 {% if form.vars.errors is not empty %}
