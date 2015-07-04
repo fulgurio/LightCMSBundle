@@ -212,7 +212,7 @@ class AdminPageHandler extends AbstractAdminHandler
      * @param string $metaValue
      * @return \Fulgurio\LightCMSBundle\Entity\PageMeta
      */
-    final protected function initMetaEntity(Page $page, $metaName, $metaValue)
+    final public function initMetaEntity(Page $page, $metaName, $metaValue)
     {
         $this->initPageMetas($page);
         if (isset($this->pageMetas[$metaName]))

@@ -62,6 +62,16 @@ abstract class AbstractAdminHandler
     }
 
     /**
+     * $form getter
+     *
+     * @return Form
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
      * $request setter
      *
      * @param Request $request
@@ -72,6 +82,16 @@ abstract class AbstractAdminHandler
         $this->request = $request;
 
         return $this;
+    }
+
+    /**
+     * $request getter
+     *
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 
     /**
@@ -88,6 +108,16 @@ abstract class AbstractAdminHandler
     }
 
     /**
+     * $doctrine getter
+     *
+     * @return RegistryInterface
+     */
+    public function getDoctrine()
+    {
+        return $this->doctrine;
+    }
+
+    /**
      * $user setter
      *
      * @param UserInterface $user
@@ -101,6 +131,16 @@ abstract class AbstractAdminHandler
     }
 
     /**
+     * $user getter
+     *
+     * @return UserInterface
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * $slugSuffixSeparator setter
      *
      * @param string $suffix
@@ -111,5 +151,15 @@ abstract class AbstractAdminHandler
         $this->slugSuffixSeparator = $suffix;
 
         return $this;
+    }
+
+    /**
+     * $slugSuffixSeparator getter
+     *
+     * @return string
+     */
+    public function getSlugSuffixSeparator()
+    {
+        return $this->slugSuffixSeparator;
     }
 }
