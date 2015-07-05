@@ -67,7 +67,7 @@ class AdminMediaController extends Controller
                 'query' => array(
                         'filter' => $request->get('filter') ? $request->get('filter') : '',
                         'filename' => $request->get('filename') ? $request->get('filename') : ''
-                        )
+                )
             ));
         }
     }
@@ -104,12 +104,11 @@ class AdminMediaController extends Controller
         $thumbSizes = $this->container->getParameter('fulgurio_light_cms.thumbs');
         $form = $this->createForm(new AdminMediaType($this->container), $media);
         $formHandler = new AdminMediaHandler();
-        $formHandler->setForm($form);
-        $formHandler->setRequest($request);
-        $formHandler->setDoctrine($this->getDoctrine());
-        $formHandler->setUser($this->getUser());
-        $formHandler->setSlugSuffixSeparator($this->container->getParameter('fulgurio_light_cms.slug_suffix_separator'));
-        $formHandler->setThumbSizes($thumbSizes);
+        $formHandler->setForm($form)
+                ->setRequest($request)
+                ->setDoctrine($this->getDoctrine())
+                ->setUser($this->getUser())
+                ->setMediaLibraryService($this->get('fulgurio_light_cms.media_library'));
         if ($formHandler->process($media))
         {
             if ($request->isXmlHttpRequest())
@@ -159,22 +158,7 @@ class AdminMediaController extends Controller
         $request = $this->getRequest();
         if ($request->request->get('confirm') === 'yes' || $request->get('confirm') === 'yes')
         {
-            $filename = LightCMSUtils::getUploadDir(FALSE) . $media->getFullPath();
-            if (is_file($filename))
-            {
-                unlink($filename);
-            }
-            foreach ($this->container->getParameter('fulgurio_light_cms.thumbs') as $size)
-            {
-                if (substr($media->getMediaType(), 0, 5) == 'image')
-                {
-                    $filename = LightCMSUtils::getUploadDir(FALSE) . LightCMSUtils::getThumbFilename($media->getFullPath(), $media->getMediaType(), $size);
-                    if (is_file($filename))
-                    {
-                        unlink($filename);
-                    }
-                }
-            }
+            $this->get('fulgurio_light_cms.media_library')->remove($media);
             $em = $this->getDoctrine()->getManager();
             $em->remove($media);
             $em->flush();
@@ -233,9 +217,10 @@ class AdminMediaController extends Controller
      */
     private function getWysiwyg()
     {
-        if ($this->container->getParameter('fulgurio_light_cms.wysiwyg') && $this->container->hasParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg')))
+        $wysiwygName = $this->container->getParameter('fulgurio_light_cms.wysiwyg');
+        if ($wysiwygName && $this->container->hasParameter($wysiwygName))
         {
-            return $this->container->getParameter($this->container->getParameter('fulgurio_light_cms.wysiwyg'));
+            return $this->container->getParameter($wysiwygName);
         }
         else
         {
@@ -251,13 +236,16 @@ class AdminMediaController extends Controller
      */
     private function getMedia($mediaId)
     {
-        if (!$page = $this->getDoctrine()->getRepository('FulgurioLightCMSBundle:Media')->findOneBy(array('id' => $mediaId)))
+        $page = $this->getDoctrine()
+                ->getRepository('FulgurioLightCMSBundle:Media')
+                ->findOneBy(array('id' => $mediaId));
+        if ($page)
         {
-            throw new NotFoundHttpException(
-                $this->get('translator')->trans('fulgurio.lightcms.medias.not_found', array(), 'admin')
-            );
+            return $page;
         }
-        return $page;
+        throw new NotFoundHttpException(
+            $this->get('translator')->trans('fulgurio.lightcms.medias.not_found', array(), 'admin')
+        );
     }
 
     /**

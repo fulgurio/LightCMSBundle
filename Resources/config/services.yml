@@ -7,11 +7,17 @@ services:
             securityContext: "@security.context"
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    fulgurio_light_cms.media_library:
+        class: Fulgurio\LightCMSBundle\Utils\MediaLibrary
+        calls:
+            - [ setThumbSizes, ["%fulgurio_light_cms.thumbs%"], setSlugSuffixSeparator, "%fulgurio_light_cms.slug_suffix_separator%"]
+
     fulgurio_light_cms.twig.extension:
         class: Fulgurio\LightCMSBundle\Extension\LightCMSTwigExtension
         tags:
             -  { name: twig.extension }
         arguments:
-            router: "@router"
-            doctrine: "@doctrine"
+            router:    "@router"
+            doctrine:  "@doctrine"
             container: "@service_container"

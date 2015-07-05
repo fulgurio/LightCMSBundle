@@ -12,17 +12,10 @@ namespace Fulgurio\LightCMSBundle\Form\Handler;
 
 use Fulgurio\LightCMSBundle\Entity\Media;
 use Fulgurio\LightCMSBundle\Form\Handler\AbstractAdminHandler;
-use Fulgurio\LightCMSBundle\Utils\LightCMSUtils;
+use Fulgurio\LightCMSBundle\Utils\MediaLibrary;
 
 class AdminMediaHandler extends AbstractAdminHandler
 {
-    /**
-     * Thumb sizes
-     * @var array
-     */
-    private $thumbSizes;
-
-
     /**
      * Processing form values
      *
@@ -39,51 +32,34 @@ class AdminMediaHandler extends AbstractAdminHandler
                 $file = $this->form->get('media')->getData();
                 if (!is_null($file))
                 {
-                    if ($file->getError() == UPLOAD_ERR_OK)
+                    $media->setMediaType($file->getMimeType());
+                    $media->setOriginalName($file->getClientOriginalName());
+                    $filename = $this->mediaLibraryService->add($file, $media);
+                    if ($filename)
                     {
-                        $oldFile = LightCMSUtils::getUploadDir(FALSE) . $media->getFullpath();
-                        if (is_file($oldFile))
+                        // New media
+                        if ($media->getId() == 0)
                         {
-                            unlink($oldFile);
-                        }
-                        $filename = $this->getUniqFilename(LightCMSUtils::getUploadDir(), LightCMSUtils::makeSlug($file->getClientOriginalName(), TRUE));
-                        $media->setFullPath(LightCMSUtils::getUploadUrl() . $filename);
-                        $media->setOriginalName($file->getClientOriginalName());
-                        $mimeType = $file->getMimeType();
-                        $media->setMediaType($mimeType);
-                        $file->move(LightCMSUtils::getUploadDir(), $filename);
-                        $mediaType = preg_split('/\//', $mimeType);
-                        if (isset($this->thumbSizes) && $mediaType[0] == 'image')
-                        {
-                            foreach ($this->thumbSizes as $size)
+                            if (is_a($this->user, 'Symfony\Component\Security\Core\User\UserInterface')
+                                    && method_exists($this->user, 'getId'))
                             {
-                                //@todo: choose crop or resize
-                                LightCMSUtils::cropPicture(
-                                    LightCMSUtils::getUploadDir() . $filename,
-                                    LightCMSUtils::getUploadDir() . LightCMSUtils::getThumbFilename($filename, $mimeType, $size),
-                                    $size['width'],
-                                    $size['height']
-                                );
+                                $media->setOwnerId($this->user->getId());
                             }
                         }
-                    }
-                    else
+                        else
                         {
-                        return FALSE;
-                    }
-                    // New media
-                    if ($media->getId() == 0)
-                    {
-                        if (is_a($this->user, 'Symfony\Component\Security\Core\User\UserInterface')
-                                && method_exists($this->user, 'getId'))
-                        {
-                            $media->setOwnerId($this->user->getId());
+                            // We remove old files
+                            $this->mediaLibraryService->remove($media);
                         }
+
+                        // We set new file
+                        $media->setFullPath($filename);
+
+                        $em = $this->doctrine->getManager();
+                        $em->persist($media);
+                        $em->flush();
+                        return TRUE;
                     }
-                    $em = $this->doctrine->getManager();
-                    $em->persist($media);
-                    $em->flush();
-                    return TRUE;
                 }
             }
         }
@@ -91,40 +67,15 @@ class AdminMediaHandler extends AbstractAdminHandler
     }
 
     /**
-     * Get uniq name for upload
+     * $mediaLibraryService setter
      *
-     * @param string $path
-     * @param string $filename
-     * @param number $counter
-     * @return string
+     * @param Fulgurio\LightCMSBundle\Form\Handler\MediaLibrary $service
+     * @return Fulgurio\LightCMSBundle\Form\Handler\AdminMediaHandler
      */
-    private function getUniqFilename($path, $filename, $counter = 0)
+    public function setMediaLibraryService(MediaLibrary $service)
     {
-        if (($pos = mb_strrpos($filename, '.')) == FALSE)
-        {
-            $file = $filename;
-            $extension = '';
-        }
-        else
-        {
-            $file = mb_substr($filename, 0, $pos);
-            $extension = mb_substr($filename, $pos);
-        }
-        $postfix = $counter > 0 ? $this->slugSuffixSeparator . $counter : '';
-        if (file_exists($path . '/' . $file . $postfix . $extension))
-        {
-            return $this->getUniqFilename($path, $filename, $counter + 1);
-        }
-        return $file . $postfix . $extension;
-    }
+        $this->mediaLibraryService = $service;
 
-    /**
-     * $thumbsizes setter
-     *
-     * @param array $sizes
-     */
-    public function setThumbSizes($sizes)
-    {
-        $this->thumbSizes = $sizes;
+        return $this;
     }
 }
