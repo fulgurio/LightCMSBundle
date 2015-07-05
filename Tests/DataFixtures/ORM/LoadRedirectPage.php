@@ -29,7 +29,6 @@ class LoadRedirectPage extends AbstractFixture implements FixtureInterface, Orde
      */
     public function load(ObjectManager $manager)
     {
-        $currentDate = new \DateTime();
         $redirectPage = new Page();
         $redirectPage->setTitle('Redirection to homepage');
         $redirectPage->setPageType('page');
@@ -38,9 +37,6 @@ class LoadRedirectPage extends AbstractFixture implements FixtureInterface, Orde
         $redirectPage->setSlug('redirection-to-homepage');
         $redirectPage->setPosition(1);
         $redirectPage->setStatus('published');
-        $redirectPage->setCreatedAt($currentDate);
-        $redirectPage->setUpdatedAt($currentDate);
-
         $redirectPage->setParent($this->getReference('page-homepage'));
 
         $meta = new PageMeta();

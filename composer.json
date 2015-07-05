@@ -18,7 +18,8 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle" : "1.1.*",
         "php" : ">=5.3.2",
-        "symfony/framework-bundle" : "2.3.*"
+        "symfony/framework-bundle" : "2.3.*",
+        "stof/doctrine-extensions-bundle": "v1.1.0"
     },
     "require-dev": {
         "liip/functional-test-bundle": "~1.0"

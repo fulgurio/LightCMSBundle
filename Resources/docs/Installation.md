@@ -43,6 +43,7 @@ public function registerBundles()
         // ...
         new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         new Fulgurio\LightCMSBundle\FulgurioLightCMSBundle(),
     );
 }
@@ -99,6 +100,14 @@ doctrine:
             page:
                 class: Fulgurio\LightCMSBundle\Filter\PageFilter
                 enabled: false
+```
+
+and the gedmo extensions :
+``` yaml
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
 ```
 
 ### Step 5: Set database fixture

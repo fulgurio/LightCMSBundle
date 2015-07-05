@@ -52,10 +52,16 @@ Fulgurio\LightCMSBundle\Entity\Page:
       nullable: true
     created_at:
       type: datetime
-      nullable: true
+      nullable: false
+      gedmo:
+        timestampable:
+          on: create
     updated_at:
       type: datetime
-      nullable: true
+      nullable: false
+      gedmo:
+        timestampable:
+          on: update
   oneToMany:
     children:
       targetEntity: Page

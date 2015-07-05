@@ -80,11 +80,6 @@ class AdminMediaHandler extends AbstractAdminHandler
                         {
                             $media->setOwnerId($this->user->getId());
                         }
-                        $media->setCreatedAt($currentDate);
-                    }
-                    else
-                    {
-                        $media->setUpdatedAt($currentDate);
                     }
                     $em = $this->doctrine->getManager();
                     $em->persist($media);
