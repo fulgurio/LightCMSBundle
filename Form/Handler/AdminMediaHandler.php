@@ -36,7 +36,6 @@ class AdminMediaHandler extends AbstractAdminHandler
             $this->form->handleRequest($this->request);
             if ($this->form->isValid())
             {
-                $currentDate = new \DateTime();
                 $file = $this->form->get('media')->getData();
                 if (!is_null($file))
                 {
