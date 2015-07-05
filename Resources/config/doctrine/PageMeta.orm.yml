@@ -20,3 +20,5 @@ Fulgurio\LightCMSBundle\Entity\PageMeta:
     page:
       targetEntity: Page
       inversedBy: meta
+      joinColumn:
+        onDelete: CASCADE

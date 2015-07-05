@@ -21,3 +21,5 @@ Fulgurio\LightCMSBundle\Entity\PageMenu:
     page:
       targetEntity: Page
       inversedBy: menu
+      joinColumn:
+        onDelete: CASCADE
