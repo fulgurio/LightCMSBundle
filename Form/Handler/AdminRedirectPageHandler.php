@@ -23,6 +23,7 @@ class AdminRedirectPageHandler extends AdminPageHandler
      */
     protected function updatePageMetas(Page $page, array $data)
     {
+        parent::updatePageMetas($page, $data);
         $em = $this->doctrine->getManager();
         $em->persist($this->initMetaEntity($page, 'target_link', $data['target_link']));
     }
