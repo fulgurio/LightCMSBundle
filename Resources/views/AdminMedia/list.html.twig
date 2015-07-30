@@ -32,8 +32,10 @@
 						<div class="thumbnail">
 {%      if media.fullPath is null %}
 							<img src="http://www.placehold.it/50x50/EFEFEF/AAAAAA" data-src="holder.js/300x200" alt=""></a>
-{%      else %}
+{%      elseif media.mediaType|slice(0, 5) == 'image' %}
 							<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ media.fullPath }}" href="{{ media.fullPath }}"><img src="{{ thumb(media, 'medium') }}" alt="" /></a>
+{%      else  %}
+							<a href="{{ media.fullPath }}" target="_blank"><img src="{{ thumb(media, 'medium') }}" alt="" /></a>
 {%      endif %}
 							<h6 title="{{ media.originalName }}"><span>{{ media.originalName }}</span>
 								<a href="{{ path('AdminMediasRemove', {mediaId: media.id}) }}" class="pull-right icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>

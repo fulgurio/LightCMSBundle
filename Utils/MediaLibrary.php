@@ -34,10 +34,10 @@ class MediaLibrary
 
     public function add(UploadedFile $file, Media $media)
     {
-        if (!self::isImage($file))
-        {
-            return FALSE;
-        }
+//        if (!self::isImage($file))
+//        {
+//            return FALSE;
+//        }
         if ($file->getError() == UPLOAD_ERR_OK)
         {
             $filename = $this->getUniqFilename(LightCMSUtils::getUploadDir(), LightCMSUtils::makeSlug($file->getClientOriginalName(), TRUE));
